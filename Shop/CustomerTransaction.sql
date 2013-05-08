@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[CustomerTransaction]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL,
+	[CustomerId] UNIQUEIDENTIFIER NOT NULL,
+	[DateTime] DATETIMEOFFSET NOT NULL,
+    [Type] INT NOT NULL, 
+    [Amount] MONEY NOT NULL, 
+    [SourceId] UNIQUEIDENTIFIER NULL, 
+    CONSTRAINT [PK_CustomerTransaction] PRIMARY KEY ([Id])
+)

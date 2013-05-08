@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Invoice]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL , 
+    [DateTime] DATETIMEOFFSET NOT NULL, 
+    [CustomerId] UNIQUEIDENTIFIER NOT NULL, 
+    CONSTRAINT [PK_Invoice] PRIMARY KEY ([Id]) 
+)
