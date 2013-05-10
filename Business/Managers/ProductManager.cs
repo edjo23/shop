@@ -8,7 +8,7 @@ using System.Transactions;
 using Business.Entities;
 using DapperExtensions;
 
-namespace Business.Manager
+namespace Business.Managers
 {
     public class ProductManager
     {

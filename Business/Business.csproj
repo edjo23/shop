@@ -52,10 +52,10 @@
     <Compile Include="Entities\InvoiceItem.cs" />
     <Compile Include="Entities\ProductMovement.cs" />
     <Compile Include="Entities\Product.cs" />
-    <Compile Include="Manager\ConnectionScope.cs" />
-    <Compile Include="Manager\CustomerManager.cs" />
-    <Compile Include="Manager\InvoiceManager.cs" />
-    <Compile Include="Manager\ProductManager.cs" />
+    <Compile Include="Managers\ConnectionScope.cs" />
+    <Compile Include="Managers\CustomerManager.cs" />
+    <Compile Include="Managers\InvoiceManager.cs" />
+    <Compile Include="Managers\ProductManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

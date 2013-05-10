@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Business.Entities;
-using Business.Manager;
+using Business.Managers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test
