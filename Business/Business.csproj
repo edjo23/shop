@@ -54,7 +54,6 @@
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Manager\ConnectionScope.cs" />
     <Compile Include="Manager\CustomerManager.cs" />
-    <Compile Include="Manager\DataManager.cs" />
     <Compile Include="Manager\InvoiceManager.cs" />
     <Compile Include="Manager\ProductManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
