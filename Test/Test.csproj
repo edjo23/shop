@@ -59,6 +59,10 @@
       <Project>{01e09d2a-03c1-451f-9ec6-8bbe1f896baa}</Project>
       <Name>Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
+      <Project>{f964b318-7bb8-4efe-8724-a2df741e91b4}</Project>
+      <Name>Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Managers
+namespace Shop.Business.Database
 {
     public class ConnectionScope : IDisposable
     {

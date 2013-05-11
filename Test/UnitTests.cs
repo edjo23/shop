@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Business.Entities;
-using Business.Managers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Shop.Business.Managers;
+using Shop.Contracts.Entities;
 
 namespace Test
 {
@@ -73,7 +73,6 @@ namespace Test
             Assert.AreEqual<int>(product.QuantityOnHand + movement.Quantity, productManager.GetProduct(product.Id).QuantityOnHand);
         }
 
-
         [TestMethod]
         public void AddInvoice()
         {
@@ -102,7 +101,7 @@ namespace Test
                     Quantity = 1
                 });
             
-            invoiceManager.ProcessInvoice(invoice, items);
+            invoiceManager.AddInvoice(invoice, items);
 
             // Check products balances.
             foreach (var product in products)
@@ -144,7 +143,7 @@ namespace Test
                 }
             };
 
-            invoiceManager.ProcessInvoice(invoice, items);
+            invoiceManager.AddInvoice(invoice, items);
 
             // Check products balances.
             Assert.AreEqual<int>(product.QuantityOnHand < 3 ? 0 : product.QuantityOnHand - 3, productManager.GetProduct(product.Id).QuantityOnHand);

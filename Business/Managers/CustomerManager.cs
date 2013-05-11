@@ -5,64 +5,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Business.Entities;
 using DapperExtensions;
+using Shop.Business.Database;
+using Shop.Contracts.Entities;
 
-namespace Business.Managers
+namespace Shop.Business.Managers
 {
     public class CustomerManager
     {
         public IEnumerable<Customer> GetCustomers()
         {
-            using (var connectionScope = new ConnectionScope())
-            {
-                return connectionScope.Connection.GetList<Customer>();
-            }
+            return Extensions.SelectAll<Customer>();
         }
 
         public Customer GetCustomer(Guid id)
         {
-            using (var connectionScope = new ConnectionScope())
-            {
-                return connectionScope.Connection.Get<Customer>(id);
-            }
+            return Extensions.SelectById<Customer>(id);
         }
 
         public void AddCustomer(Customer customer)
         {
-            using (var transactionScope = new TransactionScope())
-            using (var connectionScope = new ConnectionScope())
-            {
-                connectionScope.Connection.Insert(customer);
-                transactionScope.Complete();
-            }
+            customer.Insert();
         }
 
         public void UpdateCustomer(Customer customer)
         {
-            using (var transactionScope = new TransactionScope())
-            using (var connectionScope = new ConnectionScope())
-            {
-                connectionScope.Connection.Update(customer);
-                transactionScope.Complete();
-            }
+            customer.Update();
         }
 
         public void AddTransaction(CustomerTransaction customerTransaction)
         {
-            using (var transactionScope = new TransactionScope())
-            using (var connectionScope = new ConnectionScope())
+            using (var transaction = new TransactionScope())
+            using (var connection = new ConnectionScope())
             {
-                connectionScope.Connection.Insert(customerTransaction);
-
                 var customer = GetCustomer(customerTransaction.CustomerId);
                 if (customer == null)
                     throw new Exception("Customer not found");
 
+                customerTransaction.Insert();
                 customer.Balance += customerTransaction.Amount;
-                UpdateCustomer(customer);
+                customer.Update();
 
-                transactionScope.Complete();
+                transaction.Complete();
             }
         }        
     }

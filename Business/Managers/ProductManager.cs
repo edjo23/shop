@@ -5,37 +5,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using Business.Entities;
 using DapperExtensions;
+using Shop.Business.Database;
+using Shop.Contracts.Entities;
 
-namespace Business.Managers
+namespace Shop.Business.Managers
 {
     public class ProductManager
     {
         public IEnumerable<Product> GetProducts()
         {
-            using (var connectionScope = new ConnectionScope())
-            {
-                return connectionScope.Connection.GetList<Product>();
-            }
+            return Extensions.SelectAll<Product>();
         }
 
         public Product GetProduct(Guid id)
         {
-            using (var connectionScope = new ConnectionScope())
-            {
-                return connectionScope.Connection.Get<Product>(id);
-            }
+            return Extensions.SelectById<Product>(id);
         }
 
-        public void AddProduct(Product product, IDbConnection useConnection = null)
+        public void AddProduct(Product product)
         {
-            using (var transactionScope = new TransactionScope())
-            using (var connectionScope = new ConnectionScope())
-            {
-                connectionScope.Connection.Insert(product);
-                transactionScope.Complete();
-            }
+            product.Insert();
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            product.Update();
         }
 
         public void AddMovement(ProductMovement movement)
@@ -43,14 +38,16 @@ namespace Business.Managers
             using (var transaction = new TransactionScope())
             using (var connection = new ConnectionScope())
             {
-                connection.Connection.Insert(movement);
-
-                var product = connection.Connection.Get<Product>(movement.ProductId);
+                var product = GetProduct(movement.ProductId);
                 if (product == null)
                     throw new Exception("Product not found");
 
+                if (product.QuantityOnHand + movement.Quantity < 0)
+                    throw new Exception("Quantity on hand cannot become negative.");
+
+                movement.Insert();
                 product.QuantityOnHand += movement.Quantity;
-                connection.Connection.Update(product);
+                product.Update();
 
                 transaction.Complete();
             }
