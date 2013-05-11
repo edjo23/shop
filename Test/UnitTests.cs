@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Business.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shop.Business.Managers;
 using Shop.Contracts.Entities;
+using Shop.Contracts.Services;
 
 namespace Test
 {
@@ -13,9 +15,9 @@ namespace Test
         [TestMethod]
         public void AddCustomer()
         {
-            var customerManager = new CustomerManager();
+            ICustomerService customerService = new CustomerService(new CustomerManager());
 
-            var customers = customerManager.GetCustomers();
+            var customers = customerService.GetCustomers();
 
             var customer = new Customer
             {
@@ -25,17 +27,17 @@ namespace Test
                 Balance = Decimal.Zero
             };
 
-            customerManager.AddCustomer(customer);
+            customerService.AddCustomer(customer);
 
-            Assert.AreEqual<int>(customers.Count() + 1, customerManager.GetCustomers().Count());
+            Assert.AreEqual<int>(customers.Count() + 1, customerService.GetCustomers().Count());
         }
 
         [TestMethod]
         public void AddProduct()
         {
-            var productManager = new ProductManager();
+            IProductService productService = new ProductService(new ProductManager());
 
-            var products = productManager.GetProducts();
+            var products = productService.GetProducts();
 
             var product = new Product
             {
@@ -47,17 +49,17 @@ namespace Test
                 QuantityOnHand = 0
             };
 
-            productManager.AddProduct(product);
+            productService.AddProduct(product);
 
-            Assert.AreEqual<int>(products.Count() + 1, productManager.GetProducts().Count());
+            Assert.AreEqual<int>(products.Count() + 1, productService.GetProducts().Count());
         }
 
         [TestMethod]
         public void AddStockReceipt()
         {
-            var productManager = new ProductManager();
+            IProductService productService = new ProductService(new ProductManager());
 
-            var product = productManager.GetProducts().First();
+            var product = productService.GetProducts().First();
 
             var movement = new ProductMovement
             {
@@ -68,20 +70,20 @@ namespace Test
                 Quantity = 10
             };
 
-            productManager.AddMovement(movement);
+            productService.AddMovement(movement);
 
-            Assert.AreEqual<int>(product.QuantityOnHand + movement.Quantity, productManager.GetProduct(product.Id).QuantityOnHand);
+            Assert.AreEqual<int>(product.QuantityOnHand + movement.Quantity, productService.GetProduct(product.Id).QuantityOnHand);
         }
 
         [TestMethod]
         public void AddInvoice()
         {
-            var productManager = new ProductManager();
-            var customerManager = new CustomerManager();
-            var invoiceManager = new InvoiceManager(productManager, customerManager);
+            IProductService productService = new ProductService(new ProductManager());
+            ICustomerService customerService = new CustomerService(new CustomerManager());
+            IInvoiceService invoiceService =  new InvoiceService(new InvoiceManager(new ProductManager(), new CustomerManager()));
 
-            var products = productManager.GetProducts();
-            var customer = customerManager.GetCustomers().First();
+            var products = productService.GetProducts();
+            var customer = customerService.GetCustomers().First();
 
             var invoice = new Invoice
             {
@@ -101,27 +103,27 @@ namespace Test
                     Quantity = 1
                 });
             
-            invoiceManager.AddInvoice(invoice, items);
+            invoiceService.AddInvoice(invoice, items);
 
             // Check products balances.
             foreach (var product in products)
             {
-                Assert.AreEqual<int>(product.QuantityOnHand < 1 ? 0 : product.QuantityOnHand - 1, productManager.GetProduct(product.Id).QuantityOnHand);
+                Assert.AreEqual<int>(product.QuantityOnHand < 1 ? 0 : product.QuantityOnHand - 1, productService.GetProduct(product.Id).QuantityOnHand);
             }
             
             // Check customer balance.
-            Assert.AreEqual<decimal>(customer.Balance + products.Sum(o => o.Price), customerManager.GetCustomer(customer.Id).Balance);
+            Assert.AreEqual<decimal>(customer.Balance + products.Sum(o => o.Price), customerService.GetCustomer(customer.Id).Balance);
         }
 
         [TestMethod]
         public void AddInvoiceWithQuantities()
         {
-            var productManager = new ProductManager();
-            var customerManager = new CustomerManager();
-            var invoiceManager = new InvoiceManager(productManager, customerManager);
+            IProductService productService = new ProductService(new ProductManager());
+            ICustomerService customerService = new CustomerService(new CustomerManager());
+            IInvoiceService invoiceService = new InvoiceService(new InvoiceManager(new ProductManager(), new CustomerManager()));
 
-            var customer = customerManager.GetCustomers().First();
-            var product = productManager.GetProducts().First();
+            var customer = customerService.GetCustomers().First();
+            var product = productService.GetProducts().First();
 
             var invoice = new Invoice
             {
@@ -143,21 +145,21 @@ namespace Test
                 }
             };
 
-            invoiceManager.AddInvoice(invoice, items);
+            invoiceService.AddInvoice(invoice, items);
 
             // Check products balances.
-            Assert.AreEqual<int>(product.QuantityOnHand < 3 ? 0 : product.QuantityOnHand - 3, productManager.GetProduct(product.Id).QuantityOnHand);
+            Assert.AreEqual<int>(product.QuantityOnHand < 3 ? 0 : product.QuantityOnHand - 3, productService.GetProduct(product.Id).QuantityOnHand);
 
             // Check customer balance.
-            Assert.AreEqual<decimal>(customer.Balance + product.Price * 3, customerManager.GetCustomer(customer.Id).Balance);
+            Assert.AreEqual<decimal>(customer.Balance + product.Price * 3, customerService.GetCustomer(customer.Id).Balance);
         }
 
         [TestMethod]
         public void AddPayment()
         {
-            var customerManager = new CustomerManager();
+            ICustomerService customerService = new CustomerService(new CustomerManager());
 
-            var customer = customerManager.GetCustomers().First();
+            var customer = customerService.GetCustomers().First();
 
             var transaction = new CustomerTransaction
             {
@@ -168,18 +170,18 @@ namespace Test
                 Amount = customer.Balance * -1
             };
 
-            customerManager.AddTransaction(transaction);
+            customerService.AddTransaction(transaction);
 
             // Check customer balance.
-            Assert.AreEqual<decimal>(0, customerManager.GetCustomer(customer.Id).Balance);
+            Assert.AreEqual<decimal>(0, customerService.GetCustomer(customer.Id).Balance);
         }
 
         [TestMethod]
         public void AddOverpayment()
         {
-            var customerManager = new CustomerManager();
+            ICustomerService customerService = new CustomerService(new CustomerManager());
 
-            var customer = customerManager.GetCustomers().First();
+            var customer = customerService.GetCustomers().First();
 
             var transaction = new CustomerTransaction
             {
@@ -190,18 +192,18 @@ namespace Test
                 Amount = customer.Balance * -2
             };
 
-            customerManager.AddTransaction(transaction);
+            customerService.AddTransaction(transaction);
 
             // Check customer balance.
-            Assert.AreEqual<decimal>(customer.Balance * -1, customerManager.GetCustomer(customer.Id).Balance);
+            Assert.AreEqual<decimal>(customer.Balance * -1, customerService.GetCustomer(customer.Id).Balance);
         }
 
         [TestMethod]
         public void AddAdjustment()
         {
-            var customerManager = new CustomerManager();
+            ICustomerService customerService = new CustomerService(new CustomerManager());
 
-            var customer = customerManager.GetCustomers().First();
+            var customer = customerService.GetCustomers().First();
 
             var transaction = new CustomerTransaction
             {
@@ -212,10 +214,10 @@ namespace Test
                 Amount = -10.0m
             };
 
-            customerManager.AddTransaction(transaction);
+            customerService.AddTransaction(transaction);
 
             // Check customer balance.
-            Assert.AreEqual<decimal>(customer.Balance - 10.0m, customerManager.GetCustomer(customer.Id).Balance);
+            Assert.AreEqual<decimal>(customer.Balance - 10.0m, customerService.GetCustomer(customer.Id).Balance);
         }
     }
 }
