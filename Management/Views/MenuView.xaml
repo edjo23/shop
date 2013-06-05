@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="Shop.Management.Views.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel>    
+        <TextBlock Style="{StaticResource H2}" Text="Home" Margin="10,10,10,0" />
+        <ItemsControl x:Name="Items" Margin="0,3,0,0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ToggleButton Name="Bn" Style="{StaticResource ToolbarButtonStyle}" cal:Message.Attach="Select($dataContext)" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                        IsChecked="{Binding IsSelected}" 
+                        FontSize="16" FontWeight="Light" Height="35" Padding="10,0">
+                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" />
+                    </ToggleButton>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

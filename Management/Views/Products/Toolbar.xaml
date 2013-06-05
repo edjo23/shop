@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Shop.Management.Views.Products.Toolbar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:c="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="300">
+    <Grid>
+        <StackPanel Style="{StaticResource ToolbarStyle}">
+            <Button x:Name="Refresh">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Shop.Management;component/images/refresh_76.png" />
+                    <TextBlock Text="Refresh" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="New">
+                <StackPanel Orientation="Horizontal">
+                    <!--<Image Source="/Shop.Management;component/images/add_76.png" Margin="0,0,5,0" />-->
+                    <TextBlock Text="New" Foreground="White" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="Edit" Visibility="{Binding ItemCommandVisibility}" c:Message.Attach="Edit($dataContext)">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Edit" Foreground="White" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="Receipt" Visibility="{Binding ItemCommandVisibility}" c:Message.Attach="Receipt($dataContext)">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Receipt" Foreground="White" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
