@@ -11,6 +11,7 @@ namespace Shop.Contracts.Entities
         public const int Receipt = 1;
         public const int Invoice = 2;
         public const int Correction = 3;
+        public const int Adjustment = 4;
     }
 
     public class ProductMovement

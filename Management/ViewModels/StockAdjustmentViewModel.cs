@@ -10,17 +10,19 @@ using Shop.Management.Messages;
 
 namespace Shop.Management.ViewModels
 {
-    public class ProductEditViewModel : Screen
+    public class StockAdjustmentViewModel : Screen
     {
-        public ProductEditViewModel(IEventAggregator eventAggregator, IProductService productService)
+        public StockAdjustmentViewModel(IEventAggregator eventAggregator, IProductService productService)
         {
             EventAggregator = eventAggregator;
             ProductService = productService;
+
+            DisplayName = "New Stock Adjustment";
         }
 
         public IEventAggregator EventAggregator { get; set; }
 
-        public IProductService ProductService { get; set; }
+        public IProductService ProductService { get; private set; }
 
         public Product Product { get; set; }
 
@@ -40,28 +42,6 @@ namespace Shop.Management.ViewModels
                 {
                     _Code = value;
                     NotifyOfPropertyChange(() => Code);
-                }
-            }
-        }
-
-        #endregion
-
-        #region Group Property
-
-        private string _Group;
-
-        public string Group
-        {
-            get
-            {
-                return _Group;
-            }
-            set
-            {
-                if (value != _Group)
-                {
-                    _Group = value;
-                    NotifyOfPropertyChange(() => Group);
                 }
             }
         }
@@ -90,22 +70,22 @@ namespace Shop.Management.ViewModels
 
         #endregion
 
-        #region Price Property
+        #region Quantity Property
 
-        private decimal _Price;
+        private int _Quantity;
 
-        public decimal Price
+        public int Quantity
         {
             get
             {
-                return _Price;
+                return _Quantity;
             }
             set
             {
-                if (value != _Price)
+                if (value != _Quantity)
                 {
-                    _Price = value;
-                    NotifyOfPropertyChange(() => Price);
+                    _Quantity = value;
+                    NotifyOfPropertyChange(() => Quantity);
                 }
             }
         }
@@ -117,20 +97,22 @@ namespace Shop.Management.ViewModels
             base.OnInitialize();
 
             Code = Product.Code;
-            Group = Product.Group;
             Description = Product.Description;
-            Price = Product.Price;
+            Quantity = 0;
         }
 
         public void Save()
         {
-            var product = ProductService.GetProduct(Product.Id);
-            product.Code = Code;
-            product.Group = Group;
-            product.Description = Description;
-            product.Price = Price;
+            var movement = new ProductMovement
+            {
+                Id = Guid.NewGuid(),
+                ProductId = Product.Id,
+                DateTime = DateTimeOffset.Now,
+                MovementType = ProductMovementType.Adjustment,
+                Quantity = Quantity
+            };
 
-            ProductService.UpdateProduct(product);
+            ProductService.AddMovement(movement);
 
             Close();
         }

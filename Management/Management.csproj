@@ -80,9 +80,10 @@
     <Compile Include="ViewModels\CustomersViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\StockAdjustmentViewModel.cs" />
     <Compile Include="ViewModels\ProductEditViewModel.cs" />
     <Compile Include="ViewModels\ProductNewViewModel.cs" />
-    <Compile Include="ViewModels\ProductReceiptViewModel.cs" />
+    <Compile Include="ViewModels\StockReceiptViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ProductsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -97,14 +98,17 @@
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StockAdjustmentView.xaml.cs">
+      <DependentUpon>StockAdjustmentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProductEditView.xaml.cs">
       <DependentUpon>ProductEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductNewView.xaml.cs">
       <DependentUpon>ProductNewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProductReceiptView.xaml.cs">
-      <DependentUpon>ProductReceiptView.xaml</DependentUpon>
+    <Compile Include="Views\StockReceiptView.xaml.cs">
+      <DependentUpon>StockReceiptView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -147,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\StockAdjustmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProductEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -155,7 +163,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProductReceiptView.xaml">
+    <Page Include="Views\StockReceiptView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -90,9 +90,10 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Height" Value="40" />
+        <!--<Setter Property="Height" Value="40" />-->
         <Setter Property="FontSize" Value="14" />
         <!--<Setter Property="FontWeight" Value="Light" />-->
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
@@ -124,13 +125,51 @@
     <!-- ToolbarStyle -->
     <Style x:Key="ToolbarStyle" TargetType="{x:Type StackPanel}">
         <Setter Property="Orientation" Value="Horizontal" />
-        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="Height" Value="40" />
         <Style.Resources>
             <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButtonStyle}">
                 <Setter Property="Foreground" Value="White" />
             </Style>
         </Style.Resources>
     </Style>
+    
+    <!-- FormButtonToolbar -->
+    <Style x:Key="FormToolbarStyle" TargetType="{x:Type StackPanel}">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Margin" Value="0,30,0,10" />
+        <Style.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolbarButtonStyle}">
+                <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
+                <Setter Property="Background" Value="#15000000" />
+                <Setter Property="MinWidth" Value="90" />
+                <Setter Property="Margin" Value="0,0,10,0" />
+                <Style.Triggers>
+                    <Trigger Property="IsDefault" Value="True">
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+    </Style>
+    
+    <!-- TitleBar -->
+    <Style x:Key="TitleBar" TargetType="{x:Type ContentControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <Grid>                        
+                        <Border Background="{StaticResource AccentColorBrush}" Height="40" />
+                        <StackPanel Orientation="Horizontal" Margin="2,0,0,0" VerticalAlignment="Center">
+                            <Image Source="/Shop.Management;component/images/shopping_76.png" Height="40" Width="40" />
+                            <TextBlock Text="The Shop" FontFamily="Segue UI" FontSize="20" FontWeight="Light" FontStyle="Normal" Foreground="White" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>    
     
     <SolidColorBrush x:Key="ScrollBar.Static.Background" Color="#F0F0F0" />
     <SolidColorBrush x:Key="ScrollBar.Static.Border" Color="#F0F0F0" />
@@ -727,6 +766,149 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <SolidColorBrush x:Key="TextBox.Static.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3" />
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA" />
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5" />
+
+    <Style x:Key="{x:Type TextBoxBase}" TargetType="{x:Type TextBoxBase}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="5"    
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                            Focusable="false" 
+                            HorizontalScrollBarVisibility="Hidden" 
+                            VerticalScrollBarVisibility="Hidden" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Opacity" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.MouseOver.Border}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.Focus.Border}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="{x:Type PasswordBox}"
+           TargetType="{x:Type PasswordBox}">
+        <Setter Property="PasswordChar" Value="●"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" 
+                            Focusable="false" 
+                            HorizontalScrollBarVisibility="Hidden" 
+                            VerticalScrollBarVisibility="Hidden" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="border" Property="Opacity" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.MouseOver.Border}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource TextBox.Focus.Border}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true" />
+                    <Condition Property="IsSelectionActive" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+
+    <Style x:Key="{x:Type TextBox}"
+           BasedOn="{StaticResource {x:Type TextBoxBase}}"
+           TargetType="{x:Type TextBox}">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style x:Key="{x:Type RichTextBox}"
+           BasedOn="{StaticResource {x:Type TextBoxBase}}"
+           TargetType="{x:Type RichTextBox}">
+        <Style.Resources>
+            <Style x:Key="{x:Type FlowDocument}"
+                   TargetType="{x:Type FlowDocument}">
+                <Setter Property="OverridesDefaultStyle"
+                        Value="true"/>
+            </Style>
+            <Style x:Key="{x:Type Hyperlink}"
+                   BasedOn="{StaticResource {x:Type Hyperlink}}"
+                   TargetType="{x:Type Hyperlink}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver"
+                             Value="true">
+                        <Setter Property="Foreground"
+                                Value="Blue"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+        <Setter Property="MinWidth"
+                Value="10"/>
     </Style>
 
 </ResourceDictionary>

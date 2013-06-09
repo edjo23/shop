@@ -62,9 +62,9 @@ namespace Shop.Management.ViewModels
 
         public BindableCollection<Customer> Customers { get; set; }
 
-        private Product _SelectedCustomer = null;
+        private Customer _SelectedCustomer = null;
 
-        public Product SelectedCustomer
+        public Customer SelectedCustomer
         {
             get
             {

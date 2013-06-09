@@ -20,14 +20,19 @@
                     <TextBlock Text="New" Foreground="White" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
-            <Button x:Name="Edit" Visibility="{Binding ItemCommandVisibility}" c:Message.Attach="Edit($dataContext)">
+            <Button x:Name="EditSelectedProduct" Visibility="{Binding ItemCommandVisibility}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Edit" Foreground="White" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
-            <Button x:Name="Receipt" Visibility="{Binding ItemCommandVisibility}" c:Message.Attach="Receipt($dataContext)">
+            <Button x:Name="ReceiptSelectedProduct" Visibility="{Binding ItemCommandVisibility}">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Receipt" Foreground="White" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="AdjustSelectedProduct" Visibility="{Binding ItemCommandVisibility}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Adjustment" Foreground="White" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
         </StackPanel>
