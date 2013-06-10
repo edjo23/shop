@@ -13,6 +13,7 @@ namespace Shop.Contracts.Services
         Product GetProduct(Guid id);
         void AddProduct(Product product);
         void UpdateProduct(Product product);
+        IEnumerable<ProductMovement> GetProductMovements(Guid productId);
         void AddMovement(ProductMovement movement);
     }
 }

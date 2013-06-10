@@ -38,6 +38,11 @@ namespace Business.Services
             Manager.UpdateProduct(product);
         }
 
+        public IEnumerable<ProductMovement> GetProductMovements(Guid productId)
+        {
+            return Manager.GetProductMovements(productId);
+        }
+
         public void AddMovement(ProductMovement movement)
         {
             Manager.AddMovement(movement);

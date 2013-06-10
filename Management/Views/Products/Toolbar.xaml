@@ -18,6 +18,7 @@
             <Button x:Name="ShowStockReceipt" Content="Receipt" Visibility="{Binding ItemCommandVisibility}" />
             <Button x:Name="ShowStockAdjustment" Content="Adjustment" Visibility="{Binding ItemCommandVisibility}" />
             <Button x:Name="ShowProductEdit" Content="Edit" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="ShowProductMovements" Content="Movements" Visibility="{Binding ItemCommandVisibility}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -163,5 +163,11 @@ namespace Shop.Management.ViewModels
             if (SelectedProduct != null)
                 EventAggregator.Publish(new ActivateItem<ProductStockAdjustmentViewModel>(o => o.Product = SelectedProduct));
         }
+
+        public void ShowProductMovements()
+        {
+            if (SelectedProduct != null)
+                EventAggregator.Publish(new ActivateItem<ProductMovementsViewModel>(o => o.Product = SelectedProduct));
+        }
     }
 }

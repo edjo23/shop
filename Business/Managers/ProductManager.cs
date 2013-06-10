@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Dapper;
 using DapperExtensions;
 using Shop.Business.Database;
 using Shop.Contracts.Entities;
@@ -31,6 +32,30 @@ namespace Shop.Business.Managers
         public void UpdateProduct(Product product)
         {
             product.Update();
+        }
+
+        public IEnumerable<ProductMovement> GetProductMovements(Guid productId)
+        {
+            using (var connection = new ConnectionScope())
+            {
+                var sql = @"
+                    select
+	                    Id,
+	                    ProductId,
+	                    MovementType,
+	                    Quantity,
+	                    DateTime,
+	                    SourceId,
+	                    SourceItemNumber
+                    from
+	                    dbo.ProductMovement
+                    where
+	                    ProductId = @ProductId
+                    order by
+                        DateTime desc";
+
+                return connection.Connection.Query<ProductMovement>(sql, new { ProductId = productId });
+            }
         }
 
         public void AddMovement(ProductMovement movement)

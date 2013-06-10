@@ -25,7 +25,7 @@
             
         <ContentControl Style="{StaticResource TitleBar}" />
         
-        <StackPanel Grid.Row="1" Margin="10,10">
+        <StackPanel Grid.Row="1" Margin="10">
             <TextBlock x:Name="DisplayName" Style="{StaticResource H2}" Text="Display Name" />
             <TextBlock Text="PRODUCT CODE" />
             <TextBox x:Name="Code" />

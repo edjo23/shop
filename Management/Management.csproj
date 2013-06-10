@@ -86,6 +86,8 @@
     <Compile Include="ViewModels\CustomerInvoiceViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
+    <Compile Include="ViewModels\ProductMovementsViewModel.cs" />
+    <Compile Include="ViewModels\ProductMovementViewModel.cs" />
     <Compile Include="ViewModels\ProductStockAdjustmentViewModel.cs" />
     <Compile Include="ViewModels\ProductEditViewModel.cs" />
     <Compile Include="ViewModels\ProductNewViewModel.cs" />
@@ -119,6 +121,9 @@
     </Compile>
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProductMovementsView.xaml.cs">
+      <DependentUpon>ProductMovementsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductSales\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
@@ -196,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductMovementsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
