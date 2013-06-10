@@ -135,6 +135,12 @@ namespace Shop.Management.ViewModels
             EventAggregator.Publish(new ActivateItem<CustomerNewViewModel>());
         }
 
+        public void ShowInvoiceNew()
+        {
+            if (SelectedCustomer != null)
+                EventAggregator.Publish(new ActivateItem<CustomerInvoiceViewModel>(o => o.Customer = SelectedCustomer));
+        }
+
         public void ShowCustomerEdit()
         {
             if (SelectedCustomer != null)

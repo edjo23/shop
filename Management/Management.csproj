@@ -79,9 +79,11 @@
     <Compile Include="Messages\DeactivateItem.cs" />
     <Compile Include="ViewModels\CustomerAccountAdjustmentViewModel.cs" />
     <Compile Include="ViewModels\CustomerEditViewModel.cs" />
+    <Compile Include="ViewModels\CustomerInvoiceItemViewModel.cs" />
     <Compile Include="ViewModels\CustomerNewViewModel.cs" />
     <Compile Include="ViewModels\CustomerAccountPaymentViewModel.cs" />
     <Compile Include="ViewModels\CustomersViewModel.cs" />
+    <Compile Include="ViewModels\CustomerInvoiceViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ProductStockAdjustmentViewModel.cs" />
@@ -110,6 +112,9 @@
     </Compile>
     <Compile Include="Views\Customers\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerInvoiceView.xaml.cs">
+      <DependentUpon>CustomerInvoiceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
@@ -176,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Customers\Toolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerInvoiceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,6 +286,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Dark\close_76.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dark\add_76.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dark\minus_76.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
