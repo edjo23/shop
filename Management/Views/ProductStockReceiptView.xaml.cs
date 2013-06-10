@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Shop.Management.Views
 {
     /// <summary>
-    /// Interaction logic for CustomerAdjustmentView.xaml
+    /// Interaction logic for ProductReceiptView.xaml
     /// </summary>
-    public partial class CustomerAdjustmentView : UserControl
+    public partial class ProductStockReceiptView : UserControl
     {
-        public CustomerAdjustmentView()
+        public ProductStockReceiptView()
         {
             InitializeComponent();
         }

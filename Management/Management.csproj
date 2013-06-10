@@ -77,24 +77,24 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Messages\ActivateItem.cs" />
     <Compile Include="Messages\DeactivateItem.cs" />
-    <Compile Include="ViewModels\CustomerAdjustmentViewModel.cs" />
+    <Compile Include="ViewModels\CustomerAccountAdjustmentViewModel.cs" />
     <Compile Include="ViewModels\CustomerEditViewModel.cs" />
     <Compile Include="ViewModels\CustomerNewViewModel.cs" />
-    <Compile Include="ViewModels\CustomerPaymentViewModel.cs" />
+    <Compile Include="ViewModels\CustomerAccountPaymentViewModel.cs" />
     <Compile Include="ViewModels\CustomersViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
-    <Compile Include="ViewModels\StockAdjustmentViewModel.cs" />
+    <Compile Include="ViewModels\ProductStockAdjustmentViewModel.cs" />
     <Compile Include="ViewModels\ProductEditViewModel.cs" />
     <Compile Include="ViewModels\ProductNewViewModel.cs" />
-    <Compile Include="ViewModels\StockReceiptViewModel.cs" />
+    <Compile Include="ViewModels\ProductStockReceiptViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ProductsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SummaryViewModel.cs" />
     <Compile Include="ViewModels\TestsViewModel.cs" />
-    <Compile Include="Views\CustomerAdjustmentView.xaml.cs">
-      <DependentUpon>CustomerAdjustmentView.xaml</DependentUpon>
+    <Compile Include="Views\CustomerAccountAdjustmentView.xaml.cs">
+      <DependentUpon>CustomerAccountAdjustmentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomerEditView.xaml.cs">
       <DependentUpon>CustomerEditView.xaml</DependentUpon>
@@ -102,8 +102,8 @@
     <Compile Include="Views\CustomerNewView.xaml.cs">
       <DependentUpon>CustomerNewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CustomerPaymentView.xaml.cs">
-      <DependentUpon>CustomerPaymentView.xaml</DependentUpon>
+    <Compile Include="Views\CustomerAccountPaymentView.xaml.cs">
+      <DependentUpon>CustomerAccountPaymentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomersView.xaml.cs">
       <DependentUpon>CustomersView.xaml</DependentUpon>
@@ -114,8 +114,8 @@
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StockAdjustmentView.xaml.cs">
-      <DependentUpon>StockAdjustmentView.xaml</DependentUpon>
+    <Compile Include="Views\ProductStockAdjustmentView.xaml.cs">
+      <DependentUpon>ProductStockAdjustmentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductEditView.xaml.cs">
       <DependentUpon>ProductEditView.xaml</DependentUpon>
@@ -123,8 +123,8 @@
     <Compile Include="Views\ProductNewView.xaml.cs">
       <DependentUpon>ProductNewView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StockReceiptView.xaml.cs">
-      <DependentUpon>StockReceiptView.xaml</DependentUpon>
+    <Compile Include="Views\ProductStockReceiptView.xaml.cs">
+      <DependentUpon>ProductStockReceiptView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -155,7 +155,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CustomerAdjustmentView.xaml">
+    <Page Include="Views\CustomerAccountAdjustmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,7 +167,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CustomerPaymentView.xaml">
+    <Page Include="Views\CustomerAccountPaymentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,7 +183,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StockAdjustmentView.xaml">
+    <Page Include="Views\ProductStockAdjustmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,7 +195,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StockReceiptView.xaml">
+    <Page Include="Views\ProductStockReceiptView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

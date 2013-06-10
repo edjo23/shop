@@ -18,9 +18,9 @@ namespace Shop.Management.Views
     /// <summary>
     /// Interaction logic for CustomerPaymentView.xaml
     /// </summary>
-    public partial class CustomerPaymentView : UserControl
+    public partial class CustomerAccountPaymentView : UserControl
     {
-        public CustomerPaymentView()
+        public CustomerAccountPaymentView()
         {
             InitializeComponent();
         }

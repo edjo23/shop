@@ -135,39 +135,33 @@ namespace Shop.Management.ViewModels
             });
         }
 
-        public void Refresh()
+        public void RefreshView()
         {
             if (CanRefresh)
                 Load(true);
         }
 
-        public void New()
+        public void ShowProductNew()
         {
             EventAggregator.Publish(new ActivateItem<ProductNewViewModel>());
         }
 
-        public void EditSelectedProduct()
+        public void ShowProductEdit()
         {
-            if (SelectedProduct == null)
-                return;
-
-            EventAggregator.Publish(new ActivateItem<ProductEditViewModel>(o => o.Product = SelectedProduct));
+            if (SelectedProduct != null)
+                EventAggregator.Publish(new ActivateItem<ProductEditViewModel>(o => o.Product = SelectedProduct));
         }
 
-        public void ReceiptSelectedProduct()
+        public void ShowStockReceipt()
         {
-            if (SelectedProduct == null)
-                return;
-
-            EventAggregator.Publish(new ActivateItem<StockReceiptViewModel>(o => o.Product = SelectedProduct));
+            if (SelectedProduct != null)
+                EventAggregator.Publish(new ActivateItem<ProductStockReceiptViewModel>(o => o.Product = SelectedProduct));
         }
 
-        public void AdjustSelectedProduct()
+        public void ShowStockAdjustment()
         {
-            if (SelectedProduct == null)
-                return;
-
-            EventAggregator.Publish(new ActivateItem<StockAdjustmentViewModel>(o => o.Product = SelectedProduct));
+            if (SelectedProduct != null)
+                EventAggregator.Publish(new ActivateItem<ProductStockAdjustmentViewModel>(o => o.Product = SelectedProduct));
         }
     }
 }

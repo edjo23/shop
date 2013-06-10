@@ -8,16 +8,16 @@
              d:DesignHeight="40" d:DesignWidth="300">
     <Grid>
         <StackPanel Style="{StaticResource ToolbarStyle}">
-            <Button x:Name="Refresh">
+            <Button x:Name="RefreshView">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Shop.Management;component/images/refresh_76.png" />
                     <TextBlock Text="Refresh" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-            <Button x:Name="New" Content="New" />
-            <Button x:Name="ReceiptSelectedProduct" Content="Receipt" Visibility="{Binding ItemCommandVisibility}" />
-            <Button x:Name="AdjustSelectedProduct" Content="Adjustment" Visibility="{Binding ItemCommandVisibility}" />
-            <Button x:Name="EditSelectedProduct" Content="Edit" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="ShowProductNew" Content="New" />
+            <Button x:Name="ShowStockReceipt" Content="Receipt" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="ShowStockAdjustment" Content="Adjustment" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="ShowProductEdit" Content="Edit" Visibility="{Binding ItemCommandVisibility}" />
         </StackPanel>
     </Grid>
 </UserControl>

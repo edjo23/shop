@@ -10,9 +10,9 @@ using Shop.Management.Messages;
 
 namespace Shop.Management.ViewModels
 {
-    public class CustomerPaymentViewModel : Screen
+    public class CustomerAccountPaymentViewModel : Screen
     {
-        public CustomerPaymentViewModel(IEventAggregator eventAggregator, ICustomerService customerService)
+        public CustomerAccountPaymentViewModel(IEventAggregator eventAggregator, ICustomerService customerService)
         {
             EventAggregator = eventAggregator;
             CustomerService = customerService;
@@ -85,7 +85,7 @@ namespace Shop.Management.ViewModels
                 CustomerId = Customer.Id,
                 DateTime = DateTimeOffset.Now,
                 Type = CustomerTransactionType.Payment,
-                Amount = Amount
+                Amount = Amount * -1
             };
 
             CustomerService.AddTransaction(payment);

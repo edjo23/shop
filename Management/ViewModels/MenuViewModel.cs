@@ -13,17 +13,29 @@ namespace Shop.Management.ViewModels
         {
             EventAggregator = eventAggregator;
 
-            Items = new BindableCollection<IMenuItem>() 
-            { 
-                new MenuItemViewModel<SummaryViewModel>("Overview"),
+            SalesItems = new BindableCollection<IMenuItem>()
+            {
+                new MenuItemViewModel<SummaryViewModel>("Overview")
+            };
+
+            AdministrationItems = new BindableCollection<IMenuItem>()
+            {
                 new MenuItemViewModel<ProductsViewModel>("Products"),
                 new MenuItemViewModel<CustomersViewModel>("Customers")
             };
+
+            Items = new BindableCollection<IMenuItem>();
+            Items.AddRange(SalesItems);
+            Items.AddRange(AdministrationItems);
         }
 
         public IEventAggregator EventAggregator { get; set; }
 
         public BindableCollection<IMenuItem> Items { get; set; }
+
+        public BindableCollection<IMenuItem> SalesItems { get; set; }
+
+        public BindableCollection<IMenuItem> AdministrationItems { get; set; }
 
         public void Select(IMenuItem menuItem)
         {

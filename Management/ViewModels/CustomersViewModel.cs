@@ -124,13 +124,13 @@ namespace Shop.Management.ViewModels
             });
         }
 
-        public void Refresh()
+        public void RefreshView()
         {
             if (CanRefresh)
                 Load(true);
         }
 
-        public void New()
+        public void ShowCustomerNew()
         {
             EventAggregator.Publish(new ActivateItem<CustomerNewViewModel>());
         }
@@ -144,13 +144,13 @@ namespace Shop.Management.ViewModels
         public void ShowPaymentReceipt()
         {
             if (SelectedCustomer != null)
-                EventAggregator.Publish(new ActivateItem<CustomerPaymentViewModel>(o => o.Customer = SelectedCustomer));
+                EventAggregator.Publish(new ActivateItem<CustomerAccountPaymentViewModel>(o => o.Customer = SelectedCustomer));
         }
 
-        public void ShowBalanceAdjustment()
+        public void ShowStockAdjustment()
         {
             if (SelectedCustomer != null)
-                EventAggregator.Publish(new ActivateItem<CustomerAdjustmentViewModel>(o => o.Customer = SelectedCustomer));
+                EventAggregator.Publish(new ActivateItem<CustomerAccountAdjustmentViewModel>(o => o.Customer = SelectedCustomer));
         }
     }
 }

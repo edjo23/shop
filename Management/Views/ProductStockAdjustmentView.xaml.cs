@@ -18,9 +18,9 @@ namespace Shop.Management.Views
     /// <summary>
     /// Interaction logic for ProductCorrectionView.xaml
     /// </summary>
-    public partial class StockAdjustmentView : UserControl
+    public partial class ProductStockAdjustmentView : UserControl
     {
-        public StockAdjustmentView()
+        public ProductStockAdjustmentView()
         {
             InitializeComponent();
         }

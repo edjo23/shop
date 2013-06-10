@@ -7,8 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>    
-        <TextBlock Style="{StaticResource H2}" Text="Home" Margin="10,10,10,0" />
-        <ItemsControl x:Name="Items" Margin="0,3,0,0">
+        <TextBlock Style="{StaticResource H2}" Text="Sales" Margin="10,10,10,0" />
+        <ItemsControl x:Name="SalesItems" Margin="0,3,0,0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ToggleButton Name="Bn" Style="{StaticResource ToolbarButtonStyle}" cal:Message.Attach="Select($dataContext)" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                        IsChecked="{Binding IsSelected}" 
+                        FontSize="16" FontWeight="Light" Height="35" Padding="10,0">
+                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" />
+                    </ToggleButton>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <TextBlock Style="{StaticResource H2}" Text="Administration" Margin="10,10,10,0" />
+        <ItemsControl x:Name="AdministrationItems" Margin="0,3,0,0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <ToggleButton Name="Bn" Style="{StaticResource ToolbarButtonStyle}" cal:Message.Attach="Select($dataContext)" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"

@@ -10,17 +10,15 @@ using Shop.Management.Messages;
 
 namespace Shop.Management.ViewModels
 {
-    public class StockAdjustmentViewModel : Screen
+    public class ProductStockReceiptViewModel : Screen
     {
-        public StockAdjustmentViewModel(IEventAggregator eventAggregator, IProductService productService)
+        public ProductStockReceiptViewModel(IEventAggregator eventAggregator, IProductService productService)
         {
             EventAggregator = eventAggregator;
             ProductService = productService;
-
-            DisplayName = "New Stock Adjustment";
         }
 
-        public IEventAggregator EventAggregator { get; set; }
+        public IEventAggregator EventAggregator { get; private set; }
 
         public IProductService ProductService { get; private set; }
 
@@ -102,13 +100,13 @@ namespace Shop.Management.ViewModels
         }
 
         public void Save()
-        {
+        {            
             var movement = new ProductMovement
             {
                 Id = Guid.NewGuid(),
                 ProductId = Product.Id,
                 DateTime = DateTimeOffset.Now,
-                MovementType = ProductMovementType.Adjustment,
+                MovementType = ProductMovementType.Receipt,
                 Quantity = Quantity
             };
 

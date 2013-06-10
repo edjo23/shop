@@ -10,9 +10,9 @@ using Shop.Management.Messages;
 
 namespace Shop.Management.ViewModels
 {
-    public class CustomerAdjustmentViewModel : Screen
+    public class CustomerAccountAdjustmentViewModel : Screen
     {
-        public CustomerAdjustmentViewModel(IEventAggregator eventAggregator, ICustomerService customerService)
+        public CustomerAccountAdjustmentViewModel(IEventAggregator eventAggregator, ICustomerService customerService)
         {
             EventAggregator = eventAggregator;
             CustomerService = customerService;
