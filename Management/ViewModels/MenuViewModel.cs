@@ -15,7 +15,8 @@ namespace Shop.Management.ViewModels
 
             SalesItems = new BindableCollection<IMenuItem>()
             {
-                new MenuItemViewModel<SummaryViewModel>("Overview")
+                new MenuItemViewModel<SummaryViewModel>("Overview"),
+                new MenuItemViewModel<ProductSalesViewModel>("Today", o => o.StartDate = DateTime.Today),
             };
 
             AdministrationItems = new BindableCollection<IMenuItem>()

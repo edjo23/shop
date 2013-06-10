@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Dapper;
 using DapperExtensions;
 using Shop.Business.Database;
 using Shop.Contracts.Entities;
@@ -29,11 +30,16 @@ namespace Shop.Business.Managers
 
         public void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items)
         {
+
             using (var transaction = new TransactionScope())
             using (var connection = new ConnectionScope())
             {
                 // Insert Invoice.
                 invoice.Insert();
+
+                foreach (var item in items)
+                    item.InvoiceId = invoice.Id;
+
                 items.Insert();
 
                 // Update Inventory.
@@ -85,6 +91,32 @@ namespace Shop.Business.Managers
                 transaction.Complete();
             }
 
+        }
+
+        public IEnumerable<dynamic> GetInvoiceItemHistory(DateTimeOffset startDateTime)
+        {
+            using (var connection = new ConnectionScope())
+            {
+                var sql = @"
+                    select 
+	                    invoice.DateTime,
+	                    customer.Name as CustomerName,
+	                    product.Description as ProductDescription,
+	                    item.Quantity,
+	                    item.Price
+                    from
+	                    dbo.Invoice invoice
+		                    join dbo.Customer customer on customer.Id = invoice.CustomerId
+		                    join dbo.InvoiceItem item on item.InvoiceId = invoice.Id
+		                    join dbo.Product product on product.Id = item.ProductId
+                    where
+                        invoice.DateTime >= @StartDateTime
+                    order by
+                        invoice.DateTime desc,
+                        item.ItemNumber";
+
+                return connection.Connection.Query(sql, new { StartDateTime = startDateTime });
+            }
         }
     }
 }

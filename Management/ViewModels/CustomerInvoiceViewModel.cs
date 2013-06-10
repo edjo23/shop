@@ -46,7 +46,6 @@ namespace Shop.Management.ViewModels
         {
             var invoice = new Invoice
             {
-                Id = Guid.NewGuid(),
                 DateTime = DateTimeOffset.Now,
                 CustomerId = Customer.Id
             };
@@ -55,8 +54,6 @@ namespace Shop.Management.ViewModels
                 .Where(o => o.Quantity > 0)
                 .Select((o,i) => new InvoiceItem
                 {
-                    Id = Guid.NewGuid(),
-                    InvoiceId = invoice.Id,
                     ItemNumber = i + 1,
                     ProductId = o.Product.Id,
                     Price = o.Product.Price,

@@ -28,7 +28,15 @@ namespace Shop.Management.ViewModels
             Name = name;
         }
 
+        public MenuItemViewModel(string name, Action<T> action)
+        {
+            Name = name;
+            Action = action;
+        }
+
         public string Name { get; set; }
+
+        public Action<T> Action { get; set; }
 
         private bool _IsSelected = false;
 
@@ -56,7 +64,14 @@ namespace Shop.Management.ViewModels
             get
             {
                 if (_Instance == null)
-                    _Instance = IoC.Get<T>();
+                {
+                     var instance = IoC.Get<T>();
+
+                    if (Action != null)
+                        Action(instance);
+
+                    _Instance = instance;
+                }
 
                 return _Instance;
             }

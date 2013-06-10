@@ -22,5 +22,10 @@ namespace Business.Services
         {
             Manager.AddInvoice(invoice, items);
         }
+
+        public IEnumerable<dynamic> GetInvoiceItemHistory(DateTimeOffset startDateTime)
+        {
+            return Manager.GetInvoiceItemHistory(startDateTime);
+        }
     }
 }

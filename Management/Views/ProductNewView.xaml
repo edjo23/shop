@@ -42,7 +42,7 @@
         </StackPanel>
 
         <Button Grid.Row="1" x:Name="Close" Style="{StaticResource FlatButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Image Source="/Shop.Management;component/images/dark/close_76.png" Margin="0" />
+            <Image Source="/Shop.Management;component/images/dark/close_76.png" />
         </Button>
     </Grid>
 </UserControl>

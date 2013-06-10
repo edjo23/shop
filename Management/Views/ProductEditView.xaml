@@ -26,7 +26,7 @@
         <ContentControl Style="{StaticResource TitleBar}" />
         
         <StackPanel Grid.Row="1" Margin="10,10">
-            <TextBlock Style="{StaticResource H2}" Text="Edit Product" />
+            <TextBlock x:Name="DisplayName" Style="{StaticResource H2}" Text="Display Name" />
             <TextBlock Text="PRODUCT CODE" />
             <TextBox x:Name="Code" />
             <TextBlock Text="GROUP" />
@@ -42,7 +42,7 @@
         </StackPanel>
 
         <Button Grid.Row="1" x:Name="Close" Style="{StaticResource FlatButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top">
-            <Image Source="/Shop.Management;component/images/dark/close_76.png" Margin="0" />
+            <Image Source="/Shop.Management;component/images/dark/close_76.png" />
         </Button>        
     </Grid>
 </UserControl>
