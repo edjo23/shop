@@ -9,18 +9,22 @@ using Business.Services;
 using Caliburn.Micro;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
+using Shop.Management.Messages;
 
 namespace Shop.Management.ViewModels
 {
     public class CustomersViewModel : Screen
     {
-        public CustomersViewModel(ICustomerService customerService)
+        public CustomersViewModel(IEventAggregator eventAggregator, ICustomerService customerService)
         {
             CustomerService = customerService;
             DisplayName = "Customers";
 
+            EventAggregator = eventAggregator;
             Customers = new BindableCollection<Customer>();
         }
+
+        public IEventAggregator EventAggregator { get; set; }
 
         public ICustomerService CustomerService { get; set; }
 
@@ -77,7 +81,16 @@ namespace Shop.Management.ViewModels
                     _SelectedCustomer = value;
 
                     NotifyOfPropertyChange(() => SelectedCustomer);
+                    NotifyOfPropertyChange(() => ItemCommandVisibility);
                 }
+            }
+        }
+
+        public Visibility ItemCommandVisibility
+        {
+            get
+            {
+                return SelectedCustomer == null ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
@@ -115,6 +128,29 @@ namespace Shop.Management.ViewModels
         {
             if (CanRefresh)
                 Load(true);
+        }
+
+        public void New()
+        {
+            EventAggregator.Publish(new ActivateItem<CustomerNewViewModel>());
+        }
+
+        public void ShowCustomerEdit()
+        {
+            if (SelectedCustomer != null)
+                EventAggregator.Publish(new ActivateItem<CustomerEditViewModel>(o => o.Customer = SelectedCustomer));
+        }
+
+        public void ShowPaymentReceipt()
+        {
+            if (SelectedCustomer != null)
+                EventAggregator.Publish(new ActivateItem<CustomerPaymentViewModel>(o => o.Customer = SelectedCustomer));
+        }
+
+        public void ShowBalanceAdjustment()
+        {
+            if (SelectedCustomer != null)
+                EventAggregator.Publish(new ActivateItem<CustomerAdjustmentViewModel>(o => o.Customer = SelectedCustomer));
         }
     }
 }

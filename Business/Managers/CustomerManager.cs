@@ -15,7 +15,7 @@ namespace Shop.Business.Managers
     {
         public IEnumerable<Customer> GetCustomers()
         {
-            return Extensions.SelectAll<Customer>();
+            return Extensions.SelectAll<Customer>().OrderBy(o => o.Name);
         }
 
         public Customer GetCustomer(Guid id)
@@ -25,6 +25,11 @@ namespace Shop.Business.Managers
 
         public void AddCustomer(Customer customer)
         {
+            if (customer.Id == Guid.Empty)
+            {
+                customer.Id = Guid.NewGuid();
+            }
+
             customer.Insert();
         }
 

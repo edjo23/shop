@@ -15,7 +15,7 @@ namespace Shop.Business.Managers
     {
         public IEnumerable<Product> GetProducts()
         {
-            return Extensions.SelectAll<Product>().OrderBy(o => o.Code);
+            return Extensions.SelectAll<Product>().OrderBy(o => o.Description);
         }
 
         public Product GetProduct(Guid id)

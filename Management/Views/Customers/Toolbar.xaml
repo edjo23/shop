@@ -13,6 +13,10 @@
                     <TextBlock Text="Refresh" Foreground="White" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
+            <Button x:Name="New" Content="New" />
+            <Button x:Name="ShowPaymentReceipt" Content="Payment" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="ShowBalanceAdjustment" Content="Adjustment" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="ShowCustomerEdit" Content="Edit" Visibility="{Binding ItemCommandVisibility}" />
         </StackPanel>
     </Grid>
 </UserControl>

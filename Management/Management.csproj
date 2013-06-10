@@ -77,6 +77,10 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Messages\ActivateItem.cs" />
     <Compile Include="Messages\DeactivateItem.cs" />
+    <Compile Include="ViewModels\CustomerAdjustmentViewModel.cs" />
+    <Compile Include="ViewModels\CustomerEditViewModel.cs" />
+    <Compile Include="ViewModels\CustomerNewViewModel.cs" />
+    <Compile Include="ViewModels\CustomerPaymentViewModel.cs" />
     <Compile Include="ViewModels\CustomersViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
@@ -89,6 +93,18 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SummaryViewModel.cs" />
     <Compile Include="ViewModels\TestsViewModel.cs" />
+    <Compile Include="Views\CustomerAdjustmentView.xaml.cs">
+      <DependentUpon>CustomerAdjustmentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerEditView.xaml.cs">
+      <DependentUpon>CustomerEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerNewView.xaml.cs">
+      <DependentUpon>CustomerNewView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerPaymentView.xaml.cs">
+      <DependentUpon>CustomerPaymentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CustomersView.xaml.cs">
       <DependentUpon>CustomersView.xaml</DependentUpon>
     </Compile>
@@ -136,6 +152,22 @@
       <DependentUpon>TestsView.xaml</DependentUpon>
     </Compile>
     <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerAdjustmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerNewView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerPaymentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

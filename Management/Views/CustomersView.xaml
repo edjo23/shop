@@ -10,8 +10,8 @@
         <ListView x:Name="Customers" Margin="1,0,0,0" BorderThickness="0" SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Number" DisplayMemberBinding="{Binding Number}" Width="150" />
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="300" />
+                    <GridViewColumn Header="Number" DisplayMemberBinding="{Binding Number}" Width="150" />
                     <GridViewColumn Header="Balance" DisplayMemberBinding="{Binding Balance}" Width="150" />
                 </GridView>
             </ListView.View>

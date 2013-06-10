@@ -14,27 +14,10 @@
                     <TextBlock Text="Refresh" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0" />
                 </StackPanel>
             </Button>
-            <Button x:Name="New">
-                <StackPanel Orientation="Horizontal">
-                    <!--<Image Source="/Shop.Management;component/images/add_76.png" Margin="0,0,5,0" />-->
-                    <TextBlock Text="New" Foreground="White" VerticalAlignment="Center" />
-                </StackPanel>
-            </Button>
-            <Button x:Name="EditSelectedProduct" Visibility="{Binding ItemCommandVisibility}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Edit" Foreground="White" VerticalAlignment="Center" />
-                </StackPanel>
-            </Button>
-            <Button x:Name="ReceiptSelectedProduct" Visibility="{Binding ItemCommandVisibility}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Receipt" Foreground="White" VerticalAlignment="Center" />
-                </StackPanel>
-            </Button>
-            <Button x:Name="AdjustSelectedProduct" Visibility="{Binding ItemCommandVisibility}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Adjustment" Foreground="White" VerticalAlignment="Center" />
-                </StackPanel>
-            </Button>
+            <Button x:Name="New" Content="New" />
+            <Button x:Name="ReceiptSelectedProduct" Content="Receipt" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="AdjustSelectedProduct" Content="Adjustment" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="EditSelectedProduct" Content="Edit" Visibility="{Binding ItemCommandVisibility}" />
         </StackPanel>
     </Grid>
 </UserControl>
