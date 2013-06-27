@@ -75,6 +75,7 @@ namespace Shop.Management.ViewModels
             base.OnInitialize();
 
             Name = Customer.Name;
+            Number = Customer.Number;
         }
 
         public void Save()

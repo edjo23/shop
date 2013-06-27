@@ -75,7 +75,7 @@ namespace Shop.Management.ViewModels
 
         public void Save()
         {
-            var customer = new Customer { Name = Name };
+            var customer = new Customer { Name = Name, Number = Number };
 
             CustomerService.AddCustomer(customer);
 
