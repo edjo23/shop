@@ -70,13 +70,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Messages\HideDialog.cs" />
+    <Compile Include="Messages\ShowDialog.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Services\ScreenCoordinator.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\LoadingViewModel.cs" />
+    <Compile Include="ViewModels\PayItemViewModel.cs" />
     <Compile Include="ViewModels\PayViewModel.cs" />
     <Compile Include="ViewModels\SaleItemViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\SaleViewModel.cs" />
+    <Compile Include="Views\LoadingView.xaml.cs">
+      <DependentUpon>LoadingView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pay\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
@@ -105,6 +112,10 @@
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
     <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoadingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -51,8 +51,9 @@ namespace Shop.Business.Managers
 	                    dbo.ProductMovement
                     where
 	                    ProductId = @ProductId
-                    order by
-                        DateTime desc";
+                    order by                
+                        DateTime desc,
+                        MovementType";
 
                 return connection.Connection.Query<ProductMovement>(sql, new { ProductId = productId });
             }

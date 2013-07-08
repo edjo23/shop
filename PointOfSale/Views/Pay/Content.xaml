@@ -3,9 +3,65 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:c="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Grid>
+            <ItemsControl x:Name="PaymentItems">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Background="White" Margin="0,0,25,25" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="150" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Button c:Message.Attach="AddPayment($dataContext)" SnapsToDevicePixels="True">
+                                <Image Source="{Binding ImageSource}" Margin="10" />
+                                <Button.Template>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="Transparent">
+                                            <ContentPresenter />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                            <!-- Quantity Layer-->
+                            <Border Visibility="{Binding QuantityVisibility}" Background="#DDFFFFFF" SnapsToDevicePixels="True">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding Quantity}" Foreground="Black" FontSize="75" FontWeight="Light" MinWidth="75" TextAlignment="Left" />
+
+                                    <Button Style="{StaticResource RoundButtonStyle}" c:Message.Attach="AddPayment($dataContext)" Width="32" Height="32" VerticalAlignment="Center" Margin="5,0">
+                                        <Image Source="/Shop.PointOfSale;component/images/dark/add_76.png" Margin="0" />
+                                    </Button>
+                                    <Button Style="{StaticResource RoundButtonStyle}" c:Message.Attach="RemovePayment($dataContext)" Width="32" Height="32" VerticalAlignment="Center" Margin="5,0">
+                                        <Image Source="/Shop.PointOfSale;component/images/dark/remove_76.png" Margin="0" />
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1" Background="SteelBlue" SnapsToDevicePixels="True">
+                                <Grid>
+                                    <TextBlock Text="{Binding Description}" FontSize="20" FontWeight="Light" Foreground="White" HorizontalAlignment="Left" Margin="15,5,0,5" />
+                                </Grid>
+                            </Border>
+
+                            <Border Grid.RowSpan="2" BorderThickness="1" BorderBrush="#25000000" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
     </Grid>
 </UserControl>

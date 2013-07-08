@@ -9,7 +9,7 @@ namespace Shop.Contracts.Services
 {
     public interface IInvoiceService
     {
-        void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items);
+        void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items, decimal payment);
         IEnumerable<dynamic> GetInvoiceItemHistory(DateTimeOffset startDateTime);
 
     }

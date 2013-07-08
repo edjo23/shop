@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Caliburn.Micro;
-using Shop.Contracts.Entities;
 
 namespace Shop.PointOfSale.ViewModels
 {
-    public class SaleItemViewModel : PropertyChangedBase
+    public class PayItemViewModel : PropertyChangedBase
     {
-        public Product Product { get; set; }
+        public string Description { get; set; }
+
+        public decimal Amount { get; set; }
 
         public BitmapImage ImageSource
         {
             get
             {
-                var fileInfo = new FileInfo(String.Format(@"Images\{0}.png", Product.Code));
+                var fileInfo = new FileInfo(String.Format(@"Images\{0}.png", Description));
                 if (fileInfo.Exists)
                     return new BitmapImage(new Uri(fileInfo.FullName));
                 else
@@ -51,7 +52,7 @@ namespace Shop.PointOfSale.ViewModels
         {
             get
             {
-                return Quantity * Product.Price;
+                return Quantity * Amount;
             }
         }
 
@@ -61,6 +62,6 @@ namespace Shop.PointOfSale.ViewModels
             {
                 return Quantity > 0 ? Visibility.Visible : Visibility.Hidden;
             }
-        }        
+        }
     }
 }

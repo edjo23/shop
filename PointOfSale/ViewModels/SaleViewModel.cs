@@ -4,24 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
+using Shop.PointOfSale.Messages;
 using Shop.PointOfSale.Services;
 
 namespace Shop.PointOfSale.ViewModels
 {
     public class SaleViewModel : Screen
     {
-        public SaleViewModel(ScreenCoordinator screenCoordinator, IProductService productService)
+        public SaleViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, IProductService productService, IInvoiceService invoiceService)        
         {
+            EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
             ProductService = productService;
+            InvoiceService = invoiceService;
 
             DisplayName = "New Purchase";
+            Products = new BindableCollection<SaleItemViewModel>();
         }
+
+        private readonly IEventAggregator EventAggregator;
 
         private readonly ScreenCoordinator ScreenCoordinator;
 
         private readonly IProductService ProductService;
+
+        private readonly IInvoiceService InvoiceService;
+
+        public Customer Customer { get; set; }
+
+        public bool IsCashAccount
+        {
+            get
+            {
+                return Customer != null && String.Equals(Customer.Name, "Cash", StringComparison.InvariantCultureIgnoreCase);
+            }
+        }
 
         public BindableCollection<SaleItemViewModel> Products { get; set; }
 
@@ -41,11 +60,26 @@ namespace Shop.PointOfSale.ViewModels
             }
         }
 
+        public string TotalText
+        {
+            get
+            {
+                return Total.ToString("C");
+            }
+        }
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
-            Products = new BindableCollection<SaleItemViewModel>(ProductService.GetProducts().Select((o, i) => new SaleItemViewModel { Product = o }));
+            EventAggregator.Publish(new ShowDialog { Screen = IoC.Get<LoadingViewModel>() });
+
+            Task.Factory.StartNew(() =>
+            {
+                Products.AddRange(ProductService.GetProducts().Select(o => new SaleItemViewModel { Product = o }));
+
+                EventAggregator.Publish(new HideDialog { });
+            });
         }
 
         public void AddToCart(SaleItemViewModel item)
@@ -54,6 +88,7 @@ namespace Shop.PointOfSale.ViewModels
 
             NotifyOfPropertyChange(() => TotalQuantity);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => TotalText);
         }
 
         public void RemoveFromCart(SaleItemViewModel item)
@@ -62,10 +97,29 @@ namespace Shop.PointOfSale.ViewModels
 
             NotifyOfPropertyChange(() => TotalQuantity);
             NotifyOfPropertyChange(() => Total);
+            NotifyOfPropertyChange(() => TotalText);
         }
 
         public void Checkout()
         {
+            var invoice = new Invoice
+            {
+                DateTime = DateTimeOffset.Now,
+                CustomerId = Customer.Id
+            };
+
+            var invoiceItems = new List<InvoiceItem>(Products
+                .Where(o => o.Quantity > 0)
+                .Select((o, i) => new InvoiceItem
+                {
+                    ItemNumber = i + 1,
+                    ProductId = o.Product.Id,
+                    Price = o.Product.Price,
+                    Quantity = o.Quantity
+                }));
+
+            InvoiceService.AddInvoice(invoice, invoiceItems, IsCashAccount ? Total : 0.0m);
+
             ScreenCoordinator.GoToHome();
         }
     }

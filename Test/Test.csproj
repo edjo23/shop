@@ -64,6 +64,16 @@
       <Name>Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\%241.png" />
+    <Content Include="Images\%2410.png" />
+    <Content Include="Images\10c.png" />
+    <Content Include="Images\1c.png" />
+    <Content Include="Images\can.png" />
+    <Content Include="Images\chips.png" />
+    <Content Include="Images\chocolate.png" />
+    <Content Include="Images\coffee.png" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

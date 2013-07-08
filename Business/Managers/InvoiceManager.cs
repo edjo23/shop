@@ -28,7 +28,7 @@ namespace Shop.Business.Managers
             return Extensions.SelectAll<Invoice>();
         }
 
-        public void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items)
+        public void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items, decimal payment)
         {
 
             using (var transaction = new TransactionScope())
@@ -87,6 +87,20 @@ namespace Shop.Business.Managers
                     Amount = items.Aggregate(0.0m, (total, item) => total += item.Price * item.Quantity),
                     SourceId = invoice.Id
                 });
+
+                // Payment?
+                if (payment > 0)
+                {
+                    CustomerManager.AddTransaction(new CustomerTransaction()
+                    {
+                        Id = Guid.NewGuid(),
+                        CustomerId = invoice.CustomerId,
+                        DateTime = invoice.DateTime,
+                        Type = CustomerTransactionType.Payment,
+                        Amount = items.Aggregate(0.0m, (total, item) => total += item.Price * item.Quantity) * -1,
+                        SourceId = invoice.Id
+                    });
+                }
 
                 transaction.Complete();
             }

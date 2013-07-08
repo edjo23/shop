@@ -25,9 +25,9 @@
 
         <Grid Grid.Row="1" Grid.Column="0" Background="SteelBlue" Margin="75,0,0,25" SnapsToDevicePixels="True">
             <StackPanel>
-                <StackPanel Margin="25">
+                <StackPanel Margin="25" Visibility="{Binding BalanceVisibility}">
                     <TextBlock Text="CURRENT BALANCE" Foreground="White" FontSize="20" FontWeight="Light" />
-                    <TextBlock x:Name="Customer_Balance" Text="$99.99" Foreground="White" FontSize="30" FontWeight="Light" />
+                    <TextBlock x:Name="BalanceText" Text="$99.99" Foreground="White" FontSize="30" FontWeight="Light" />
                 </StackPanel>                
                 <ListBox x:Name="Items" Style="{StaticResource FlatListBox}">                            
                     <ItemsControl.ItemTemplate>

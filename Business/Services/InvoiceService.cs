@@ -18,9 +18,9 @@ namespace Business.Services
 
         private InvoiceManager Manager { get; set; }
 
-        public void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items)
+        public void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items, decimal payment)
         {
-            Manager.AddInvoice(invoice, items);
+            Manager.AddInvoice(invoice, items, payment);
         }
 
         public IEnumerable<dynamic> GetInvoiceItemHistory(DateTimeOffset startDateTime)

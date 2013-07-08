@@ -25,7 +25,7 @@
                         </Grid.RowDefinitions>
 
                         <Button c:Message.Attach="AddToCart($dataContext)" SnapsToDevicePixels="True">
-                            <Image Source="{Binding ImageSource}" />
+                            <Image Source="{Binding ImageSource}" Margin="10" />
                             <Button.Template>
                                 <ControlTemplate TargetType="{x:Type Button}">
                                     <Border Background="Transparent">
@@ -36,7 +36,6 @@
                         </Button>
 
                         <!-- Quantity Layer-->
-                        <!-- #EE4682B4-->
                         <Border Visibility="{Binding QuantityVisibility}" Background="#DDFFFFFF" SnapsToDevicePixels="True">
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <TextBlock Text="{Binding Quantity}" Foreground="Black" FontSize="75" FontWeight="Light" MinWidth="75" TextAlignment="Left" />

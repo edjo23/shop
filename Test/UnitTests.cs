@@ -103,7 +103,7 @@ namespace Test
                     Quantity = 1
                 });
             
-            invoiceService.AddInvoice(invoice, items);
+            invoiceService.AddInvoice(invoice, items, 0);
 
             // Check products balances.
             foreach (var product in products)
@@ -145,7 +145,7 @@ namespace Test
                 }
             };
 
-            invoiceService.AddInvoice(invoice, items);
+            invoiceService.AddInvoice(invoice, items, 0);
 
             // Check products balances.
             Assert.AreEqual<int>(product.QuantityOnHand < 3 ? 0 : product.QuantityOnHand - 3, productService.GetProduct(product.Id).QuantityOnHand);
