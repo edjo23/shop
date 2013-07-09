@@ -7,12 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1366">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Button}">
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DarkStoreButtonStyle}">
             <Setter Property="Width" Value="200" />
-            <Setter Property="Height" Value="75" />
-            <Setter Property="Margin" Value="0,0,25,10" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Margin" Value="0,0,15,5" />
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Padding" Value="10,0,0,0" />            
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -21,24 +24,31 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="120" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.ColumnSpan="2">
-            <TextBlock Text="The Shop" FontSize="50" FontWeight="Light" Margin="25,10,0,0" />
-            <TextBlock Text="Select your account to begin..." FontSize="25" FontWeight="Light" Margin="25,0,0,0" />
-        </StackPanel>
-
-        <TextBlock Grid.Row="1" Text="Visitor" FontSize="25" FontWeight="Light" Margin="25,10" />
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="Account" FontSize="25" FontWeight="Light" Margin="25,10" />
+        <Border Grid.ColumnSpan="2" Background="{StaticResource AccentColorBrush}">
+            <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
+                <Border Background="{StaticResource AccentColorBrush}" Width="75" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,15">
+                    <Image Source="/Shop.PointOfSale;component/images/refrigerator-icon.png" Margin="0" />
+                </Border>
+                <StackPanel VerticalAlignment="Center" Margin="0,0,0,10">
+                    <TextBlock Text="le réfrigérateur" FontSize="50" FontWeight="Light" Foreground="White" />
+                    <TextBlock Text="Select your account to begin..." FontSize="25" FontWeight="Light" Foreground="White" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
         
-        <Border Grid.Row="2" Margin="25,0,0,0">
-            <ItemsControl x:Name="Visitors">
+        <TextBlock Grid.Row="1" Text="Visitor" FontSize="25" FontWeight="Light" Margin="20,10,0,8" />
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Account" FontSize="25" FontWeight="Light" Margin="20,10,0,8" />
+        
+        <Border Grid.Row="2" Background="White">
+            <ItemsControl x:Name="Visitors" Margin="10">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel />
+                        <WrapPanel Orientation="Vertical" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -49,11 +59,11 @@
             </ItemsControl>            
         </Border>
 
-        <Border Grid.Row="2" Grid.Column="1" Margin="0,0,25,25" Background="White">
-            <ItemsControl x:Name="Accounts" Margin="25">
+        <Border Grid.Row="2" Grid.Column="1" Padding="0,0,25,25" Background="White">
+            <ItemsControl x:Name="Accounts" Margin="10">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel />
+                        <WrapPanel Orientation="Vertical" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>

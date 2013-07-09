@@ -199,6 +199,9 @@
     <Resource Include="Images\Dark\add_76.png" />
     <Resource Include="Images\Dark\remove_76.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\refrigerator-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

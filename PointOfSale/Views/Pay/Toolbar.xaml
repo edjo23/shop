@@ -6,11 +6,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <StackPanel Margin="25" VerticalAlignment="Bottom">
+        <StackPanel Margin="25" VerticalAlignment="Bottom">            
             <TextBlock Foreground="White" Text="TOTAL" FontSize="20" FontWeight="Light" Margin="0,10,0,0" />
             <TextBlock x:Name="TotalText" Foreground="White" Text="$9.99" FontSize="30" TextAlignment="Left" />
 
-            <Button x:Name="CompletePayment" Content="Complete Payment" Margin="0,25,0,0" Padding="25,10" HorizontalAlignment="Left" />
+            <Button x:Name="CompletePayment" Style="{StaticResource StoreButtonStyle}" Content="Complete Payment" MinWidth="175" Margin="0,25,0,0" Padding="25,10" HorizontalAlignment="Left" />
         </StackPanel>
     </Grid>
 </UserControl>
