@@ -13,10 +13,11 @@ namespace Shop.PointOfSale.ViewModels
 {
     public class SaleViewModel : Screen
     {
-        public SaleViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, IProductService productService, IInvoiceService invoiceService)        
+        public SaleViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService)        
         {
             EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
+            CustomerService = customerService;
             ProductService = productService;
             InvoiceService = invoiceService;
 
@@ -27,6 +28,8 @@ namespace Shop.PointOfSale.ViewModels
         private readonly IEventAggregator EventAggregator;
 
         private readonly ScreenCoordinator ScreenCoordinator;
+
+        private readonly ICustomerService CustomerService;
 
         private readonly IProductService ProductService;
 
@@ -102,25 +105,61 @@ namespace Shop.PointOfSale.ViewModels
 
         public void Checkout()
         {
-            var invoice = new Invoice
-            {
-                DateTime = DateTimeOffset.Now,
-                CustomerId = Customer.Id
-            };
+            var messageBox = IoC.Get<MessageBoxViewModel>();
+            messageBox.DisplayName = "";
+            messageBox.Content = "";
 
-            var invoiceItems = new List<InvoiceItem>(Products
-                .Where(o => o.Quantity > 0)
-                .Select((o, i) => new InvoiceItem
+            EventAggregator.Publish(new ShowDialog { Screen = messageBox });
+
+            Task.Factory.StartNew(() =>
                 {
-                    ItemNumber = i + 1,
-                    ProductId = o.Product.Id,
-                    Price = o.Product.Price,
-                    Quantity = o.Quantity
-                }));
+                    var invoice = new Invoice
+                    {
+                        DateTime = DateTimeOffset.Now,
+                        CustomerId = Customer.Id
+                    };
 
-            InvoiceService.AddInvoice(invoice, invoiceItems, IsCashAccount ? Total : 0.0m);
+                    var invoiceItems = new List<InvoiceItem>(Products
+                        .Where(o => o.Quantity > 0)
+                        .Select((o, i) => new InvoiceItem
+                        {
+                            ItemNumber = i + 1,
+                            ProductId = o.Product.Id,
+                            Price = o.Product.Price,
+                            Quantity = o.Quantity
+                        }));
 
-            ScreenCoordinator.GoToHome();
+                    InvoiceService.AddInvoice(invoice, invoiceItems, IsCashAccount ? Total : 0.0m);
+
+                    Customer.Balance = CustomerService.GetCustomer(Customer.Id).Balance;
+                })
+            .ContinueWith(task =>
+                {
+                    if (task.IsFaulted)
+                    {
+                        Execute.OnUIThread(() =>
+                            {
+                                messageBox.Background = System.Windows.Media.Brushes.Firebrick;
+                                messageBox.DisplayName = "Sorry, an error has occurred :(";
+                                messageBox.Content = "The purchase was not be processed";
+                            });
+                    }
+                    else
+                    {
+                        Execute.OnUIThread(() =>
+                            {
+                                messageBox.DisplayName = "Thank you :)";
+                                messageBox.Content = String.Format("Your new balance is now {0:C}", Customer.Balance);
+                            });
+
+                        System.Threading.Thread.Sleep(5000);
+
+                        Execute.OnUIThread(() =>
+                            {
+                                ScreenCoordinator.GoToHome();
+                            });
+                    }
+                });
         }
     }
 }

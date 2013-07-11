@@ -6,19 +6,23 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
+using Shop.PointOfSale.Messages;
 using Shop.PointOfSale.Services;
 
 namespace Shop.PointOfSale.ViewModels
 {
     public class PayViewModel : Screen
     {
-        public PayViewModel(ScreenCoordinator screenCoordinator, ICustomerService customerService)
+        public PayViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
         {
+            EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
             DisplayName = "Pay Account";
             PaymentItems = new BindableCollection<PayItemViewModel>();
         }
+
+        private readonly IEventAggregator EventAggregator;
 
         private readonly ScreenCoordinator ScreenCoordinator;
 
@@ -72,18 +76,54 @@ namespace Shop.PointOfSale.ViewModels
 
         public void CompletePayment()
         {
-            var payment = new CustomerTransaction
+            var messageBox = IoC.Get<MessageBoxViewModel>();
+            messageBox.DisplayName = "";
+            messageBox.Content = "";
+
+            EventAggregator.Publish(new ShowDialog { Screen = messageBox });
+
+            Task.Factory.StartNew(() =>
             {
-                Id = Guid.NewGuid(),
-                CustomerId = Customer.Id,
-                DateTime = DateTimeOffset.Now,
-                Type = CustomerTransactionType.Payment,
-                Amount = Total * -1
-            };
+                var payment = new CustomerTransaction
+                {
+                    Id = Guid.NewGuid(),
+                    CustomerId = Customer.Id,
+                    DateTime = DateTimeOffset.Now,
+                    Type = CustomerTransactionType.Payment,
+                    Amount = Total * -1
+                };
 
-            CustomerService.AddTransaction(payment);
+                CustomerService.AddTransaction(payment);
 
-            ScreenCoordinator.GoToHome();
+                Customer.Balance = CustomerService.GetCustomer(Customer.Id).Balance;
+            })
+            .ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    Execute.OnUIThread(() =>
+                    {
+                        messageBox.Background = System.Windows.Media.Brushes.Firebrick;
+                        messageBox.DisplayName = "Sorry, an error has occurred :(";
+                        messageBox.Content = "The purchase was not be processed";
+                    });
+                }
+                else
+                {
+                    Execute.OnUIThread(() =>
+                    {
+                        messageBox.DisplayName = "Thank you :)";
+                        messageBox.Content = String.Format("Your new balance is now {0:C}", Customer.Balance);
+                    });
+
+                    System.Threading.Thread.Sleep(5000);
+
+                    Execute.OnUIThread(() =>
+                    {
+                        ScreenCoordinator.GoToHome();
+                    });
+                }
+            });
         }
     }
 }
