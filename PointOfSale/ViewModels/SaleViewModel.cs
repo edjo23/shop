@@ -141,7 +141,7 @@ namespace Shop.PointOfSale.ViewModels
                             {
                                 messageBox.Background = System.Windows.Media.Brushes.Firebrick;
                                 messageBox.DisplayName = "Sorry, an error has occurred :(";
-                                messageBox.Content = "The purchase was not be processed";
+                                messageBox.Content = "The purchase was not processed";
                             });
                     }
                     else
