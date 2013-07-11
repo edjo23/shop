@@ -48,6 +48,14 @@ namespace Shop.PointOfSale.ViewModels
             }
         }
 
+        public bool CanCompletePayment
+        {
+            get
+            {
+                return PaymentItems.Any(o => o.Quantity > 0);
+            }
+        }
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -60,16 +68,19 @@ namespace Shop.PointOfSale.ViewModels
 
         public void AddPayment(PayItemViewModel item)
         {
-            item.Quantity += 1;
-
-            NotifyOfPropertyChange(() => Total);
-            NotifyOfPropertyChange(() => TotalText);
+            UpdateQuantity(item, 1);
         }
 
         public void RemovePayment(PayItemViewModel item)
         {
-            item.Quantity -= 1;
+            UpdateQuantity(item, -1);
+        }
 
+        protected void UpdateQuantity(PayItemViewModel item, int value)
+        {
+            item.Quantity += value;
+
+            NotifyOfPropertyChange(() => CanCompletePayment);
             NotifyOfPropertyChange(() => Total);
             NotifyOfPropertyChange(() => TotalText);
         }

@@ -71,6 +71,14 @@ namespace Shop.PointOfSale.ViewModels
             }
         }
 
+        public bool CanCheckout
+        {
+            get
+            {
+                return Products.Any(o => o.Quantity > 0);
+            }
+        }
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -87,17 +95,19 @@ namespace Shop.PointOfSale.ViewModels
 
         public void AddToCart(SaleItemViewModel item)
         {
-            item.Quantity += 1;
-
-            NotifyOfPropertyChange(() => TotalQuantity);
-            NotifyOfPropertyChange(() => Total);
-            NotifyOfPropertyChange(() => TotalText);
+            UpdateQuantity(item, 1);
         }
 
         public void RemoveFromCart(SaleItemViewModel item)
         {
-            item.Quantity -= 1;
+            UpdateQuantity(item, -1);
+        }
 
+        protected void UpdateQuantity(SaleItemViewModel item, int value)
+        {
+            item.Quantity += value;
+
+            NotifyOfPropertyChange(() => CanCheckout);
             NotifyOfPropertyChange(() => TotalQuantity);
             NotifyOfPropertyChange(() => Total);
             NotifyOfPropertyChange(() => TotalText);
