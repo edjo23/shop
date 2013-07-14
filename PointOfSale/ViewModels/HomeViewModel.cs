@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
 using Shop.PointOfSale.Messages;
+using System.Windows;
 
 namespace Shop.PointOfSale.ViewModels
 {
@@ -19,6 +20,7 @@ namespace Shop.PointOfSale.ViewModels
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
 
+            Items = new BindableCollection<string>();
             Accounts = new BindableCollection<Customer>();
             Visitors = new BindableCollection<Customer>();
         }
@@ -29,15 +31,57 @@ namespace Shop.PointOfSale.ViewModels
 
         private readonly ICustomerService CustomerService;
 
+        public BindableCollection<string> Items { get; set; }
+
         public BindableCollection<Customer> Accounts { get; set; }
 
         public BindableCollection<Customer> Visitors { get; set; }
+
+        private string _SelectedItem = "Visitor";
+
+        public string SelectedItem
+        {
+            get
+            {
+                return _SelectedItem;
+            }
+            set
+            {
+                if (value != _SelectedItem)
+                {
+                    _SelectedItem = value;
+
+                    NotifyOfPropertyChange(() => SelectedItem);
+                    NotifyOfPropertyChange(() => VisitorVisibility);
+                    NotifyOfPropertyChange(() => AccountVisibility);
+                }
+            }
+        }
+
+        public Visibility VisitorVisibility
+        {
+            get
+            {
+                return SelectedItem == "Visitor" ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        public Visibility AccountVisibility
+        {
+            get
+            {
+                return SelectedItem == "Account" ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
             EventAggregator.Publish(new ShowDialog { Screen = IoC.Get<LoadingViewModel>() });
+
+            Items.Add("Visitor");
+            Items.Add("Account");
 
             Task.Factory.StartNew(() =>
                 {

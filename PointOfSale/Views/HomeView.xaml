@@ -19,10 +19,6 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="40" />
@@ -30,8 +26,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border Grid.ColumnSpan="2">
-            <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">                
+        <Border>
+            <StackPanel Orientation="Horizontal">                
                 <Viewbox Margin="25,15">
                     <Canvas Width="60" Height="100">
                         <Path Fill="{StaticResource AccentColorBrush}" Height="100" Stretch="Fill" Width="60" Data="M0,5 C0,2.2385763 2.2385763,0 5,0 L55,0 C57.761424,0 60,2.2385763 60,5 L60,95 C60,97.761424 57.761424,100 55,100 L5,100 C2.2385763,100 0,97.761424 0,95 z"/>
@@ -42,13 +38,20 @@
             </StackPanel>
         </Border>
 
-        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#FFE0E0E0">
+        <Border Grid.Row="1" Background="#FFE0E0E0">
+            <ListBox x:Name="Items" Style="{StaticResource FlatListBox}" HorizontalAlignment="Center">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Foreground="{StaticResource AccentColorBrush}" FontSize="20" FontWeight="Light" Padding="10,0" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
         </Border>
         
-        <TextBlock Grid.Row="2" Text="Visitor" FontSize="25" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" Margin="20,3,0,0" />
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="Account" FontSize="25" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" Margin="20,3,0,0" />
-        
-        <Border Grid.Row="3">
+        <!--<TextBlock Grid.Row="2" Text="Visitor" FontSize="25" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" Margin="20,3,0,0" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="Account" FontSize="25" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" Margin="20,3,0,0" />-->
+
+        <Border Grid.Row="3" Visibility="{Binding VisitorVisibility}">
             <ItemsControl x:Name="Visitors" Margin="10">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -63,7 +66,7 @@
             </ItemsControl>            
         </Border>
 
-        <Border Grid.Row="3" Grid.Column="1" Padding="0,0,25,25">
+        <Border Grid.Row="3" Padding="0,0,25,25" Visibility="{Binding AccountVisibility}">
             <ItemsControl x:Name="Accounts" Margin="10">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -76,6 +79,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </Border>            
+        </Border>
     </Grid>
 </UserControl>
