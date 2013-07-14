@@ -24,27 +24,31 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border Grid.ColumnSpan="2" Background="{StaticResource AccentColorBrush}">
-            <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
-                <Border Background="{StaticResource AccentColorBrush}" Width="75" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,15">
-                    <Image Source="/Shop.PointOfSale;component/images/refrigerator-icon.png" Margin="0" />
-                </Border>
-                <StackPanel VerticalAlignment="Center" Margin="0,0,0,10">
-                    <TextBlock Text="le réfrigérateur" FontSize="50" FontWeight="Light" Foreground="White" />
-                    <TextBlock Text="Select your account to begin..." FontSize="25" FontWeight="Light" Foreground="White" />
-                </StackPanel>
+        <Border Grid.ColumnSpan="2">
+            <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">                
+                <Viewbox Margin="25,15">
+                    <Canvas Width="60" Height="100">
+                        <Path Fill="{StaticResource AccentColorBrush}" Height="100" Stretch="Fill" Width="60" Data="M0,5 C0,2.2385763 2.2385763,0 5,0 L55,0 C57.761424,0 60,2.2385763 60,5 L60,95 C60,97.761424 57.761424,100 55,100 L5,100 C2.2385763,100 0,97.761424 0,95 z"/>
+                        <Path Fill="#99FFFFFF" Height="52" Stretch="Fill" Canvas.Top="15" Width="60" Data="M52,32 L55,32 55,52 52,52 z M0,25 L60,25 60,27 0,27 z M52,0 L55,0 55,20 52,20 z"/>
+                    </Canvas>
+                </Viewbox>
+                <TextBlock Text="le réfrigérateur" FontSize="50" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" VerticalAlignment="Center" Margin="0,0,0,10" />                
             </StackPanel>
         </Border>
+
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#FFE0E0E0">
+        </Border>
         
-        <TextBlock Grid.Row="1" Text="Visitor" FontSize="25" FontWeight="Light" Margin="20,10,0,8" />
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="Account" FontSize="25" FontWeight="Light" Margin="20,10,0,8" />
+        <TextBlock Grid.Row="2" Text="Visitor" FontSize="25" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" Margin="20,3,0,0" />
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="Account" FontSize="25" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" Margin="20,3,0,0" />
         
-        <Border Grid.Row="2" Background="White">
+        <Border Grid.Row="3">
             <ItemsControl x:Name="Visitors" Margin="10">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -59,7 +63,7 @@
             </ItemsControl>            
         </Border>
 
-        <Border Grid.Row="2" Grid.Column="1" Padding="0,0,25,25" Background="White">
+        <Border Grid.Row="3" Grid.Column="1" Padding="0,0,25,25">
             <ItemsControl x:Name="Accounts" Margin="10">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
