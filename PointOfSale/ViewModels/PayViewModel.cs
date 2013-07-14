@@ -18,7 +18,7 @@ namespace Shop.PointOfSale.ViewModels
             EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
-            DisplayName = "Pay Account";
+            DisplayName = "New Payment";
             PaymentItems = new BindableCollection<PayItemViewModel>();
         }
 

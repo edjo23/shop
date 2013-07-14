@@ -32,7 +32,7 @@
         
         <Border Grid.Row="1" Grid.ColumnSpan="2" Background="Gainsboro">
             <Grid>                               
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="15,0">
                     <Button x:Name="GoHome" Style="{StaticResource FlatButtonStyle}" HorizontalAlignment="Left" Padding="10,5">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
                             <Border BorderThickness="1.5" BorderBrush="{StaticResource AccentColorBrush}" CornerRadius="100">
@@ -62,7 +62,9 @@
         <Grid Grid.Row="2" Grid.Column="1" Margin="0" SnapsToDevicePixels="True">
             <StackPanel>
                 <StackPanel Margin="25" Visibility="{Binding BalanceVisibility}">
-                    <TextBlock Text="CURRENT BALANCE" Foreground="DarkGray" FontSize="20" FontWeight="Light" TextAlignment="Right" />
+                    <TextBlock Text="ACCOUNT" Foreground="DarkGray" FontSize="20" FontWeight="Light" TextAlignment="Right" />
+                    <TextBlock x:Name="Customer_Name" Text="Customer" Foreground="Black" FontSize="30" FontWeight="Light" TextAlignment="Right" />
+                    <TextBlock Text="CURRENT BALANCE" Foreground="DarkGray" FontSize="20" FontWeight="Light" TextAlignment="Right" Margin="0,10,0,0" />
                     <TextBlock x:Name="BalanceText" Text="$99.99" Foreground="Black" FontSize="30" FontWeight="Light" TextAlignment="Right" />
                 </StackPanel>                                
             </StackPanel>            
