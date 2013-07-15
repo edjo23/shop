@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -33,7 +34,9 @@ namespace Shop.Business.Database
             {
                 Current = this;
 
-                Connection = new SqlConnection(@"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=Shop;Integrated Security=True;Pooling=False");
+                var config = ConfigurationManager.ConnectionStrings["Shop"];
+
+                Connection = new SqlConnection(config != null ? config.ConnectionString : @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=Shop;Integrated Security=True;Pooling=False");
                 Connection.Open();
             }
         }
