@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using Business.Services;
 using Caliburn.Micro;
 using Caliburn.Micro.Autofac;
 using Shop.Business.Managers;
+using Shop.Business.Services;
 using Shop.Contracts.Services;
 using Shop.Management.ViewModels;
 

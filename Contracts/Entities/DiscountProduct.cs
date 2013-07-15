@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace Shop.Contracts.Entities
 {
-    public class InvoiceItem
+    public class DiscountProduct
     {
         public Guid Id { get; set; }
 
-        public Guid InvoiceId { get; set; }
-
-        public int ItemNumber { get; set; }
+        public Guid DiscountId { get; set; }
 
         public Guid ProductId { get; set; }
-
-        public int Quantity { get; set; }
-
-        public decimal Price { get; set; }
 
         public decimal Discount { get; set; }
     }

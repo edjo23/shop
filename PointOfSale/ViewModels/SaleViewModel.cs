@@ -13,13 +13,14 @@ namespace Shop.PointOfSale.ViewModels
 {
     public class SaleViewModel : Screen
     {
-        public SaleViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService)        
+        public SaleViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService, IDiscountService discountService)        
         {
             EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
             ProductService = productService;
             InvoiceService = invoiceService;
+            DiscountService = discountService;
 
             DisplayName = "New Purchase";
             Products = new BindableCollection<SaleItemViewModel>();
@@ -34,6 +35,8 @@ namespace Shop.PointOfSale.ViewModels
         private readonly IProductService ProductService;
 
         private readonly IInvoiceService InvoiceService;
+
+        private readonly IDiscountService DiscountService;
 
         public Customer Customer { get; set; }
 
@@ -87,7 +90,11 @@ namespace Shop.PointOfSale.ViewModels
 
             Task.Factory.StartNew(() =>
             {
-                Products.AddRange(ProductService.GetProducts().Select(o => new SaleItemViewModel { Product = o }));
+                var products = ProductService.GetProducts();
+                var discounts = DiscountService.GetDiscounts();
+                var discountProducts = discounts.Item3.Where(o => o.CustomerId == Customer.Id).Join(discounts.Item2, c => c.DiscountId, p => p.DiscountId, (c,p) => p);
+
+                Products.AddRange(products.Select(o => new SaleItemViewModel { Product = o, Discount = discountProducts.Where(p => p.ProductId == o.Id).Select(p => p.Discount).DefaultIfEmpty(0.0m).Max() }));
 
                 EventAggregator.Publish(new HideDialog { });
             });
@@ -135,8 +142,9 @@ namespace Shop.PointOfSale.ViewModels
                         {
                             ItemNumber = i + 1,
                             ProductId = o.Product.Id,
+                            Quantity = o.Quantity,
                             Price = o.Product.Price,
-                            Quantity = o.Quantity
+                            Discount = o.Discount
                         }));
 
                     InvoiceService.AddInvoice(invoice, invoiceItems, IsCashAccount ? Total : 0.0m);

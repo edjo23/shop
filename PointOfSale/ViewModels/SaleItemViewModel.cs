@@ -13,7 +13,18 @@ namespace Shop.PointOfSale.ViewModels
 {
     public class SaleItemViewModel : PropertyChangedBase
     {
+        public SaleItemViewModel()
+        {
+
+        }
+        public SaleItemViewModel(Product product)
+        {
+
+        }
+
         public Product Product { get; set; }
+
+        public decimal Discount { get; set; }
 
         public BitmapImage ImageSource
         {
@@ -47,11 +58,19 @@ namespace Shop.PointOfSale.ViewModels
             }
         }
 
+        public decimal Price
+        {
+            get
+            {
+                return Math.Round(Product.Price * (100 - Discount) / 100, 2, MidpointRounding.ToEven);
+            }
+        }
+
         public decimal Total
         {
             get
             {
-                return Quantity * Product.Price;
+                return Quantity * Price;
             }
         }
 

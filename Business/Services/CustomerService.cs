@@ -7,7 +7,7 @@ using Shop.Business.Managers;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
 
-namespace Business.Services
+namespace Shop.Business.Services
 {
     public class CustomerService : ICustomerService
     {

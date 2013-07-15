@@ -77,4 +77,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="InvoiceNumber" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="a103ac9a-a71b-4a6b-aa3a-090940e481e0" ChangeDateTime="07/15/2013 11:34:46">
+    <Property Name="ElementName" Value="[dbo].[DiscountCustomer].[CustomerId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscountCustomer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DiscountId" />
+  </Operation>
 </Operations>

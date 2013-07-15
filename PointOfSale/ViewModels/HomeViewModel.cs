@@ -37,7 +37,7 @@ namespace Shop.PointOfSale.ViewModels
 
         public BindableCollection<Customer> Visitors { get; set; }
 
-        private string _SelectedItem = "Visitor";
+        private string _SelectedItem;
 
         public string SelectedItem
         {
@@ -80,8 +80,10 @@ namespace Shop.PointOfSale.ViewModels
 
             EventAggregator.Publish(new ShowDialog { Screen = IoC.Get<LoadingViewModel>() });
 
-            Items.Add("Visitor");
             Items.Add("Account");
+            Items.Add("Visitor");
+
+            SelectedItem = Items.First();
 
             Task.Factory.StartNew(() =>
                 {

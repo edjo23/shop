@@ -49,10 +49,12 @@
     <Compile Include="Database\ConnectionScope.cs" />
     <Compile Include="Managers\CustomerManager.cs" />
     <Compile Include="Database\Extensions.cs" />
+    <Compile Include="Managers\DiscountManager.cs" />
     <Compile Include="Managers\InvoiceManager.cs" />
     <Compile Include="Managers\ProductManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CustomerService.cs" />
+    <Compile Include="Services\DiscountService.cs" />
     <Compile Include="Services\InvoiceService.cs" />
     <Compile Include="Services\ProductService.cs" />
   </ItemGroup>

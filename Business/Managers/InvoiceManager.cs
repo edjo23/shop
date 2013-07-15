@@ -84,7 +84,7 @@ namespace Shop.Business.Managers
                     CustomerId = invoice.CustomerId,
                     DateTime = invoice.DateTime,
                     Type = CustomerTransactionType.Invoice,
-                    Amount = items.Aggregate(0.0m, (total, item) => total += item.Price * item.Quantity),
+                    Amount = items.Aggregate(0.0m, (total, item) => total += item.Quantity * Math.Round(item.Price * (100 - item.Discount) / 100, 2, MidpointRounding.ToEven)),
                     SourceId = invoice.Id
                 });
 
@@ -97,7 +97,7 @@ namespace Shop.Business.Managers
                         CustomerId = invoice.CustomerId,
                         DateTime = invoice.DateTime,
                         Type = CustomerTransactionType.Payment,
-                        Amount = items.Aggregate(0.0m, (total, item) => total += item.Price * item.Quantity) * -1,
+                        Amount = payment * -1,
                         SourceId = invoice.Id
                     });
                 }
@@ -117,7 +117,8 @@ namespace Shop.Business.Managers
 	                    customer.Name as CustomerName,
 	                    product.Description as ProductDescription,
 	                    item.Quantity,
-	                    item.Price
+	                    item.Price,
+                        item.Discount
                     from
 	                    dbo.Invoice invoice
 		                    join dbo.Customer customer on customer.Id = invoice.CustomerId

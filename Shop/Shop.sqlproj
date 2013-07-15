@@ -61,6 +61,9 @@
     <Build Include="Invoice.sql" />
     <Build Include="InvoiceItem.sql" />
     <Build Include="CustomerTransaction.sql" />
+    <Build Include="Discount.sql" />
+    <Build Include="DiscountProduct.sql" />
+    <Build Include="DiscountCustomer.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shop.publish.xml" />

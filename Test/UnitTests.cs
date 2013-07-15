@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Business.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Shop.Business.Managers;
+using Shop.Business.Services;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
 

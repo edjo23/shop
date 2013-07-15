@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-using Business.Services;
 using Caliburn.Micro;
 using Caliburn.Micro.Autofac;
 using Shop.Business.Managers;
 using Shop.Contracts.Services;
 using Shop.PointOfSale.ViewModels;
 using Shop.PointOfSale.Services;
+using Shop.Business.Services;
 
 namespace Shop.PointOfSale
 {
@@ -21,10 +21,12 @@ namespace Shop.PointOfSale
             builder.RegisterType<ProductManager>();
             builder.RegisterType<CustomerManager>();
             builder.RegisterType<InvoiceManager>();
+            builder.RegisterType<DiscountManager>();
 
             builder.RegisterType<ProductService>().As<IProductService>();
             builder.RegisterType<CustomerService>().As<ICustomerService>();
             builder.RegisterType<InvoiceService>().As<IInvoiceService>();
+            builder.RegisterType<DiscountService>().As<IDiscountService>();
 
             builder.RegisterType<ScreenCoordinator>().InstancePerLifetimeScope();
 
