@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DarkStoreButtonStyle}">
             <Setter Property="Width" Value="200" />
-            <Setter Property="Height" Value="40" />
+            <Setter Property="MinHeight" Value="40" />
             <Setter Property="Margin" Value="0,0,15,5" />
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontWeight" Value="Light" />
@@ -75,7 +75,12 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Content="{Binding Name}" c:Message.Attach="NewTransaction($dataContext)" />
+                        <Button c:Message.Attach="NewTransaction($dataContext)">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" />
+                                <TextBlock Text="{Binding Balance, StringFormat=C}" FontSize="15" />
+                            </StackPanel>
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
