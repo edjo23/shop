@@ -21,14 +21,17 @@ namespace Shop.Management
             builder.RegisterType<ProductManager>();
             builder.RegisterType<CustomerManager>();
             builder.RegisterType<InvoiceManager>();
+            builder.RegisterType<DiscountManager>();
 
             builder.RegisterType<ProductService>().As<IProductService>();
             builder.RegisterType<CustomerService>().As<ICustomerService>();
             builder.RegisterType<InvoiceService>().As<IInvoiceService>();
+            builder.RegisterType<DiscountService>().As<IDiscountService>();
 
             builder.RegisterType<MenuItemViewModel<SummaryViewModel>>();
             builder.RegisterType<MenuItemViewModel<ProductsViewModel>>();
             builder.RegisterType<MenuItemViewModel<CustomersViewModel>>();
+            builder.RegisterType<MenuItemViewModel<DiscountsViewModel>>();
 
             base.ConfigureContainer(builder);
         }

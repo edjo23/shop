@@ -22,7 +22,8 @@ namespace Shop.Management.ViewModels
             AdministrationItems = new BindableCollection<IMenuItem>()
             {
                 new MenuItemViewModel<ProductsViewModel>("Products"),
-                new MenuItemViewModel<CustomersViewModel>("Customers")
+                new MenuItemViewModel<CustomersViewModel>("Customers"),
+                new MenuItemViewModel<DiscountsViewModel>("Discounts")
             };
 
             Items = new BindableCollection<IMenuItem>();

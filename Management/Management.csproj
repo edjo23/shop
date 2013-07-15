@@ -84,6 +84,7 @@
     <Compile Include="ViewModels\CustomerAccountPaymentViewModel.cs" />
     <Compile Include="ViewModels\CustomersViewModel.cs" />
     <Compile Include="ViewModels\CustomerInvoiceViewModel.cs" />
+    <Compile Include="ViewModels\DiscountsViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ProductMovementsViewModel.cs" />
@@ -118,6 +119,12 @@
     </Compile>
     <Compile Include="Views\CustomerInvoiceView.xaml.cs">
       <DependentUpon>CustomerInvoiceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DiscountsView.xaml.cs">
+      <DependentUpon>DiscountsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Discounts\Toolbar.xaml.cs">
+      <DependentUpon>Toolbar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
@@ -197,6 +204,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CustomerInvoiceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DiscountsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Discounts\Toolbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
