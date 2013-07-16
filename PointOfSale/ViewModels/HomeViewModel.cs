@@ -20,6 +20,7 @@ namespace Shop.PointOfSale.ViewModels
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
 
+            Logger = log4net.LogManager.GetLogger(GetType());
             Items = new BindableCollection<string>();
             Accounts = new BindableCollection<Customer>();
             Visitors = new BindableCollection<Customer>();
@@ -30,6 +31,8 @@ namespace Shop.PointOfSale.ViewModels
         private readonly ScreenCoordinator ScreenCoordinator;
 
         private readonly ICustomerService CustomerService;
+
+        private readonly log4net.ILog Logger;
 
         public BindableCollection<string> Items { get; set; }
 
@@ -87,8 +90,17 @@ namespace Shop.PointOfSale.ViewModels
 
             Task.Factory.StartNew(() =>
                 {
-                    Accounts.AddRange(CustomerService.GetCustomers().Where(o => !String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
-                    Visitors.AddRange(CustomerService.GetCustomers().Where(o => String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
+                    Logger.Info("Loading home page");
+
+                    try
+                    {
+                        Accounts.AddRange(CustomerService.GetCustomers().Where(o => !String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
+                        Visitors.AddRange(CustomerService.GetCustomers().Where(o => String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.Error(ex.Message, ex);
+                    }
 
                     EventAggregator.Publish(new HideDialog { });
                 });
