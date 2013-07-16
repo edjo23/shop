@@ -11,15 +11,15 @@ using Shop.PointOfSale.Services;
 
 namespace Shop.PointOfSale.ViewModels
 {
-    public class PayViewModel : Screen
+    public class LoanViewModel : Screen
     {
-        public PayViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
+        public LoanViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
         {
             EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
-            DisplayName = "Payment";
-            PaymentItems = new BindableCollection<PayItemViewModel>();
+            DisplayName = "Cash Advance";
+            LoanItems = new BindableCollection<LoanItemViewModel>();
         }
 
         private readonly IEventAggregator EventAggregator;
@@ -30,13 +30,13 @@ namespace Shop.PointOfSale.ViewModels
 
         public Customer Customer { get; set; }
 
-        public BindableCollection<PayItemViewModel> PaymentItems { get; set; }
+        public BindableCollection<LoanItemViewModel> LoanItems { get; set; }
 
         public decimal Total
         {
             get
             {
-                return PaymentItems.Sum(o => o.Total);;
+                return LoanItems.Sum(o => o.Total);;
             }
         }
 
@@ -48,11 +48,11 @@ namespace Shop.PointOfSale.ViewModels
             }
         }
 
-        public bool CanCompletePayment
+        public bool CanCompleteLoan
         {
             get
             {
-                return PaymentItems.Any(o => o.Quantity > 0);
+                return LoanItems.Any(o => o.Quantity > 0);
             }
         }
 
@@ -60,32 +60,32 @@ namespace Shop.PointOfSale.ViewModels
         {
             base.OnInitialize();
 
-            PaymentItems.Add(new PayItemViewModel { Description = "$10", Amount = 10.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "$1", Amount = 1.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "10c", Amount = 0.10m });
-            PaymentItems.Add(new PayItemViewModel { Description = "1c", Amount = 0.01m });
+            LoanItems.Add(new LoanItemViewModel { Description = "$10", Amount = 10.0m });
+            LoanItems.Add(new LoanItemViewModel { Description = "$1", Amount = 1.0m });
+            LoanItems.Add(new LoanItemViewModel { Description = "10c", Amount = 0.10m });
+            LoanItems.Add(new LoanItemViewModel { Description = "1c", Amount = 0.01m });
         }
 
-        public void AddPayment(PayItemViewModel item)
+        public void AddLoanItem(LoanItemViewModel item)
         {
             UpdateQuantity(item, 1);
         }
 
-        public void RemovePayment(PayItemViewModel item)
+        public void RemoveLoanItem(LoanItemViewModel item)
         {
             UpdateQuantity(item, -1);
         }
 
-        protected void UpdateQuantity(PayItemViewModel item, int value)
+        protected void UpdateQuantity(LoanItemViewModel item, int value)
         {
             item.Quantity += value;
 
-            NotifyOfPropertyChange(() => CanCompletePayment);
+            NotifyOfPropertyChange(() => CanCompleteLoan);
             NotifyOfPropertyChange(() => Total);
             NotifyOfPropertyChange(() => TotalText);
         }
 
-        public void CompletePayment()
+        public void CompleteLoan()
         {
             var messageBox = IoC.Get<MessageBoxViewModel>();
             messageBox.DisplayName = "";
@@ -95,16 +95,16 @@ namespace Shop.PointOfSale.ViewModels
 
             Task.Factory.StartNew(() =>
             {
-                var payment = new CustomerTransaction
+                var transaction = new CustomerTransaction
                 {
                     Id = Guid.NewGuid(),
                     CustomerId = Customer.Id,
                     DateTime = DateTimeOffset.Now,
-                    Type = CustomerTransactionType.Payment,
-                    Amount = Total * -1
+                    Type = CustomerTransactionType.CashAdvance,
+                    Amount = Total
                 };
 
-                CustomerService.AddTransaction(payment);
+                CustomerService.AddTransaction(transaction);
 
                 Customer.Balance = CustomerService.GetCustomer(Customer.Id).Balance;
             })
@@ -116,14 +116,14 @@ namespace Shop.PointOfSale.ViewModels
                     {
                         messageBox.Background = System.Windows.Media.Brushes.Firebrick;
                         messageBox.DisplayName = "Sorry, an error has occurred :(";
-                        messageBox.Content = "The payment was not processed";
+                        messageBox.Content = "The loan was not processed";
                     });
                 }
                 else
                 {
                     Execute.OnUIThread(() =>
                     {
-                        messageBox.DisplayName = "Thank you :)";
+                        messageBox.DisplayName = "Thank you";
                         messageBox.Content = String.Format("Your new balance is now {0:C}", Customer.Balance);
                     });
 

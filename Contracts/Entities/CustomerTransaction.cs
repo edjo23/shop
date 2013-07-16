@@ -11,6 +11,7 @@ namespace Shop.Contracts.Entities
         public const int Invoice = 1;
         public const int Payment = 2;
         public const int Adjustment = 3;
+        public const int CashAdvance = 4;
     }
 
     public class CustomerTransaction

@@ -67,6 +67,11 @@ namespace Shop.PointOfSale.ViewModels
                 payViewModel.Customer = Customer;
 
                 Items.Add(payViewModel);
+
+                var loanViewModel = IoC.Get<LoanViewModel>();
+                loanViewModel.Customer = Customer;
+
+                Items.Add(loanViewModel);
             }
 
             ActivateItem(Items.First());
