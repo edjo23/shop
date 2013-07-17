@@ -16,6 +16,8 @@ namespace Shop.Management.ViewModels
         {
             EventAggregator = eventAggregator;
             ProductService = productService;
+
+            DisplayName = "Edit Product";
         }
 
         public IEventAggregator EventAggregator { get; set; }

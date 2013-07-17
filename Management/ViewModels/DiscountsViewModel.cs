@@ -7,6 +7,7 @@ using System.Windows;
 using Caliburn.Micro;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
+using Shop.Management.Messages;
 
 namespace Shop.Management.ViewModels
 {
@@ -138,5 +139,11 @@ namespace Shop.Management.ViewModels
                 Load(true);
         }
 
+        public void ShowDiscountEdit()
+        {
+            if (SelectedDiscount != null)
+                EventAggregator.Publish(new ActivateItem<DiscountEditViewModel>(o => o.Discount = SelectedDiscount));
+
+        }
     }
 }

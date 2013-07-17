@@ -43,6 +43,7 @@
     <Compile Include="Entities\CustomerTransaction.cs" />
     <Compile Include="Entities\Discount.cs" />
     <Compile Include="Entities\DiscountCustomer.cs" />
+    <Compile Include="Entities\DiscountModel.cs" />
     <Compile Include="Entities\DiscountProduct.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\InvoiceItem.cs" />
