@@ -33,6 +33,11 @@ namespace Shop.Business.Services
             return Manager.GetDiscountModel(id);
         }
 
+        public DiscountModel InsertDiscountModel(DiscountModel entity)
+        {
+            return Manager.InsertDiscountModel(entity);
+        }
+
         public DiscountModel UpdateDiscountModel(DiscountModel entity)
         {
             return Manager.UpdateDiscountModel(entity);

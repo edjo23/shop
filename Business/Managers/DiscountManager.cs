@@ -36,6 +36,25 @@ namespace Shop.Business.Managers
             }
         }
 
+        public DiscountModel InsertDiscountModel(DiscountModel entity)
+        {
+            // TODO - Make this more efficient.
+            using (var connectionScope = new ConnectionScope())
+            {
+                connectionScope.Connection.Insert<Discount>(entity.Discount);
+
+                foreach (var product in entity.Products)
+                    product.DiscountId = entity.Discount.Id;
+                foreach (var customer in entity.Customers)
+                    customer.DiscountId = entity.Discount.Id;
+
+                connectionScope.Connection.Insert<DiscountProduct>(entity.Products);
+                connectionScope.Connection.Insert<DiscountCustomer>(entity.Customers);
+            }
+
+            return entity;
+        }
+
         public DiscountModel UpdateDiscountModel(DiscountModel entity)
         {
             // TODO - Make this more efficient.
@@ -45,10 +64,12 @@ namespace Shop.Business.Managers
                 connectionScope.Connection.Delete<DiscountCustomer>(Predicates.Field<DiscountCustomer>(f => f.DiscountId, Operator.Eq, entity.Discount.Id));
 
                 connectionScope.Connection.Update<Discount>(entity.Discount);
-                foreach (var product in entity.Products)
-                    connectionScope.Connection.Insert<DiscountProduct>(product);
-                foreach (var customer in entity.Customers)
-                    connectionScope.Connection.Insert<DiscountCustomer>(customer);
+                connectionScope.Connection.Insert<DiscountProduct>(entity.Products);
+                connectionScope.Connection.Insert<DiscountCustomer>(entity.Customers);
+                //foreach (var product in entity.Products)
+                //    connectionScope.Connection.Insert<DiscountProduct>(product);
+                //foreach (var customer in entity.Customers)
+                //    connectionScope.Connection.Insert<DiscountCustomer>(customer);
             }
 
             return entity;

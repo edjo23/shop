@@ -16,6 +16,7 @@
             <!--<Button x:Name="ShowProductNew" Content="New" />
             <Button x:Name="ShowStockReceipt" Content="Receipt" Visibility="{Binding ItemCommandVisibility}" />
             <Button x:Name="ShowStockAdjustment" Content="Adjustment" Visibility="{Binding ItemCommandVisibility}" />-->
+            <Button x:Name="ShowDiscountNew" Content="New" />
             <Button x:Name="ShowDiscountEdit" Content="Edit" Visibility="{Binding ItemCommandVisibility}" />
         </StackPanel>
 

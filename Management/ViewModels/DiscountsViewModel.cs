@@ -139,6 +139,11 @@ namespace Shop.Management.ViewModels
                 Load(true);
         }
 
+        public void ShowDiscountNew()
+        {
+            EventAggregator.Publish(new ActivateItem<DiscountNewViewModel>());
+        }
+
         public void ShowDiscountEdit()
         {
             if (SelectedDiscount != null)

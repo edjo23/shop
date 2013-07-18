@@ -10,25 +10,28 @@ namespace Shop.Management.ViewModels
 {
     public class DiscountProductViewModel : PropertyChangedBase
     {
+        public DiscountProductViewModel()
+        {
+            DiscountProduct = new DiscountProduct();
+        }
+
         public Product Product { get; set; }
 
         public DiscountProduct DiscountProduct { get; set; }
 
         #region Discount Property
 
-        private decimal _Discount;
-
         public decimal Discount
         {
             get
             {
-                return _Discount;
+                return DiscountProduct.Discount;
             }
             set
             {
-                if (value != _Discount)
+                if (value != DiscountProduct.Discount)
                 {
-                    _Discount = value;                    
+                    DiscountProduct.Discount = value;
                     NotifyOfPropertyChange(() => Discount);
                 }
             }

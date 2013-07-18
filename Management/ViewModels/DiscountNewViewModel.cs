@@ -10,16 +10,16 @@ using Shop.Management.Messages;
 
 namespace Shop.Management.ViewModels
 {
-    public class DiscountEditViewModel : Screen
+    public class DiscountNewViewModel : Screen
     {
-        public DiscountEditViewModel (IEventAggregator eventAggregator, IDiscountService discountService, IProductService productService, ICustomerService customerService)
+        public DiscountNewViewModel(IEventAggregator eventAggregator, IDiscountService discountService, IProductService productService, ICustomerService customerService)
         {
             EventAggregator = eventAggregator;
             DiscountService = discountService;
             ProductService = productService;
             CustomerService = customerService;
 
-            DisplayName = "Edit Discount";
+            DisplayName = "New Discount";
             DiscountProducts = new BindableCollection<DiscountProductViewModel>();
             DiscountCustomers = new BindableCollection<DiscountCustomerViewModel>();
         }
@@ -31,8 +31,6 @@ namespace Shop.Management.ViewModels
         private readonly IProductService ProductService;
 
         private readonly ICustomerService CustomerService;
-
-        public Discount Discount { get; set; }
 
         public BindableCollection<DiscountProductViewModel> DiscountProducts { get; set; }
 
@@ -66,20 +64,14 @@ namespace Shop.Management.ViewModels
 
             // TODO - Make this async.
 
-            Description = Discount.Description;
-
-            var model = DiscountService.GetDiscountModel(Discount.Id);
-
             foreach (var product in ProductService.GetProducts())
             {
-                var discountProduct = model.Products.Where(o => o.ProductId == product.Id).FirstOrDefault();
-                DiscountProducts.Add(new DiscountProductViewModel { Product = product, DiscountProduct = discountProduct ?? new DiscountProduct { DiscountId = Discount.Id, ProductId = product.Id } });
+                DiscountProducts.Add(new DiscountProductViewModel { Product = product, DiscountProduct = new DiscountProduct { ProductId = product.Id }, Discount = 0.0m });
             }
 
             foreach (var customer in CustomerService.GetCustomers())
             {
-                var discountCustomer = model.Customers.Where(o => o.CustomerId == customer.Id).FirstOrDefault();
-                DiscountCustomers.Add(new DiscountCustomerViewModel { Customer = customer, DiscountCustomer = discountCustomer ?? new DiscountCustomer { DiscountId = Discount.Id, CustomerId = customer.Id }, Selected = discountCustomer != null });
+                DiscountCustomers.Add(new DiscountCustomerViewModel { Customer = customer, DiscountCustomer = new DiscountCustomer { CustomerId = customer.Id }, Selected = false });
             }
         }
 
@@ -95,12 +87,14 @@ namespace Shop.Management.ViewModels
 
         public void Save()
         {
-            var model = DiscountService.GetDiscountModel(Discount.Id);
-            model.Discount.Description = Description;
-            model.Products = new List<DiscountProduct>(DiscountProducts.Where(o => o.Discount > 0.0m).Select(o => o.DiscountProduct));
-            model.Customers = new List<DiscountCustomer>(DiscountCustomers.Where(o => o.Selected).Select(o => o.DiscountCustomer));
+            var model = new DiscountModel
+            {
+                Discount = new Discount { Description = Description },
+                Products = new List<DiscountProduct>(DiscountProducts.Where(o => o.Discount > 0.0m).Select(o => o.DiscountProduct)),
+                Customers = new List<DiscountCustomer>(DiscountCustomers.Where(o => o.Selected).Select(o => o.DiscountCustomer))
+            };
 
-            DiscountService.UpdateDiscountModel(model);
+            DiscountService.InsertDiscountModel(model);
 
             Close();
         }

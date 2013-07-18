@@ -13,6 +13,7 @@ namespace Shop.Contracts.Services
 
         IEnumerable<DiscountModel> GetDiscountModels();
         DiscountModel GetDiscountModel(Guid id);
+        DiscountModel InsertDiscountModel(DiscountModel entity);
         DiscountModel UpdateDiscountModel(DiscountModel entity);
     }
 }

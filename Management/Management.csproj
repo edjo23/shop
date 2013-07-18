@@ -86,6 +86,7 @@
     <Compile Include="ViewModels\CustomerInvoiceViewModel.cs" />
     <Compile Include="ViewModels\DiscountCustomerViewModel.cs" />
     <Compile Include="ViewModels\DiscountEditViewModel.cs" />
+    <Compile Include="ViewModels\DiscountNewViewModel.cs" />
     <Compile Include="ViewModels\DiscountProductViewModel.cs" />
     <Compile Include="ViewModels\DiscountsViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
@@ -125,6 +126,9 @@
     </Compile>
     <Compile Include="Views\DiscountEditView.xaml.cs">
       <DependentUpon>DiscountEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DiscountNewView.xaml.cs">
+      <DependentUpon>DiscountNewView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DiscountsView.xaml.cs">
       <DependentUpon>DiscountsView.xaml</DependentUpon>
@@ -214,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DiscountEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DiscountNewView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
