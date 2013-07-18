@@ -123,7 +123,7 @@ namespace Shop.Management.ViewModels
             Task.Factory.StartNew(() =>
             {
                 Discounts.Clear();
-                Discounts.AddRange(DiscountService.GetDiscounts().Item1);
+                Discounts.AddRange(DiscountService.GetDiscounts());
             }).ContinueWith(t =>
             {
                 Execute.OnUIThread(() =>
@@ -148,7 +148,6 @@ namespace Shop.Management.ViewModels
         {
             if (SelectedDiscount != null)
                 EventAggregator.Publish(new ActivateItem<DiscountEditViewModel>(o => o.Discount = SelectedDiscount));
-
         }
     }
 }

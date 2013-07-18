@@ -18,14 +18,9 @@ namespace Shop.Business.Services
 
         private DiscountManager Manager { get; set; }
 
-        public Tuple<IEnumerable<Contracts.Entities.Discount>, IEnumerable<Contracts.Entities.DiscountProduct>, IEnumerable<Contracts.Entities.DiscountCustomer>> GetDiscounts()
+        public IEnumerable<Discount> GetDiscounts()
         {
             return Manager.GetDiscounts();
-        }
-
-        public IEnumerable<DiscountModel> GetDiscountModels()
-        {
-            return Manager.GetDiscountModels();
         }
 
         public DiscountModel GetDiscountModel(Guid id)
@@ -41,6 +36,11 @@ namespace Shop.Business.Services
         public DiscountModel UpdateDiscountModel(DiscountModel entity)
         {
             return Manager.UpdateDiscountModel(entity);
+        }
+
+        public IEnumerable<DiscountProduct> GetDiscountProductsByCustomerId(Guid customerId)
+        {
+            return Manager.GetDiscountProductsByCustomerId(customerId);
         }
     }
 }

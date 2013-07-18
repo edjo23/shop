@@ -92,7 +92,7 @@ namespace Shop.PointOfSale.ViewModels
             {
                 var products = ProductService.GetProducts();
                 var discounts = DiscountService.GetDiscounts();
-                var discountProducts = discounts.Item3.Where(o => o.CustomerId == Customer.Id).Join(discounts.Item2, c => c.DiscountId, p => p.DiscountId, (c,p) => p);
+                var discountProducts = DiscountService.GetDiscountProductsByCustomerId(Customer.Id);
 
                 Products.AddRange(products.Select(o => new SaleItemViewModel { Product = o, Discount = discountProducts.Where(p => p.ProductId == o.Id).Select(p => p.Discount).DefaultIfEmpty(0.0m).Max() }));
 

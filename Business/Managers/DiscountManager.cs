@@ -12,14 +12,9 @@ namespace Shop.Business.Managers
 {
     public class DiscountManager
     {
-        public Tuple<IEnumerable<Discount>, IEnumerable<DiscountProduct>, IEnumerable<DiscountCustomer>> GetDiscounts()
+        public IEnumerable<Discount> GetDiscounts()
         {
-            return Tuple.Create(Extensions.SelectAll<Discount>(), Extensions.SelectAll<DiscountProduct>(), Extensions.SelectAll<DiscountCustomer>());
-        }
-
-        public IEnumerable<DiscountModel> GetDiscountModels()
-        {
-            return null;
+            return Extensions.SelectAll<Discount>();
         }
 
         public DiscountModel GetDiscountModel(Guid id)
@@ -64,12 +59,14 @@ namespace Shop.Business.Managers
                 connectionScope.Connection.Delete<DiscountCustomer>(Predicates.Field<DiscountCustomer>(f => f.DiscountId, Operator.Eq, entity.Discount.Id));
 
                 connectionScope.Connection.Update<Discount>(entity.Discount);
+
+                foreach (var product in entity.Products)
+                    product.DiscountId = entity.Discount.Id;
+                foreach (var customer in entity.Customers)
+                    customer.DiscountId = entity.Discount.Id;
+
                 connectionScope.Connection.Insert<DiscountProduct>(entity.Products);
                 connectionScope.Connection.Insert<DiscountCustomer>(entity.Customers);
-                //foreach (var product in entity.Products)
-                //    connectionScope.Connection.Insert<DiscountProduct>(product);
-                //foreach (var customer in entity.Customers)
-                //    connectionScope.Connection.Insert<DiscountCustomer>(customer);
             }
 
             return entity;

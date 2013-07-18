@@ -9,11 +9,10 @@ namespace Shop.Contracts.Services
 {
     public interface IDiscountService
     {
-        Tuple<IEnumerable<Discount>, IEnumerable<DiscountProduct>, IEnumerable<DiscountCustomer>> GetDiscounts();
-
-        IEnumerable<DiscountModel> GetDiscountModels();
+        IEnumerable<Discount> GetDiscounts();
         DiscountModel GetDiscountModel(Guid id);
         DiscountModel InsertDiscountModel(DiscountModel entity);
         DiscountModel UpdateDiscountModel(DiscountModel entity);
+        IEnumerable<DiscountProduct> GetDiscountProductsByCustomerId(Guid customerId);
     }
 }
