@@ -41,10 +41,10 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="{Binding Quantity}" Foreground="Black" FontSize="75" FontWeight="Light" MinWidth="75" TextAlignment="Left" />
 
-                                    <Button Style="{StaticResource RoundButtonStyle}" c:Message.Attach="AddPayment($dataContext)" Width="32" Height="32" VerticalAlignment="Center" Margin="5,0">
+                                    <Button Style="{StaticResource RoundButtonStyle}" c:Message.Attach="AddPayment($dataContext)" Width="50" Height="50" VerticalAlignment="Center" Margin="5,0">
                                         <Image Source="/Shop.PointOfSale;component/images/dark/add_76.png" Margin="0" />
                                     </Button>
-                                    <Button Style="{StaticResource RoundButtonStyle}" c:Message.Attach="RemovePayment($dataContext)" Width="32" Height="32" VerticalAlignment="Center" Margin="5,0">
+                                    <Button Style="{StaticResource RoundButtonStyle}" c:Message.Attach="RemovePayment($dataContext)" Width="50" Height="50" VerticalAlignment="Center" Margin="5,0">
                                         <Image Source="/Shop.PointOfSale;component/images/dark/remove_76.png" Margin="0" />
                                     </Button>
                                 </StackPanel>

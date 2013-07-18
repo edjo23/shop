@@ -1,9 +1,17 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
 
     <SolidColorBrush x:Key="AccentColorBrush" Color="SteelBlue" />
     <SolidColorBrush x:Key="NormalColorBrush" Color="Black" />
     <SolidColorBrush x:Key="LabelColorBrush" Color="DarkGray" />
+
+    <s:Double x:Key="NormalFontSize">30</s:Double>
+    
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontWeight" Value="Light" />
+    </Style>
 
     <!-- RoundButtonStyle -->
     <Style x:Key="RoundButtonStyle" TargetType="{x:Type ButtonBase}">

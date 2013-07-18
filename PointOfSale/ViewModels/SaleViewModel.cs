@@ -166,8 +166,8 @@ namespace Shop.PointOfSale.ViewModels
                     {
                         Execute.OnUIThread(() =>
                             {
-                                messageBox.DisplayName = "Thank you :)";
-                                messageBox.Content = String.Format("Your new balance is now {0:C}", Customer.Balance);
+                                messageBox.DisplayName = "Thank you";
+                                messageBox.Content = IsCashAccount ? "" : String.Format("Your balance is now {0:C}", Customer.Balance);
                             });
 
                         System.Threading.Thread.Sleep(5000);
