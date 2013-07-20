@@ -42,7 +42,7 @@
                                     </Canvas>
                                 </Viewbox>
                             </Border>
-                            <TextBlock Text="Back" VerticalAlignment="Center" FontSize="30" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" Margin="5,0,0,3" />
+                            <TextBlock Text="BACK" VerticalAlignment="Center" FontSize="30" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" Margin="5,0,0,3" />
                         </StackPanel>
                     </Button>                    
                 </StackPanel>

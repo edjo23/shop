@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
 
+    <SolidColorBrush x:Key="BackgroundBrush" Color="#FFF0F0F0" />
     <SolidColorBrush x:Key="AccentColorBrush" Color="SteelBlue" />
     <SolidColorBrush x:Key="NormalColorBrush" Color="Black" />
     <SolidColorBrush x:Key="LabelColorBrush" Color="DarkGray" />
@@ -9,17 +10,19 @@
     <s:Double x:Key="NormalFontSize">30</s:Double>
     
     <Style TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontSize" Value="25" />
         <Setter Property="FontWeight" Value="Light" />
     </Style>
 
     <!-- RoundButtonStyle -->
     <Style x:Key="RoundButtonStyle" TargetType="{x:Type ButtonBase}">
-        <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="BorderThickness" Value="1.5" />
+        <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Width" Value="50" />
         <Setter Property="Height" Value="50" />
         <Setter Property="FontSize" Value="14" />
@@ -30,7 +33,9 @@
                         <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="38">
                         </Border>
                         <Border Name="Bd" CornerRadius="38" Margin="{TemplateBinding Padding}">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" TextBlock.Foreground="{TemplateBinding Foreground}" />
+                            <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">                                
+                                <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextBlock.Foreground="{TemplateBinding Foreground}" />
+                            </Viewbox>
                         </Border>
                     </Grid>
                     
@@ -53,7 +58,19 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <DataTemplate x:Key="PlusButtonContent">
+        <Canvas Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+            <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{StaticResource AccentColorBrush}" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "/>
+        </Canvas>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MinusButtonContent">
+        <Canvas Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+            <Path Width="38" Height="6" Canvas.Left="19" Canvas.Top="35" Stretch="Fill" Fill="{StaticResource AccentColorBrush}" Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z "/>
+        </Canvas>        
+    </DataTemplate>    
+
     <!-- FlatButtonStyle -->
     <Style x:Key="FlatButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="Transparent" />

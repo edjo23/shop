@@ -25,7 +25,7 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
-                            <Button c:Message.Attach="AddLoanItem($dataContext)" SnapsToDevicePixels="True">
+                            <Button c:Message.Attach="AddItem($dataContext)" SnapsToDevicePixels="True">
                                 <Image Source="{Binding ImageSource}" Margin="10" />
                                 <Button.Template>
                                     <ControlTemplate TargetType="{x:Type Button}">
@@ -39,14 +39,9 @@
                             <!-- Quantity Layer-->
                             <Border Visibility="{Binding QuantityVisibility}" Background="#DDFFFFFF" SnapsToDevicePixels="True">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding Quantity}" Foreground="Black" FontSize="75" FontWeight="Light" MinWidth="75" TextAlignment="Left" />
-
-                                    <Button Style="{StaticResource RoundButtonStyle}" c:Message.Attach="AddLoanItem($dataContext)" Width="50" Height="50" VerticalAlignment="Center" Margin="5,0">
-                                        <Image Source="/Shop.PointOfSale;component/images/dark/add_76.png" Margin="0" />
-                                    </Button>
-                                    <Button Style="{StaticResource RoundButtonStyle}" c:Message.Attach="RemoveLoanItem($dataContext)" Width="50" Height="50" VerticalAlignment="Center" Margin="5,0">
-                                        <Image Source="/Shop.PointOfSale;component/images/dark/remove_76.png" Margin="0" />
-                                    </Button>
+                                    <TextBlock Text="{Binding Quantity}" Foreground="{StaticResource AccentColorBrush}" FontSize="50" FontWeight="Light" MinWidth="75" TextAlignment="Left" />
+                                    <Button Style="{StaticResource RoundButtonStyle}" ContentTemplate="{StaticResource PlusButtonContent}" c:Message.Attach="AddItem($dataContext)" VerticalAlignment="Center" Margin="5,0" />
+                                    <Button Style="{StaticResource RoundButtonStyle}" ContentTemplate="{StaticResource MinusButtonContent}" c:Message.Attach="RemoveItem($dataContext)" VerticalAlignment="Center" Margin="5,0" />
                                 </StackPanel>
                             </Border>
 

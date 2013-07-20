@@ -18,7 +18,7 @@ namespace Shop.PointOfSale.ViewModels
             EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
-            DisplayName = "Cash Advance";
+            DisplayName = "LOAN";
             LoanItems = new BindableCollection<LoanItemViewModel>();
         }
 
@@ -66,12 +66,12 @@ namespace Shop.PointOfSale.ViewModels
             LoanItems.Add(new LoanItemViewModel { Description = "1c", Amount = 0.01m });
         }
 
-        public void AddLoanItem(LoanItemViewModel item)
+        public void AddItem(LoanItemViewModel item)
         {
             UpdateQuantity(item, 1);
         }
 
-        public void RemoveLoanItem(LoanItemViewModel item)
+        public void RemoveItem(LoanItemViewModel item)
         {
             UpdateQuantity(item, -1);
         }

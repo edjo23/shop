@@ -22,7 +22,7 @@ namespace Shop.PointOfSale.ViewModels
             InvoiceService = invoiceService;
             DiscountService = discountService;
 
-            DisplayName = "Purchase";
+            DisplayName = "PURCHASE";
             Products = new BindableCollection<SaleItemViewModel>();
         }
 
