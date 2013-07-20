@@ -60,18 +60,18 @@ namespace Shop.PointOfSale.ViewModels
         {
             base.OnInitialize();
 
-            PaymentItems.Add(new PayItemViewModel { Description = "$10", Amount = 10.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "$1", Amount = 1.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "10c", Amount = 0.10m });
-            PaymentItems.Add(new PayItemViewModel { Description = "1c", Amount = 0.01m });
+            PaymentItems.Add(new PayItemViewModel { Description = "$10", Price = 10.0m });
+            PaymentItems.Add(new PayItemViewModel { Description = "$1", Price = 1.0m });
+            PaymentItems.Add(new PayItemViewModel { Description = "10c", Price = 0.10m });
+            PaymentItems.Add(new PayItemViewModel { Description = "5c", Price = 0.05m });
         }
 
-        public void AddPayment(PayItemViewModel item)
+        public void AddItem(PayItemViewModel item)
         {
             UpdateQuantity(item, 1);
         }
 
-        public void RemovePayment(PayItemViewModel item)
+        public void RemoveItem(PayItemViewModel item)
         {
             UpdateQuantity(item, -1);
         }

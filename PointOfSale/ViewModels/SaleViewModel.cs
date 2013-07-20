@@ -100,12 +100,12 @@ namespace Shop.PointOfSale.ViewModels
             });
         }
 
-        public void AddToCart(SaleItemViewModel item)
+        public void AddItem(SaleItemViewModel item)
         {
             UpdateQuantity(item, 1);
         }
 
-        public void RemoveFromCart(SaleItemViewModel item)
+        public void RemoveItem(SaleItemViewModel item)
         {
             UpdateQuantity(item, -1);
         }

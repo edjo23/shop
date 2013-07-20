@@ -63,7 +63,7 @@ namespace Shop.PointOfSale.ViewModels
             LoanItems.Add(new LoanItemViewModel { Description = "$10", Amount = 10.0m });
             LoanItems.Add(new LoanItemViewModel { Description = "$1", Amount = 1.0m });
             LoanItems.Add(new LoanItemViewModel { Description = "10c", Amount = 0.10m });
-            LoanItems.Add(new LoanItemViewModel { Description = "1c", Amount = 0.01m });
+            LoanItems.Add(new LoanItemViewModel { Description = "5c", Amount = 0.05m });
         }
 
         public void AddItem(LoanItemViewModel item)

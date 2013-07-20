@@ -24,6 +24,14 @@ namespace Shop.PointOfSale.ViewModels
 
         public Product Product { get; set; }
 
+        public string Description
+        {
+            get
+            {
+                return Product.Description;
+            }
+        }
+
         public decimal Discount { get; set; }
 
         public BitmapImage ImageSource

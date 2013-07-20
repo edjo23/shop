@@ -65,7 +65,7 @@ namespace Shop.PointOfSale.ViewModels
         {
             get
             {
-                return SelectedItem == "Visitor" ? Visibility.Visible : Visibility.Hidden;
+                return SelectedItem.Equals("Visitor", StringComparison.InvariantCultureIgnoreCase) ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -73,7 +73,7 @@ namespace Shop.PointOfSale.ViewModels
         {
             get
             {
-                return SelectedItem == "Account" ? Visibility.Visible : Visibility.Hidden;
+                return SelectedItem.Equals("Account", StringComparison.InvariantCultureIgnoreCase) ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -83,8 +83,8 @@ namespace Shop.PointOfSale.ViewModels
 
             EventAggregator.Publish(new ShowDialog { Screen = IoC.Get<LoadingViewModel>() });
 
-            Items.Add("Account");
-            Items.Add("Visitor");
+            Items.Add("ACCOUNT");
+            Items.Add("VISITOR");
 
             SelectedItem = Items.First();
 

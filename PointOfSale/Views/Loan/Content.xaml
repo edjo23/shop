@@ -7,56 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Grid>
-            <ItemsControl x:Name="LoanItems">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Background="White" Margin="0,0,25,25" HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="250" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="150" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <Button c:Message.Attach="AddItem($dataContext)" SnapsToDevicePixels="True">
-                                <Image Source="{Binding ImageSource}" Margin="10" />
-                                <Button.Template>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Border Background="Transparent">
-                                            <ContentPresenter />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Button.Template>
-                            </Button>
-
-                            <!-- Quantity Layer-->
-                            <Border Visibility="{Binding QuantityVisibility}" Background="#DDFFFFFF" SnapsToDevicePixels="True">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding Quantity}" Foreground="{StaticResource AccentColorBrush}" FontSize="50" FontWeight="Light" MinWidth="75" TextAlignment="Left" />
-                                    <Button Style="{StaticResource RoundButtonStyle}" ContentTemplate="{StaticResource PlusButtonContent}" c:Message.Attach="AddItem($dataContext)" VerticalAlignment="Center" Margin="5,0" />
-                                    <Button Style="{StaticResource RoundButtonStyle}" ContentTemplate="{StaticResource MinusButtonContent}" c:Message.Attach="RemoveItem($dataContext)" VerticalAlignment="Center" Margin="5,0" />
-                                </StackPanel>
-                            </Border>
-
-                            <Border Grid.Row="1" Background="SteelBlue" SnapsToDevicePixels="True">
-                                <Grid>
-                                    <TextBlock Text="{Binding Description}" FontSize="20" FontWeight="Light" Foreground="White" HorizontalAlignment="Left" Margin="15,5,0,5" />
-                                </Grid>
-                            </Border>
-
-                            <Border Grid.RowSpan="2" BorderThickness="1" BorderBrush="#25000000" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Grid>
-
+        <ItemsControl x:Name="LoanItems" Style="{StaticResource PointOfSaleContent}" />
     </Grid>
 </UserControl>

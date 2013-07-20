@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+                    xmlns:s="clr-namespace:System;assembly=mscorlib"
+                    xmlns:c="http://www.caliburnproject.org">
 
     <SolidColorBrush x:Key="BackgroundBrush" Color="#FFF0F0F0" />
     <SolidColorBrush x:Key="AccentColorBrush" Color="SteelBlue" />
@@ -151,6 +152,18 @@
         <Setter Property="Foreground" Value="Black" />
     </Style>
 
+    <Style x:Key="NoStyleButtonStyle" TargetType="{x:Type ButtonBase}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="Transparent" Margin="{TemplateBinding Padding}">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="FlatListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
         <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
         <Setter Property="Background" Value="Transparent" />
@@ -200,5 +213,42 @@
             </Setter.Value>
         </Setter>
         <Setter Property="ItemContainerStyle" Value="{StaticResource FlatListBoxItemStyle}" />
+    </Style>
+
+    <ItemsPanelTemplate x:Key="PointOfSalePanelTemplate">
+        <WrapPanel Orientation="Horizontal" />
+    </ItemsPanelTemplate>
+    
+    <DataTemplate x:Key="PointOfSaleContentItemTemplate">
+        <Grid Background="White" Margin="0,0,25,25" Width="250" Height="160" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button Style="{StaticResource NoStyleButtonStyle}" c:Message.Attach="AddItem($dataContext)" Padding="10,10,10,25">
+                <Image Source="{Binding ImageSource}" Margin="5" />
+            </Button>
+
+            <!-- Quantity Layer-->
+            <Border Visibility="{Binding QuantityVisibility}" Background="#DDFFFFFF" SnapsToDevicePixels="True">
+                <Grid Margin="20,0,20,25">
+                    <TextBlock Text="{Binding Quantity}" Foreground="{StaticResource AccentColorBrush}" FontSize="50" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Style="{StaticResource RoundButtonStyle}" ContentTemplate="{StaticResource PlusButtonContent}" c:Message.Attach="AddItem($dataContext)" VerticalAlignment="Center" />
+                        <Button Style="{StaticResource RoundButtonStyle}" ContentTemplate="{StaticResource MinusButtonContent}" c:Message.Attach="RemoveItem($dataContext)" VerticalAlignment="Center" Margin="15,0,0,0" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border SnapsToDevicePixels="True" VerticalAlignment="Bottom">
+                <Grid Margin="20,5" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Description}" FontSize="20" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Price, StringFormat=C}" FontSize="20" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Right" />
+                </Grid>
+            </Border>
+
+            <Border BorderThickness="1" BorderBrush="#25000000" />
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="PointOfSaleContent" TargetType="{x:Type ItemsControl}">
+        <Setter Property="ItemsPanel" Value="{StaticResource PointOfSalePanelTemplate}" />
+        <Setter Property="ItemTemplate" Value="{StaticResource PointOfSaleContentItemTemplate}" />
     </Style>
 </ResourceDictionary>
