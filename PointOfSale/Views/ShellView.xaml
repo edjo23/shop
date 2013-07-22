@@ -4,13 +4,24 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:b="clr-namespace:Shop.PointOfSale.Behaviors"
         Title="ShellView" Height="760" Width="1358" WindowStartupLocation="CenterScreen"
-        Background="#FFF0F0F0">
+        Background="{StaticResource BackgroundColorBrush}">
     <i:Interaction.Behaviors>
         <b:FullScreenBehaviour />
     </i:Interaction.Behaviors>
     
     <Grid>
-        <ContentControl x:Name="ActiveItem" />
-        <ContentControl x:Name="DialogItem" Focusable="False" />
+        <Border Height="100" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <Viewbox Margin="25,15">
+                    <Canvas Width="60" Height="100">
+                        <Path Fill="{StaticResource AccentColorBrush}" Height="100" Stretch="Fill" Width="60" Data="M0,5 C0,2.2385763 2.2385763,0 5,0 L55,0 C57.761424,0 60,2.2385763 60,5 L60,95 C60,97.761424 57.761424,100 55,100 L5,100 C2.2385763,100 0,97.761424 0,95 z"/>
+                        <Path Fill="#99FFFFFF" Height="52" Stretch="Fill" Canvas.Top="15" Width="60" Data="M52,32 L55,32 55,52 52,52 z M0,25 L60,25 60,27 0,27 z M52,0 L55,0 55,20 52,20 z"/>
+                    </Canvas>
+                </Viewbox>
+                <TextBlock Text="le réfrigérateur" FontSize="50" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" VerticalAlignment="Center" Margin="0,0,0,10" />
+            </StackPanel>
+        </Border>
+        
+        <ContentControl x:Name="ActiveItem" Focusable="False" />
     </Grid>
 </Window>

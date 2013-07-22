@@ -15,23 +15,44 @@ namespace Shop.PointOfSale.Services
         public ScreenCoordinator(IEventAggregator eventAggregator)
 	    {
             EventAggregator = eventAggregator;
+            Logger = log4net.LogManager.GetLogger(GetType());
 	    }
 
         private readonly IEventAggregator EventAggregator;
 
-        public void GoToHome()
-        {
-            var screen = IoC.Get<HomeViewModel>();
+        private readonly log4net.ILog Logger;
 
+        public void NavigateToScreen(Screen screen)
+        {
             EventAggregator.Publish(screen);
         }
 
-        public void GoToCustomer(Customer customer)
+        public void NavigateToHome()
+        {
+            var screen = IoC.Get<HomeViewModel>();
+
+            NavigateToScreen(screen);
+        }
+
+        public void NavigateToCustomer(Customer customer)
         {
             var screen = IoC.Get<CustomerViewModel>();
             screen.Customer = customer;
 
-            EventAggregator.Publish(screen);
+            NavigateToScreen(screen);
+        }
+
+        public void HandleFault(AggregateException ex)
+        {
+            Logger.Error(ex.Message, ex);
+
+            var message = IoC.Get<MessageBoxViewModel>();
+            message.DisplayName = "Error";
+            message.Content = new ErrorInfo();
+            message.DismissAction = () => NavigateToHome();
+            message.DismissTimeout = 10000;
+
+            NavigateToScreen(message);
         }
     }
 }

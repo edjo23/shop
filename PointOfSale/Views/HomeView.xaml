@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="http://www.caliburnproject.org"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:b="clr-namespace:Shop.PointOfSale.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1366">
     <UserControl.Resources>
@@ -26,7 +28,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border>
+        <Border>            
             <StackPanel Orientation="Horizontal">                
                 <Viewbox Margin="25,15">
                     <Canvas Width="60" Height="100">
@@ -39,6 +41,9 @@
         </Border>
 
         <Border Grid.Row="1" Background="#FFE0E0E0">
+            <!--<i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour />
+            </i:Interaction.Behaviors>-->
             <ListBox x:Name="Items" Style="{StaticResource FlatListBox}" HorizontalAlignment="Center">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

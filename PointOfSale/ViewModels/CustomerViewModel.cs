@@ -17,9 +17,49 @@ namespace Shop.PointOfSale.ViewModels
         public CustomerViewModel(ScreenCoordinator screenCoordinator)
         {
             ScreenCoordinator = screenCoordinator;
+            Logger = log4net.LogManager.GetLogger(GetType());
         }
 
         private ScreenCoordinator ScreenCoordinator;
+
+        private readonly log4net.ILog Logger;
+
+        public bool _IsLoading = false;
+
+        public bool IsLoading
+        {
+            get
+            {
+                return _IsLoading;
+            }
+            set
+            {
+                if (value != _IsLoading)
+                {
+                    _IsLoading = value;
+
+                    NotifyOfPropertyChange(() => IsLoading);
+                    NotifyOfPropertyChange(() => LoadingVisibility);
+                    NotifyOfPropertyChange(() => ContentVisibility);
+                }
+            }
+        }
+
+        public Visibility LoadingVisibility
+        {
+            get
+            {
+                return IsLoading ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        public Visibility ContentVisibility
+        {
+            get
+            {
+                return IsLoading ? Visibility.Hidden : Visibility.Visible;
+            }
+        }
 
         public Customer Customer { get; set; }
 
@@ -50,36 +90,56 @@ namespace Shop.PointOfSale.ViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
-        }
 
-        protected override void OnActivate()
-        {
-            base.OnActivate();
+            IsLoading = true;
 
             var saleViewModel = IoC.Get<SaleViewModel>();
             saleViewModel.Customer = Customer;
 
             Items.Add(saleViewModel);
 
+            PayViewModel payViewModel = null;
+            LoanViewModel loanViewModel = null;
+
             if (!IsCashAccount)
             {
-                var payViewModel = IoC.Get<PayViewModel>();
+                payViewModel = IoC.Get<PayViewModel>();
                 payViewModel.Customer = Customer;
 
-                Items.Add(payViewModel);
-
-                var loanViewModel = IoC.Get<LoanViewModel>();
+                loanViewModel = IoC.Get<LoanViewModel>();
                 loanViewModel.Customer = Customer;
 
+                Items.Add(payViewModel);
                 Items.Add(loanViewModel);
             }
 
-            ActivateItem(Items.First());
+            Task.Factory.StartNew(() =>
+                {
+                    saleViewModel.Load();
+
+                    if (payViewModel != null)
+                        payViewModel.Load();
+
+                    if (loanViewModel != null)
+                        loanViewModel.Load();
+                })
+            .ContinueWith(task =>
+                {
+                    if (task.IsFaulted)
+                    {
+                        ScreenCoordinator.HandleFault(task.Exception);
+                    }
+                    else
+                    {
+                        Execute.OnUIThread(() => IsLoading = false);
+                        ActivateItem(Items.First());
+                    }
+                });
         }
 
         public void GoHome()
         {
-            ScreenCoordinator.GoToHome();
-        }
+            ScreenCoordinator.NavigateToHome();
+        }      
     }
 }

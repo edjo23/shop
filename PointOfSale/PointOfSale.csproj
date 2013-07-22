@@ -75,10 +75,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\ElementDeferredVisibilityBehaviour.cs" />
+    <Compile Include="Behaviors\ElementTransitionBehavior.cs" />
     <Compile Include="Behaviors\FullScreenBehaviour.cs" />
-    <Compile Include="Messages\HideDialog.cs" />
-    <Compile Include="Messages\ShowDialog.cs" />
+    <Compile Include="Models\ErrorInfo.cs" />
     <Compile Include="Models\Sale.cs" />
+    <Compile Include="Models\CustomerTransactionInfo.cs" />
     <Compile Include="Services\ScreenCoordinator.cs" />
     <Compile Include="ViewModels\LoanItemViewModel.cs" />
     <Compile Include="ViewModels\LoanViewModel.cs" />
@@ -87,9 +89,11 @@
     <Compile Include="ViewModels\LoadingViewModel.cs" />
     <Compile Include="ViewModels\PayItemViewModel.cs" />
     <Compile Include="ViewModels\PayViewModel.cs" />
+    <Compile Include="ViewModels\ProcessViewModel.cs" />
     <Compile Include="ViewModels\SaleItemViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\SaleViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Loan\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
@@ -113,6 +117,9 @@
     </Compile>
     <Compile Include="Views\Pay\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProcessView.xaml.cs">
+      <DependentUpon>ProcessView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Sale\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
@@ -171,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pay\Toolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProcessView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

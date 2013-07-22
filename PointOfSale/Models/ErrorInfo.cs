@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Caliburn.Micro;
 
-namespace Shop.PointOfSale.Messages
+namespace Shop.PointOfSale.Models
 {
-    public class ShowDialog
+    public class ErrorInfo
     {
-        public Screen Screen { get; set; }
     }
 }

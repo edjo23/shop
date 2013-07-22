@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
-using Shop.PointOfSale.Messages;
+using Shop.PointOfSale.Models;
 using Shop.PointOfSale.Services;
 
 namespace Shop.PointOfSale.ViewModels
 {
     public class SaleViewModel : Screen
     {
-        public SaleViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService, IDiscountService discountService)        
+        public SaleViewModel(ScreenCoordinator screenCoordinator, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService, IDiscountService discountService)        
         {
-            EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
             ProductService = productService;
@@ -26,8 +26,6 @@ namespace Shop.PointOfSale.ViewModels
             Products = new BindableCollection<SaleItemViewModel>();
         }
 
-        private readonly IEventAggregator EventAggregator;
-
         private readonly ScreenCoordinator ScreenCoordinator;
 
         private readonly ICustomerService CustomerService;
@@ -37,6 +35,34 @@ namespace Shop.PointOfSale.ViewModels
         private readonly IInvoiceService InvoiceService;
 
         private readonly IDiscountService DiscountService;
+
+        private bool _IsLoading = false;
+
+        public bool IsLoading
+        {
+            get
+            {
+                return _IsLoading;
+            }
+            set
+            {
+                if (value != _IsLoading)
+                {
+                    _IsLoading = value;
+
+                    NotifyOfPropertyChange(() => IsLoading);
+                    NotifyOfPropertyChange(() => LoadingVisibility);
+                }
+            }
+        }
+
+        public Visibility LoadingVisibility
+        {
+            get
+            {
+                return IsLoading ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
 
         public Customer Customer { get; set; }
 
@@ -82,24 +108,15 @@ namespace Shop.PointOfSale.ViewModels
             }
         }
 
-        protected override void OnInitialize()
+        public void Load()
         {
-            base.OnInitialize();
+            var products = ProductService.GetProducts();
+            var discounts = DiscountService.GetDiscounts();
+            var discountProducts = DiscountService.GetDiscountProductsByCustomerId(Customer.Id);
 
-            EventAggregator.Publish(new ShowDialog { Screen = IoC.Get<LoadingViewModel>() });
-
-            Task.Factory.StartNew(() =>
-            {
-                var products = ProductService.GetProducts();
-                var discounts = DiscountService.GetDiscounts();
-                var discountProducts = DiscountService.GetDiscountProductsByCustomerId(Customer.Id);
-
-                Products.AddRange(products.Select(o => new SaleItemViewModel { Product = o, Discount = discountProducts.Where(p => p.ProductId == o.Id).Select(p => p.Discount).DefaultIfEmpty(0.0m).Max() }));
-
-                EventAggregator.Publish(new HideDialog { });
-            });
+            Products.AddRange(products.Select(o => new SaleItemViewModel { Product = o, Discount = discountProducts.Where(p => p.ProductId == o.Id).Select(p => p.Discount).DefaultIfEmpty(0.0m).Max() }));
         }
-
+        
         public void AddItem(SaleItemViewModel item)
         {
             UpdateQuantity(item, 1);
@@ -122,13 +139,10 @@ namespace Shop.PointOfSale.ViewModels
 
         public void Checkout()
         {
-            var messageBox = IoC.Get<MessageBoxViewModel>();
-            messageBox.DisplayName = "";
-            messageBox.Content = "";
+            var processvm = IoC.Get<ProcessViewModel>();
+            processvm.Content = "Processing...";
 
-            EventAggregator.Publish(new ShowDialog { Screen = messageBox });
-
-            Task.Factory.StartNew(() =>
+            processvm.ProcessAction = () => 
                 {
                     var invoice = new Invoice
                     {
@@ -150,34 +164,19 @@ namespace Shop.PointOfSale.ViewModels
                     InvoiceService.AddInvoice(invoice, invoiceItems, IsCashAccount ? Total : 0.0m);
 
                     Customer.Balance = CustomerService.GetCustomer(Customer.Id).Balance;
-                })
-            .ContinueWith(task =>
+                };
+
+            processvm.CompleteAction = () =>
                 {
-                    if (task.IsFaulted)
-                    {
-                        Execute.OnUIThread(() =>
-                            {
-                                messageBox.Background = System.Windows.Media.Brushes.Firebrick;
-                                messageBox.DisplayName = "Sorry, an error has occurred :(";
-                                messageBox.Content = "The purchase was not processed";
-                            });
-                    }
-                    else
-                    {
-                        Execute.OnUIThread(() =>
-                            {
-                                messageBox.DisplayName = "Thank you";
-                                messageBox.Content = IsCashAccount ? "" : String.Format("Your balance is now {0:C}", Customer.Balance);
-                            });
+                    var message = IoC.Get<MessageBoxViewModel>();
+                    message.Content = new CustomerTransactionInfo { NewBalance = Customer.Balance };
+                    message.DismissAction = () => ScreenCoordinator.NavigateToHome();
+                    message.DismissTimeout = 2500;
 
-                        System.Threading.Thread.Sleep(5000);
+                    ScreenCoordinator.NavigateToScreen(message);
+                };
 
-                        Execute.OnUIThread(() =>
-                            {
-                                ScreenCoordinator.GoToHome();
-                            });
-                    }
-                });
+            ScreenCoordinator.NavigateToScreen(processvm);
         }
     }
 }

@@ -8,5 +8,10 @@
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <ItemsControl x:Name="Products" Style="{StaticResource PointOfSaleContent}" />
+        
+        <Border Background="{StaticResource BackgroundColorBrush}" Visibility="{Binding LoadingVisibility}">
+            <TextBlock Text="Loading..." FontSize="50" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+            
     </Grid>
 </UserControl>

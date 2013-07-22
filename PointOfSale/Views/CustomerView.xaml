@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="http://www.caliburnproject.org"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="1000"
-             Background="#FFF0F0F0">
+             d:DesignHeight="800" d:DesignWidth="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -18,7 +17,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border Grid.ColumnSpan="2">
+        <!--<Border Grid.ColumnSpan="2">
             <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
                 <Viewbox Margin="25,15">
                     <Canvas Width="60" Height="100">
@@ -28,7 +27,7 @@
                 </Viewbox>
                 <TextBlock Text="le réfrigérateur" FontSize="50" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" VerticalAlignment="Center" Margin="0,0,0,10" />
             </StackPanel>
-        </Border>
+        </Border>-->
         
         <Border Grid.Row="1" Grid.ColumnSpan="2" Background="Gainsboro">
             <Grid>                               

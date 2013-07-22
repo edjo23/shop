@@ -14,7 +14,7 @@ namespace Shop.PointOfSale.ViewModels
     {
         public string Description { get; set; }
 
-        public decimal Amount { get; set; }
+        public decimal Price { get; set; }
 
         public BitmapImage ImageSource
         {
@@ -52,7 +52,7 @@ namespace Shop.PointOfSale.ViewModels
         {
             get
             {
-                return Quantity * Amount;
+                return Quantity * Price;
             }
         }
 

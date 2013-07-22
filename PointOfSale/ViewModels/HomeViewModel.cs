@@ -7,12 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
-using Shop.PointOfSale.Messages;
 using System.Windows;
 
 namespace Shop.PointOfSale.ViewModels
 {
-    public class HomeViewModel : Screen
+    public class HomeViewModel : ViewModelBase
     {
         public HomeViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
         {
@@ -65,7 +64,7 @@ namespace Shop.PointOfSale.ViewModels
         {
             get
             {
-                return SelectedItem.Equals("Visitor", StringComparison.InvariantCultureIgnoreCase) ? Visibility.Visible : Visibility.Hidden;
+                return (SelectedItem ?? "").Equals("Visitor", StringComparison.InvariantCultureIgnoreCase) ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -73,7 +72,7 @@ namespace Shop.PointOfSale.ViewModels
         {
             get
             {
-                return SelectedItem.Equals("Account", StringComparison.InvariantCultureIgnoreCase) ? Visibility.Visible : Visibility.Hidden;
+                return (SelectedItem ?? "").Equals("Account", StringComparison.InvariantCultureIgnoreCase) ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -81,34 +80,34 @@ namespace Shop.PointOfSale.ViewModels
         {
             base.OnInitialize();
 
-            EventAggregator.Publish(new ShowDialog { Screen = IoC.Get<LoadingViewModel>() });
-
-            Items.Add("ACCOUNT");
-            Items.Add("VISITOR");
-
-            SelectedItem = Items.First();
+            IsLoading = true;
 
             Task.Factory.StartNew(() =>
                 {
-                    Logger.Info("Loading home page");
+                    Items.Add("ACCOUNT");
+                    Items.Add("VISITOR");
 
-                    try
-                    {
-                        Accounts.AddRange(CustomerService.GetCustomers().Where(o => !String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
-                        Visitors.AddRange(CustomerService.GetCustomers().Where(o => String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
-                    }
-                    catch(Exception ex)
-                    {
-                        Logger.Error(ex.Message, ex);
-                    }
+                    SelectedItem = Items.First();
 
-                    EventAggregator.Publish(new HideDialog { });
+                    Accounts.AddRange(CustomerService.GetCustomers().Where(o => !String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
+                    Visitors.AddRange(CustomerService.GetCustomers().Where(o => String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
+                })
+            .ContinueWith(task =>
+                {
+                    if (task.IsFaulted)
+                    {
+                        ScreenCoordinator.HandleFault(task.Exception);
+                    }
+                    else
+                    {
+                        Execute.OnUIThread(() => IsLoading = false);
+                    }
                 });
-        }
+        }        
 
         public void NewTransaction(Customer customer)
         {
-            ScreenCoordinator.GoToCustomer(customer);
+            ScreenCoordinator.NavigateToCustomer(customer);
         }
     }
 }

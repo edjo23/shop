@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
-using Shop.PointOfSale.Messages;
+using Shop.PointOfSale.Models;
 using Shop.PointOfSale.Services;
 
 namespace Shop.PointOfSale.ViewModels
@@ -56,12 +56,14 @@ namespace Shop.PointOfSale.ViewModels
             }
         }
 
-        protected override void OnInitialize()
+        public void Load()
         {
-            base.OnInitialize();
-
+            PaymentItems.Add(new PayItemViewModel { Description = "$20", Price = 20.0m });
             PaymentItems.Add(new PayItemViewModel { Description = "$10", Price = 10.0m });
+            PaymentItems.Add(new PayItemViewModel { Description = "$5", Price = 5.0m });
             PaymentItems.Add(new PayItemViewModel { Description = "$1", Price = 1.0m });
+            PaymentItems.Add(new PayItemViewModel { Description = "50c", Price = 0.50m });
+            PaymentItems.Add(new PayItemViewModel { Description = "20c", Price = 0.20m });
             PaymentItems.Add(new PayItemViewModel { Description = "10c", Price = 0.10m });
             PaymentItems.Add(new PayItemViewModel { Description = "5c", Price = 0.05m });
         }
@@ -87,13 +89,10 @@ namespace Shop.PointOfSale.ViewModels
 
         public void CompletePayment()
         {
-            var messageBox = IoC.Get<MessageBoxViewModel>();
-            messageBox.DisplayName = "";
-            messageBox.Content = "";
+            var processvm = IoC.Get<ProcessViewModel>();
+            processvm.Content = "Processing...";
 
-            EventAggregator.Publish(new ShowDialog { Screen = messageBox });
-
-            Task.Factory.StartNew(() =>
+            processvm.ProcessAction = () =>
             {
                 var payment = new CustomerTransaction
                 {
@@ -107,34 +106,19 @@ namespace Shop.PointOfSale.ViewModels
                 CustomerService.AddTransaction(payment);
 
                 Customer.Balance = CustomerService.GetCustomer(Customer.Id).Balance;
-            })
-            .ContinueWith(task =>
+            };
+
+            processvm.CompleteAction = () =>
             {
-                if (task.IsFaulted)
-                {
-                    Execute.OnUIThread(() =>
-                    {
-                        messageBox.Background = System.Windows.Media.Brushes.Firebrick;
-                        messageBox.DisplayName = "Sorry, an error has occurred :(";
-                        messageBox.Content = "The payment was not processed";
-                    });
-                }
-                else
-                {
-                    Execute.OnUIThread(() =>
-                    {
-                        messageBox.DisplayName = "Thank you";
-                        messageBox.Content = String.Format("Your balance is now {0:C}", Customer.Balance);
-                    });
+                var message = IoC.Get<MessageBoxViewModel>();
+                message.Content = new CustomerTransactionInfo { NewBalance = Customer.Balance };
+                message.DismissAction = () => ScreenCoordinator.NavigateToHome();
+                message.DismissTimeout = 2500;
 
-                    System.Threading.Thread.Sleep(5000);
+                ScreenCoordinator.NavigateToScreen(message);
+            };
 
-                    Execute.OnUIThread(() =>
-                    {
-                        ScreenCoordinator.GoToHome();
-                    });
-                }
-            });
+            ScreenCoordinator.NavigateToScreen(processvm);
         }
     }
 }

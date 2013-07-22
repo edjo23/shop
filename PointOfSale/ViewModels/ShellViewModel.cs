@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Shop.PointOfSale.Messages;
+using Shop.PointOfSale.Models;
 
 namespace Shop.PointOfSale.ViewModels
 {
-    public class ShellViewModel : Conductor<Screen>.Collection.OneActive, IHandle<Screen>, IHandle<ShowDialog>, IHandle<HideDialog>
+    public class ShellViewModel : Conductor<Screen>.Collection.OneActive, IHandle<Screen>
     {
         public ShellViewModel(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
+            Logger = log4net.LogManager.GetLogger(GetType());
 
             DisplayName = "The Shop";
 
@@ -21,44 +22,30 @@ namespace Shop.PointOfSale.ViewModels
 
         private readonly IEventAggregator EventAggregator;
 
-        private Screen _DialogItem;
-
-        public Screen DialogItem 
-        {
-            get
-            {
-                return _DialogItem;
-            }
-            set
-            {
-                if (value != _DialogItem)
-                {
-                    _DialogItem = value;
-                    NotifyOfPropertyChange(() => DialogItem);
-                }
-            }
-        }
+        private readonly log4net.ILog Logger;
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
-            ActivateItem(IoC.Get<HomeViewModel>());
+            Task.Factory.StartNew(() => Handle(IoC.Get<HomeViewModel>()));
         }
-        
+
         public void Handle(Screen message)
         {
+            Logger.Debug(String.Format("Showing screen [Type: {0}]", message.GetType()));
+
+            if (ActiveItem != null)
+            {
+                Logger.Debug(String.Format("Deactivating screen [Type: {0}]", ActiveItem.GetType()));
+                DeactivateItem(ActiveItem, true);
+            }
+
+            Logger.Debug(String.Format("Activating screen [Type: {0}]", message.GetType()));
+
             ActivateItem(message);
-        }
 
-        public void Handle(ShowDialog message)
-        {
-            DialogItem = message.Screen;
-        }
-
-        public void Handle(HideDialog message)
-        {
-            DialogItem = null;
-        }
+            Logger.Debug(String.Format("Active screen is [Type: {0}]", ActiveItem.GetType()));
+        }        
     }
 }
