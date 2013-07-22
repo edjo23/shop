@@ -4,9 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="http://www.caliburnproject.org"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:b="clr-namespace:Shop.PointOfSale.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <ItemsControl x:Name="LoanItems" Style="{StaticResource PointOfSaleContent}" />
+        <ItemsControl x:Name="LoanItems" Style="{StaticResource PointOfSaleContent}">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="100" AnimationDuration="400" />
+            </i:Interaction.Behaviors>
+        </ItemsControl>
     </Grid>
 </UserControl>

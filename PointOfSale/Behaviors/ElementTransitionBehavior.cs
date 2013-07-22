@@ -51,6 +51,10 @@ namespace Shop.PointOfSale.Behaviors
                     action();
                 }
             }
+            else
+            {
+                AssociatedObject.RenderTransform.BeginAnimation(TranslateTransform.XProperty, new DoubleAnimation(25.0, TimeSpan.FromMilliseconds(0)));
+            }
         }
     }
 }

@@ -223,12 +223,7 @@
     </ItemsPanelTemplate>
     
     <DataTemplate x:Key="PointOfSaleContentItemTemplate">
-        <Grid Background="White" Margin="0,0,25,25" Width="250" Height="160" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <i:Interaction.Behaviors>
-                <!--<b:ElementDeferredVisibilityBehaviour />
-                <b:ElementTransitionBehaviour />-->
-            </i:Interaction.Behaviors>
-            
+        <Grid Background="White" Margin="0,0,25,25" Width="250" Height="160" HorizontalAlignment="Left" VerticalAlignment="Top">            
             <Button Style="{StaticResource NoStyleButtonStyle}" c:Message.Attach="AddItem($dataContext)" Padding="10,10,10,25">
                 <Image Source="{Binding ImageSource}" Margin="5" />
             </Button>

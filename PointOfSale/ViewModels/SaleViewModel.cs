@@ -52,6 +52,7 @@ namespace Shop.PointOfSale.ViewModels
 
                     NotifyOfPropertyChange(() => IsLoading);
                     NotifyOfPropertyChange(() => LoadingVisibility);
+                    NotifyOfPropertyChange(() => ContentVisibility);
                 }
             }
         }
@@ -61,6 +62,14 @@ namespace Shop.PointOfSale.ViewModels
             get
             {
                 return IsLoading ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        public Visibility ContentVisibility
+        {
+            get
+            {
+                return IsLoading ? Visibility.Hidden : Visibility.Visible;
             }
         }
 

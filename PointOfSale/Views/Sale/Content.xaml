@@ -4,12 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="http://www.caliburnproject.org"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:b="clr-namespace:Shop.PointOfSale.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
-        <ItemsControl x:Name="Products" Style="{StaticResource PointOfSaleContent}" />
-        
+        <ItemsControl x:Name="Products" Style="{StaticResource PointOfSaleContent}" Visibility="{Binding ContentVisibility}">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="100" AnimationDuration="400" />
+            </i:Interaction.Behaviors>
+        </ItemsControl>
+
         <Border Background="{StaticResource BackgroundColorBrush}" Visibility="{Binding LoadingVisibility}">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="1500" />
+            </i:Interaction.Behaviors>
+            
             <TextBlock Text="Loading..." FontSize="50" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Border>
             

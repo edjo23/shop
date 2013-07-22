@@ -24,7 +24,7 @@ namespace Shop.PointOfSale.Behaviors
 
         protected override void OnAttached()
         {
-            AssociatedObject.Opacity = 0;
+            AssociatedObject.Opacity = 0.0;
             AssociatedObject.IsVisibleChanged += AssociatedObject_IsVisibleChanged;
         }
 
@@ -37,7 +37,7 @@ namespace Shop.PointOfSale.Behaviors
         {
             if (AssociatedObject.IsVisible)
             {
-                Action action = () => AssociatedObject.BeginAnimation(FrameworkElement.OpacityProperty, new DoubleAnimation(1.0, TimeSpan.FromMilliseconds(AnimationDuration)) { });
+                Action action = () => AssociatedObject.BeginAnimation(FrameworkElement.OpacityProperty, new DoubleAnimation(1.0, TimeSpan.FromMilliseconds(AnimationDuration)));
 
                 if (VisibileDelay > 0)
                 {
@@ -49,6 +49,10 @@ namespace Shop.PointOfSale.Behaviors
                 {
                     action();
                 }
+            }
+            else
+            {
+                AssociatedObject.BeginAnimation(FrameworkElement.OpacityProperty, new DoubleAnimation(0.0, TimeSpan.FromMilliseconds(0)));
             }
         }
     }
