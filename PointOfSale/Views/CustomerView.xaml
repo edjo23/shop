@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:c="http://www.caliburnproject.org"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:b="clr-namespace:Shop.PointOfSale.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1000">
     <Grid>
@@ -15,21 +17,12 @@
             <RowDefinition Height="100" />
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <!--<Border Grid.ColumnSpan="2">
-            <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
-                <Viewbox Margin="25,15">
-                    <Canvas Width="60" Height="100">
-                        <Path Fill="{StaticResource AccentColorBrush}" Height="100" Stretch="Fill" Width="60" Data="M0,5 C0,2.2385763 2.2385763,0 5,0 L55,0 C57.761424,0 60,2.2385763 60,5 L60,95 C60,97.761424 57.761424,100 55,100 L5,100 C2.2385763,100 0,97.761424 0,95 z"/>
-                        <Path Fill="#99FFFFFF" Height="52" Stretch="Fill" Canvas.Top="15" Width="60" Data="M52,32 L55,32 55,52 52,52 z M0,25 L60,25 60,27 0,27 z M52,0 L55,0 55,20 52,20 z"/>
-                    </Canvas>
-                </Viewbox>
-                <TextBlock Text="le réfrigérateur" FontSize="50" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" VerticalAlignment="Center" Margin="0,0,0,10" />
-            </StackPanel>
-        </Border>-->
+        </Grid.RowDefinitions>        
         
         <Border Grid.Row="1" Grid.ColumnSpan="2" Background="Gainsboro">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
+            </i:Interaction.Behaviors>
             <Grid>                               
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="15,0">
                     <Button x:Name="GoHome" Style="{StaticResource FlatButtonStyle}" HorizontalAlignment="Left" Padding="10,5">
@@ -59,6 +52,9 @@
         </Border>
 
         <Grid Grid.Row="2" Grid.Column="1" Margin="0" SnapsToDevicePixels="True">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
+            </i:Interaction.Behaviors>
             <StackPanel>
                 <StackPanel Margin="25" Visibility="{Binding BalanceVisibility}">
                     <TextBlock Text="ACCOUNT" Foreground="DarkGray" FontSize="20" FontWeight="Light" TextAlignment="Right" />
@@ -74,6 +70,9 @@
         </Grid>
         
         <Grid Grid.Row="2" Grid.Column="0" Margin="25,25,0,0">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
+            </i:Interaction.Behaviors>
             <ContentControl Focusable="False" c:View.Model="{Binding ActiveItem}" c:View.Context="Content" />
         </Grid>        
     </Grid>

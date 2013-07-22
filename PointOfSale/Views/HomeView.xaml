@@ -41,9 +41,9 @@
         </Border>
 
         <Border Grid.Row="1" Background="#FFE0E0E0">
-            <!--<i:Interaction.Behaviors>
-                <b:ElementDeferredVisibilityBehaviour />
-            </i:Interaction.Behaviors>-->
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
+            </i:Interaction.Behaviors>
             <ListBox x:Name="Items" Style="{StaticResource FlatListBox}" HorizontalAlignment="Center">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -54,6 +54,9 @@
         </Border>
         
         <Border Grid.Row="3" Visibility="{Binding VisitorVisibility}">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
+            </i:Interaction.Behaviors>
             <ItemsControl x:Name="Visitors" Margin="10">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -69,6 +72,9 @@
         </Border>
 
         <Border Grid.Row="3" Padding="0,0,25,25" Visibility="{Binding AccountVisibility}">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
+            </i:Interaction.Behaviors>
             <ItemsControl x:Name="Accounts" Margin="10">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
