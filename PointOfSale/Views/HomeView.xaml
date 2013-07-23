@@ -12,35 +12,22 @@
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DarkStoreButtonStyle}">
             <Setter Property="Width" Value="250" />
             <Setter Property="MinHeight" Value="40" />
-            <Setter Property="Margin" Value="0,0,15,5" />
+            <Setter Property="Margin" Value="0,0,15,0" />
             <Setter Property="FontSize" Value="30" />
             <Setter Property="FontWeight" Value="Light" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="Padding" Value="10,0,0,0" />            
+            <Setter Property="Padding" Value="10,10,0,10" />            
         </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="50" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border>            
-            <StackPanel Orientation="Horizontal">                
-                <Viewbox Margin="25,15">
-                    <Canvas Width="60" Height="100">
-                        <Path Fill="{StaticResource AccentColorBrush}" Height="100" Stretch="Fill" Width="60" Data="M0,5 C0,2.2385763 2.2385763,0 5,0 L55,0 C57.761424,0 60,2.2385763 60,5 L60,95 C60,97.761424 57.761424,100 55,100 L5,100 C2.2385763,100 0,97.761424 0,95 z"/>
-                        <Path Fill="#99FFFFFF" Height="52" Stretch="Fill" Canvas.Top="15" Width="60" Data="M52,32 L55,32 55,52 52,52 z M0,25 L60,25 60,27 0,27 z M52,0 L55,0 55,20 52,20 z"/>
-                    </Canvas>
-                </Viewbox>
-                <TextBlock Text="le réfrigérateur" FontSize="50" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" VerticalAlignment="Center" Margin="0,0,0,10" />                
-            </StackPanel>
-        </Border>
-
-        <Border Grid.Row="1" Background="#FFE0E0E0">
+        <Border Grid.Row="1" Background="#FFE0E0E0" Visibility="{Binding ContentVisibility}">
             <i:Interaction.Behaviors>
                 <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
             </i:Interaction.Behaviors>
@@ -52,12 +39,12 @@
                 </ItemsControl.ItemTemplate>
             </ListBox>
         </Border>
-        
-        <Border Grid.Row="3" Visibility="{Binding VisitorVisibility}">
+
+        <Border Grid.Row="2" Padding="0,0,10,10" Visibility="{Binding VisitorVisibility}">
             <i:Interaction.Behaviors>
                 <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
             </i:Interaction.Behaviors>
-            <ItemsControl x:Name="Visitors" Margin="10">
+            <ItemsControl x:Name="Visitors" Margin="15,25,0,0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Vertical" />
@@ -65,17 +52,17 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Content="{Binding Name}" c:Message.Attach="NewTransaction($dataContext)" />
+                        <Button Content="{Binding Customer.Name}" c:Message.Attach="NewTransaction($dataContext)" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>            
         </Border>
 
-        <Border Grid.Row="3" Padding="0,0,25,25" Visibility="{Binding AccountVisibility}">
+        <Border Grid.Row="2" Padding="0,0,10,10" Visibility="{Binding AccountVisibility}">
             <i:Interaction.Behaviors>
                 <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
             </i:Interaction.Behaviors>
-            <ItemsControl x:Name="Accounts" Margin="10">
+            <ItemsControl x:Name="Accounts" Margin="15,25,0,0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Vertical" />
@@ -85,13 +72,21 @@
                     <DataTemplate>
                         <Button c:Message.Attach="NewTransaction($dataContext)">
                             <StackPanel>
-                                <TextBlock Text="{Binding Name}" />
-                                <TextBlock Text="{Binding Balance, StringFormat=C}" FontSize="20" />
+                                <TextBlock Text="{Binding Customer.Name}" />
+                                <TextBlock Text="{Binding BalanceText, StringFormat=C}" Foreground="{Binding BalanceColorBrush}" />
                             </StackPanel>
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Border>
+
+        <Grid Grid.RowSpan="3" Visibility="{Binding LoadingVisibility}">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="1500" />
+            </i:Interaction.Behaviors>
+
+            <TextBlock Text="Loading..." FontSize="50" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>        
     </Grid>
 </UserControl>

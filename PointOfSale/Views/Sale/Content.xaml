@@ -21,7 +21,6 @@
             </i:Interaction.Behaviors>
             
             <TextBlock Text="Loading..." FontSize="50" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
-            
+        </Border>            
     </Grid>
 </UserControl>

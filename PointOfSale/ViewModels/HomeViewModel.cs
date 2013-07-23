@@ -21,8 +21,8 @@ namespace Shop.PointOfSale.ViewModels
 
             Logger = log4net.LogManager.GetLogger(GetType());
             Items = new BindableCollection<string>();
-            Accounts = new BindableCollection<Customer>();
-            Visitors = new BindableCollection<Customer>();
+            Accounts = new BindableCollection<HomeItemViewModel>();
+            Visitors = new BindableCollection<HomeItemViewModel>();
         }
 
         private readonly IEventAggregator EventAggregator;
@@ -35,9 +35,9 @@ namespace Shop.PointOfSale.ViewModels
 
         public BindableCollection<string> Items { get; set; }
 
-        public BindableCollection<Customer> Accounts { get; set; }
+        public BindableCollection<HomeItemViewModel> Accounts { get; set; }
 
-        public BindableCollection<Customer> Visitors { get; set; }
+        public BindableCollection<HomeItemViewModel> Visitors { get; set; }
 
         private string _SelectedItem;
 
@@ -87,10 +87,8 @@ namespace Shop.PointOfSale.ViewModels
                     Items.Add("ACCOUNT");
                     Items.Add("VISITOR");
 
-                    SelectedItem = Items.First();
-
-                    Accounts.AddRange(CustomerService.GetCustomers().Where(o => !String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
-                    Visitors.AddRange(CustomerService.GetCustomers().Where(o => String.Equals(o.Name, "Cash", StringComparison.InvariantCultureIgnoreCase)));
+                    Accounts.AddRange(CustomerService.GetCustomers().Where(o => !o.Name.IsMatch("Cash")).Select(o => new HomeItemViewModel { Customer = o }));
+                    Visitors.AddRange(CustomerService.GetCustomers().Where(o => o.Name.IsMatch("Cash")).Select(o => new HomeItemViewModel { Customer = o }));
                 })
             .ContinueWith(task =>
                 {
@@ -100,14 +98,18 @@ namespace Shop.PointOfSale.ViewModels
                     }
                     else
                     {
-                        Execute.OnUIThread(() => IsLoading = false);
+                        Execute.OnUIThread(() =>
+                            {
+                                IsLoading = false;
+                                SelectedItem = Items.First();
+                            });
                     }
                 });
         }        
 
-        public void NewTransaction(Customer customer)
+        public void NewTransaction(HomeItemViewModel item)
         {
-            ScreenCoordinator.NavigateToCustomer(customer);
+            ScreenCoordinator.NavigateToCustomer(item.Customer);
         }
     }
 }

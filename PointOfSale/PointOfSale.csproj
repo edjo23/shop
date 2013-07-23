@@ -78,10 +78,12 @@
     <Compile Include="Behaviors\ElementDeferredVisibilityBehaviour.cs" />
     <Compile Include="Behaviors\ElementTransitionBehavior.cs" />
     <Compile Include="Behaviors\FullScreenBehaviour.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Models\ErrorInfo.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\CustomerTransactionInfo.cs" />
     <Compile Include="Services\ScreenCoordinator.cs" />
+    <Compile Include="ViewModels\HomeItemViewModel.cs" />
     <Compile Include="ViewModels\LoanItemViewModel.cs" />
     <Compile Include="ViewModels\LoanViewModel.cs" />
     <Compile Include="ViewModels\MessageBoxViewModel.cs" />
