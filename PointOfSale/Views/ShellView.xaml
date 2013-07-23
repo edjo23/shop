@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:b="clr-namespace:Shop.PointOfSale.Behaviors"
-        Title="ShellView" Height="760" Width="1358" WindowStartupLocation="CenterScreen"
+        Title="ShellView" Height="776" Width="1374" WindowStartupLocation="CenterScreen"
         Background="{StaticResource BackgroundColorBrush}">
     <i:Interaction.Behaviors>
         <b:FullScreenBehaviour />

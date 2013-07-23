@@ -58,9 +58,12 @@ namespace Shop.PointOfSale.ViewModels
 
         public void Load()
         {
+            PaymentItems.Add(new PayItemViewModel { Description = "$100", Price = 100.0m });
+            PaymentItems.Add(new PayItemViewModel { Description = "$50", Price = 50.0m });
             PaymentItems.Add(new PayItemViewModel { Description = "$20", Price = 20.0m });
             PaymentItems.Add(new PayItemViewModel { Description = "$10", Price = 10.0m });
             PaymentItems.Add(new PayItemViewModel { Description = "$5", Price = 5.0m });
+            PaymentItems.Add(new PayItemViewModel { Description = "$2", Price = 2.0m });
             PaymentItems.Add(new PayItemViewModel { Description = "$1", Price = 1.0m });
             PaymentItems.Add(new PayItemViewModel { Description = "50c", Price = 0.50m });
             PaymentItems.Add(new PayItemViewModel { Description = "20c", Price = 0.20m });
