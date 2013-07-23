@@ -13,14 +13,6 @@
             <i:Interaction.Behaviors>
                 <b:ElementDeferredVisibilityBehaviour VisibileDelay="100" AnimationDuration="400" />
             </i:Interaction.Behaviors>
-        </ItemsControl>
-
-        <Border Background="{StaticResource BackgroundColorBrush}" Visibility="{Binding LoadingVisibility}">
-            <i:Interaction.Behaviors>
-                <b:ElementDeferredVisibilityBehaviour VisibileDelay="1500" />
-            </i:Interaction.Behaviors>
-            
-            <TextBlock Text="Loading..." FontSize="50" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>            
+        </ItemsControl>                 
     </Grid>
 </UserControl>

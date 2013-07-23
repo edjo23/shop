@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace Shop.PointOfSale.ViewModels
 {
-    public class HomeViewModel : ViewModelBase
+    public class HomeViewModel : Screen
     {
         public HomeViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
         {
@@ -32,6 +32,47 @@ namespace Shop.PointOfSale.ViewModels
         private readonly ICustomerService CustomerService;
 
         private readonly log4net.ILog Logger;
+
+        #region IsLoading Property
+
+        public bool _IsLoading = false;
+
+        public bool IsLoading
+        {
+            get
+            {
+                return _IsLoading;
+            }
+            set
+            {
+                if (value != _IsLoading)
+                {
+                    _IsLoading = value;
+
+                    NotifyOfPropertyChange(() => IsLoading);
+                    NotifyOfPropertyChange(() => LoadingVisibility);
+                    NotifyOfPropertyChange(() => ContentVisibility);
+                }
+            }
+        }
+
+        public Visibility LoadingVisibility
+        {
+            get
+            {
+                return IsLoading ? Visibility.Visible : Visibility.Hidden;
+            }
+        }
+
+        public Visibility ContentVisibility
+        {
+            get
+            {
+                return IsLoading ? Visibility.Hidden : Visibility.Visible;
+            }
+        }
+
+        #endregion
 
         public BindableCollection<string> Items { get; set; }
 

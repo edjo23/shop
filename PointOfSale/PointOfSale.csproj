@@ -95,7 +95,6 @@
     <Compile Include="ViewModels\SaleItemViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\SaleViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Loan\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>

@@ -24,6 +24,8 @@ namespace Shop.PointOfSale.ViewModels
 
         private readonly log4net.ILog Logger;
 
+        #region IsLoading Property
+
         public bool _IsLoading = false;
 
         public bool IsLoading
@@ -60,6 +62,8 @@ namespace Shop.PointOfSale.ViewModels
                 return IsLoading ? Visibility.Hidden : Visibility.Visible;
             }
         }
+
+        #endregion
 
         public Customer Customer { get; set; }
 
