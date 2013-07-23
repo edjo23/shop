@@ -19,6 +19,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Grid Grid.Column="1">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
+            </i:Interaction.Behaviors>
+            
+            <TextBlock x:Name="Customer_Name" Text="Customer" Foreground="{StaticResource AccentColorBrush}" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0" />
+        </Grid>
+        
         <Border Grid.Row="1" Grid.ColumnSpan="2" Background="Gainsboro" Visibility="{Binding ContentVisibility}">
             <i:Interaction.Behaviors>
                 <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
@@ -54,19 +62,15 @@
         <Grid Grid.Row="2" Grid.Column="1" Margin="0" SnapsToDevicePixels="True" Visibility="{Binding ContentVisibility}">
             <i:Interaction.Behaviors>
                 <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
-            </i:Interaction.Behaviors>
+            </i:Interaction.Behaviors>                       
+
+            <ContentControl Focusable="False" VerticalAlignment="Top" c:View.Model="{Binding ActiveItem}" c:View.Context="Summary" />
+
+            <StackPanel Margin="25" VerticalAlignment="Bottom" Visibility="{Binding BalanceVisibility}">
+                <TextBlock Text="CURRENT BALANCE" Foreground="DarkGray" FontSize="17.5" TextAlignment="Right" Margin="0,10,0,0" />
+                <TextBlock x:Name="BalanceText" Text="$99.99" Foreground="{StaticResource NormalColorBrush}" TextAlignment="Right" />
+            </StackPanel>                                
             
-            <StackPanel>                                
-                <StackPanel Margin="25" Visibility="{Binding BalanceVisibility}">
-                    <TextBlock Text="ACCOUNT" Foreground="DarkGray" FontSize="20" FontWeight="Light" TextAlignment="Right" />
-                    <TextBlock x:Name="Customer_Name" Text="Customer" Foreground="Black" FontSize="30" FontWeight="Light" TextAlignment="Right" />
-                    <TextBlock Text="CURRENT BALANCE" Foreground="DarkGray" FontSize="20" FontWeight="Light" TextAlignment="Right" Margin="0,10,0,0" />
-                    <TextBlock x:Name="BalanceText" Text="$99.99" Foreground="Black" FontSize="30" FontWeight="Light" TextAlignment="Right" />
-                </StackPanel>                                
-            </StackPanel>
-
-            <ContentControl Focusable="False" VerticalAlignment="Bottom" c:View.Model="{Binding ActiveItem}" c:View.Context="Summary" />
-
             <Border BorderThickness="1,0,0,0" BorderBrush="Gainsboro" SnapsToDevicePixels="True" />
         </Grid>
 

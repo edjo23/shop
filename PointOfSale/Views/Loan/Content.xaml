@@ -11,7 +11,7 @@
     <Grid>
         <ItemsControl x:Name="LoanItems" Style="{StaticResource PointOfSaleContent}">
             <i:Interaction.Behaviors>
-                <b:ElementDeferredVisibilityBehaviour VisibileDelay="100" AnimationDuration="400" />
+                <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
             </i:Interaction.Behaviors>
         </ItemsControl>
     </Grid>
