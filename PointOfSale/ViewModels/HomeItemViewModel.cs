@@ -11,7 +11,7 @@ namespace Shop.PointOfSale.ViewModels
 {
     public class HomeItemViewModel : PropertyChangedBase
     {
-        public Customer Customer { get; set; }
+        public Customer Customer { get; set; }        
 
         public string Group
         {
@@ -33,7 +33,25 @@ namespace Shop.PointOfSale.ViewModels
         {
             get
             {
-                return Customer.Balance > 0 ? Brushes.Red : Brushes.Black;
+                return Customer.Balance > 0 ? Brushes.Firebrick : Brushes.Gray;
+            }
+        }
+
+        private bool _IsFirstInGroup = false;
+
+        public bool IsFirstInGroup
+        {
+            get
+            {
+                return _IsFirstInGroup;
+            }
+            set
+            {
+                if (value != _IsFirstInGroup)
+                {
+                    _IsFirstInGroup = value;
+                    NotifyOfPropertyChange(() => IsFirstInGroup);
+                }
             }
         }
     }

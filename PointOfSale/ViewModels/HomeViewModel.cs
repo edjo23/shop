@@ -128,8 +128,23 @@ namespace Shop.PointOfSale.ViewModels
                     Items.Add("ACCOUNT");
                     Items.Add("VISITOR");
 
-                    Accounts.AddRange(CustomerService.GetCustomers().Where(o => !o.Name.IsMatch("Cash")).Select(o => new HomeItemViewModel { Customer = o }));
-                    Visitors.AddRange(CustomerService.GetCustomers().Where(o => o.Name.IsMatch("Cash")).Select(o => new HomeItemViewModel { Customer = o }));
+                    var customers = CustomerService.GetCustomers().Where(o => !o.Name.IsMatch("Cash"));
+
+                    var previousGroup = "";
+                    foreach (var customer in customers)
+                    {
+                        var item = new HomeItemViewModel { Customer = customer };
+
+                        if (item.Group != previousGroup)
+                        {
+                            item.IsFirstInGroup = true;
+                            previousGroup = item.Group;
+                        }
+
+                        Accounts.Add(item);
+                    }
+
+                    Visitors.AddRange(CustomerService.GetCustomers().Where(o => o.Name.IsMatch("Cash")).Select(o => new HomeItemViewModel { Customer = o }));                    
                 })
             .ContinueWith(task =>
                 {

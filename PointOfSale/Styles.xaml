@@ -10,6 +10,7 @@
     <SolidColorBrush x:Key="AccentColorBrush" Color="SteelBlue" />
     <SolidColorBrush x:Key="NormalColorBrush" Color="Black" />
     <SolidColorBrush x:Key="LabelColorBrush" Color="DarkGray" />
+    <SolidColorBrush x:Key="BorderColorBrush" Color="Gainsboro" />
 
     <s:Double x:Key="NormalFontSize">30</s:Double>
     

@@ -8,7 +8,7 @@
              xmlns:b="clr-namespace:Shop.PointOfSale.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1366">
-    <UserControl.Resources>
+    <UserControl.Resources>        
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DarkStoreButtonStyle}">
             <Setter Property="Width" Value="250" />
             <Setter Property="MinHeight" Value="40" />
@@ -18,7 +18,7 @@
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="HorizontalContentAlignment" Value="Left" />
             <Setter Property="Padding" Value="10,10,0,10" />            
-        </Style>
+        </Style>        
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -62,7 +62,7 @@
             <i:Interaction.Behaviors>
                 <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
             </i:Interaction.Behaviors>
-            <ItemsControl x:Name="Accounts" Margin="15,25,0,0">
+            <ItemsControl x:Name="Accounts" Margin="15,25,0,0">                
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Vertical" />
@@ -70,14 +70,26 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button c:Message.Attach="NewTransaction($dataContext)">
-                            <StackPanel>
-                                <TextBlock Text="{Binding Customer.Name}" />
-                                <TextBlock Text="{Binding BalanceText, StringFormat=C}" Foreground="{Binding BalanceColorBrush}" />
-                            </StackPanel>
-                        </Button>
+                        <StackPanel>
+                            <Border Name="GroupHeader" BorderThickness="0,0,0,1" BorderBrush="{StaticResource BorderColorBrush}" Visibility="Collapsed" Margin="0,0,15,0">
+                                <TextBlock Text="{Binding Group}" Foreground="{StaticResource AccentColorBrush}" Margin="10,0,0,0" />
+                            </Border>
+                            <Button c:Message.Attach="NewTransaction($dataContext)">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Customer.Name}" />
+                                    <TextBlock Text="{Binding BalanceText, StringFormat=C}" Foreground="{Binding BalanceColorBrush}" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                        
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsFirstInGroup}" Value="True">
+                                <Setter TargetName="GroupHeader" Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+                
             </ItemsControl>
         </Border>
 
