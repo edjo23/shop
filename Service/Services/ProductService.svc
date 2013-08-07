@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Service="Shop.Contracts.Services.IProductService, Shop.Contracts" Factory="Autofac.Integration.Wcf.AutofacServiceHostFactory, Autofac.Integration.Wcf" %>
