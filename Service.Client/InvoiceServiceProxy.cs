@@ -14,10 +14,5 @@ namespace Service.Client
         {
             Invoke(s => s.AddInvoice(invoice, items, payment));
         }
-
-        public IEnumerable<dynamic> GetInvoiceItemHistory(DateTimeOffset startDateTime)
-        {
-            return Invoke(s => s.GetInvoiceItemHistory(startDateTime));
-        }
     }
 }

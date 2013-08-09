@@ -34,7 +34,8 @@ namespace Shop.Management.ViewModels
         protected void Load()
         {
             Items.Clear();
-            Items.AddRange(InvoiceService.GetInvoiceItemHistory(DateTime.Today));
+            // TODO - Convert this into todays customer activity, show customer transactions for the day.
+            //Items.AddRange(InvoiceService.GetInvoiceItemHistory(DateTime.Today));
         }
 
         public void RefreshView()

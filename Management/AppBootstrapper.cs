@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Autofac;
 using Caliburn.Micro;
 using Caliburn.Micro.Autofac;
+using Service.Client;
 using Shop.Business.Managers;
-using Shop.Business.Services;
 using Shop.Contracts.Services;
 using Shop.Management.ViewModels;
 
@@ -23,10 +23,10 @@ namespace Shop.Management
             builder.RegisterType<InvoiceManager>();
             builder.RegisterType<DiscountManager>();
 
-            builder.RegisterType<ProductService>().As<IProductService>();
-            builder.RegisterType<CustomerService>().As<ICustomerService>();
-            builder.RegisterType<InvoiceService>().As<IInvoiceService>();
-            builder.RegisterType<DiscountService>().As<IDiscountService>();
+            builder.RegisterType<ProductServiceProxy>().As<IProductService>();
+            builder.RegisterType<CustomerServiceProxy>().As<ICustomerService>();
+            builder.RegisterType<InvoiceServiceProxy>().As<IInvoiceService>();
+            builder.RegisterType<DiscountServiceProxy>().As<IDiscountService>();
 
             builder.RegisterType<MenuItemViewModel<SummaryViewModel>>();
             builder.RegisterType<MenuItemViewModel<ProductsViewModel>>();

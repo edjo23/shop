@@ -331,6 +331,10 @@
       <Project>{f964b318-7bb8-4efe-8724-a2df741e91b4}</Project>
       <Name>Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Service.Client\Service.Client.csproj">
+      <Project>{f7543423-e620-46d1-bae4-7c915d1484e8}</Project>
+      <Name>Service.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\add_76.png" />

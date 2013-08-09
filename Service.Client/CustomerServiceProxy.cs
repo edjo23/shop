@@ -8,36 +8,31 @@ using Shop.Contracts.Services;
 
 namespace Service.Client
 {
-    public class CustomerServiceProxy : ServiceProxy<IProductService>, IProductService
+    public class CustomerServiceProxy : ServiceProxy<ICustomerService>, ICustomerService
     {
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<Customer> GetCustomers()
         {
-            return Invoke(s => GetProducts());
+            return Invoke(s => s.GetCustomers());
         }
 
-        public Product GetProduct(Guid id)
+        public Customer GetCustomer(Guid id)
         {
-            return Invoke(s => GetProduct(id));
+            return Invoke(s => s.GetCustomer(id));
         }
 
-        public void AddProduct(Product product)
+        public void AddCustomer(Customer product)
         {
-            Invoke(s => AddProduct(product));
+            Invoke(s => s.AddCustomer(product));
         }
 
-        public void UpdateProduct(Product product)
+        public void UpdateCustomer(Customer product)
         {
-            Invoke(s => UpdateProduct(product));
+            Invoke(s => s.UpdateCustomer(product));
         }
 
-        public IEnumerable<ProductMovement> GetProductMovements(Guid productId)
+        public void AddTransaction(CustomerTransaction transaction)
         {
-            return Invoke(s => GetProductMovements(productId));
-        }
-
-        public void AddMovement(ProductMovement movement)
-        {
-            Invoke(s => AddMovement(movement));
+            Invoke(s => s.AddTransaction(transaction));
         }
     }
 }

@@ -12,27 +12,27 @@ namespace Service.Client
     {
         public IEnumerable<Discount> GetDiscounts()
         {
-            return Invoke(s => GetDiscounts());
+            return Invoke(s => s.GetDiscounts());
         }
 
         public DiscountModel GetDiscountModel(Guid id)
         {
-            return Invoke(s => GetDiscountModel(id));
+            return Invoke(s => s.GetDiscountModel(id));
         }
 
         public DiscountModel InsertDiscountModel(DiscountModel entity)
         {
-            return Invoke(s => InsertDiscountModel(entity));
+            return Invoke(s => s.InsertDiscountModel(entity));
         }
 
         public DiscountModel UpdateDiscountModel(DiscountModel entity)
         {
-            return Invoke(s => UpdateDiscountModel(entity));
+            return Invoke(s => s.UpdateDiscountModel(entity));
         }
 
         public IEnumerable<DiscountProduct> GetDiscountProductsByCustomerId(Guid customerId)
         {
-            return Invoke(s => GetDiscountProductsByCustomerId(customerId));
+            return Invoke(s => s.GetDiscountProductsByCustomerId(customerId));
         }
     }
 }
