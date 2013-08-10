@@ -84,6 +84,8 @@
     <Compile Include="ViewModels\CustomerAccountPaymentViewModel.cs" />
     <Compile Include="ViewModels\CustomersViewModel.cs" />
     <Compile Include="ViewModels\CustomerInvoiceViewModel.cs" />
+    <Compile Include="Models\CustomerTransactionModel.cs" />
+    <Compile Include="ViewModels\CustomerTransactionsViewModel.cs" />
     <Compile Include="ViewModels\DiscountCustomerViewModel.cs" />
     <Compile Include="ViewModels\DiscountEditViewModel.cs" />
     <Compile Include="ViewModels\DiscountNewViewModel.cs" />
@@ -97,7 +99,7 @@
     <Compile Include="ViewModels\ProductEditViewModel.cs" />
     <Compile Include="ViewModels\ProductNewViewModel.cs" />
     <Compile Include="ViewModels\ProductStockReceiptViewModel.cs" />
-    <Compile Include="ViewModels\ProductSalesViewModel.cs" />
+    <Compile Include="ViewModels\TodaysCustomerTransactionsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ProductsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -124,6 +126,9 @@
     <Compile Include="Views\CustomerInvoiceView.xaml.cs">
       <DependentUpon>CustomerInvoiceView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CustomerTransactionsView.xaml.cs">
+      <DependentUpon>CustomerTransactionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DiscountEditView.xaml.cs">
       <DependentUpon>DiscountEditView.xaml</DependentUpon>
     </Compile>
@@ -142,7 +147,7 @@
     <Compile Include="Views\ProductMovementsView.xaml.cs">
       <DependentUpon>ProductMovementsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProductSales\Toolbar.xaml.cs">
+    <Compile Include="Views\TodaysCustomerTransactions\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProductStockAdjustmentView.xaml.cs">
@@ -157,8 +162,8 @@
     <Compile Include="Views\ProductStockReceiptView.xaml.cs">
       <DependentUpon>ProductStockReceiptView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProductSalesView.xaml.cs">
-      <DependentUpon>ProductSalesView.xaml</DependentUpon>
+    <Compile Include="Views\TodaysCustomerTransactionsView.xaml.cs">
+      <DependentUpon>TodaysCustomerTransactionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -217,6 +222,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CustomerTransactionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DiscountEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -241,7 +250,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProductSales\Toolbar.xaml">
+    <Page Include="Views\TodaysCustomerTransactions\Toolbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,7 +270,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ProductSalesView.xaml">
+    <Page Include="Views\TodaysCustomerTransactionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

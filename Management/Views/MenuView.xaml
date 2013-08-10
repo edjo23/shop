@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>    
-        <TextBlock Style="{StaticResource H2}" Text="Sales" Margin="10,10,10,0" />
+        <TextBlock Style="{StaticResource H2}" Text="Overview" Margin="10,10,10,0" />
         <ItemsControl x:Name="SalesItems" Margin="0,3,0,0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

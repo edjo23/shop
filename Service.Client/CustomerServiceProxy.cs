@@ -30,6 +30,11 @@ namespace Service.Client
             Invoke(s => s.UpdateCustomer(product));
         }
 
+        public IEnumerable<CustomerTransaction> GetTransactions(Guid? customerId, DateTimeOffset? fromDate, DateTimeOffset? toDate)
+        {
+            return Invoke(s => s.GetTransactions(customerId, fromDate, toDate));
+        }
+
         public void AddTransaction(CustomerTransaction transaction)
         {
             Invoke(s => s.AddTransaction(transaction));

@@ -157,5 +157,11 @@ namespace Shop.Management.ViewModels
             if (SelectedCustomer != null)
                 EventAggregator.Publish(new ActivateItem<CustomerAccountAdjustmentViewModel>(o => o.Customer = SelectedCustomer));
         }
+
+        public void ShowCustomerTransactions()
+        {
+            if (SelectedCustomer != null)
+                EventAggregator.Publish(new ActivateItem<CustomerTransactionsViewModel>(o => o.Customer = SelectedCustomer));
+        }
     }
 }

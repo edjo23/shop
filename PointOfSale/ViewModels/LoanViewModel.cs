@@ -102,7 +102,7 @@ namespace Shop.PointOfSale.ViewModels
                     Id = Guid.NewGuid(),
                     CustomerId = Customer.Id,
                     DateTime = DateTimeOffset.Now,
-                    Type = CustomerTransactionType.CashAdvance,
+                    Type = CustomerTransactionType.Loan,
                     Amount = Total
                 };
 

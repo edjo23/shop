@@ -24,6 +24,9 @@ namespace Shop.Contracts.Services
         void UpdateCustomer(Customer product);
 
         [OperationContract]
+        IEnumerable<CustomerTransaction> GetTransactions(Guid? customerId, DateTimeOffset? fromDate, DateTimeOffset? toDate);
+
+        [OperationContract]
         void AddTransaction(CustomerTransaction transaction);
     }
 }

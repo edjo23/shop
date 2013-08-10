@@ -53,6 +53,22 @@ namespace Shop.Business.Managers
 
                 transaction.Complete();
             }
-        }        
+        }
+
+        public IEnumerable<CustomerTransaction> GetTransactions(Guid? customerId, DateTimeOffset? fromDate, DateTimeOffset? toDate)
+        {
+            using (var connectionScope = new ConnectionScope())
+            {
+                var where = new PredicateGroup { Operator = GroupOperator.And, Predicates = new List<IPredicate>() };
+                if (customerId.HasValue)
+                    where.Predicates.Add(Predicates.Field<CustomerTransaction>(f => f.CustomerId, Operator.Eq, customerId.Value));
+                if (fromDate.HasValue)
+                    where.Predicates.Add(Predicates.Field<CustomerTransaction>(f => f.DateTime, Operator.Ge, fromDate.Value));
+                if (toDate.HasValue)
+                    where.Predicates.Add(Predicates.Field<CustomerTransaction>(f => f.DateTime, Operator.Le, toDate.Value));
+
+                return connectionScope.Connection.GetList<CustomerTransaction>(where).ToList();
+            }
+        }
     }
 }

@@ -38,6 +38,11 @@ namespace Shop.Business.Services
             Manager.UpdateCustomer(customer);
         }
 
+        public IEnumerable<CustomerTransaction> GetTransactions(Guid? customerId, DateTimeOffset? fromDate, DateTimeOffset? toDate)
+        {
+            return Manager.GetTransactions(customerId, fromDate, toDate);
+        }
+        
         public void AddTransaction(CustomerTransaction transaction)
         {
             Manager.AddTransaction(transaction);

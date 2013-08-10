@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shop.Management.Views.ProductSales
+namespace Shop.Management.Views
 {
     /// <summary>
-    /// Interaction logic for Toolbar.xaml
+    /// Interaction logic for SalesHistoryView.xaml
     /// </summary>
-    public partial class Toolbar : UserControl
+    public partial class TodaysCustomerTransactionsView : UserControl
     {
-        public Toolbar()
+        public TodaysCustomerTransactionsView()
         {
             InitializeComponent();
         }
