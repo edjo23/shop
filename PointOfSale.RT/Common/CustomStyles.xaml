@@ -1,0 +1,418 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:l="using:PointOfSale.RT.Common"
+    xmlns:m="using:PointOfSale.RT.Models"
+    xmlns:c="using:Caliburn.Micro">
+    
+    <SolidColorBrush x:Key="BackgroundColorBrush" Color="#FFF0F0F0" />
+    <SolidColorBrush x:Key="AccentColorBrush" Color="SteelBlue" />
+    <SolidColorBrush x:Key="NormalColorBrush" Color="Black" />
+    <SolidColorBrush x:Key="LabelColorBrush" Color="DarkGray" />
+    <SolidColorBrush x:Key="BorderColorBrush" Color="Gainsboro" />
+
+    <SolidColorBrush x:Key="BackgroundPressedColorBrush" Color="#15000000" />
+
+    <Style TargetType="TextBlock">
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontWeight" Value="Light" />
+    </Style>
+
+    <Style x:Key="SmallText" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontWeight" Value="Light" />
+    </Style>
+    
+    <Style x:Key="NormalText" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontWeight" Value="Light" />
+    </Style>
+    
+    <Style x:Key="LargeText" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="50" />
+        <Setter Property="FontWeight" Value="Light" />
+    </Style>
+    
+    <Style x:Key="LargeAccentText" TargetType="TextBlock" BasedOn="{StaticResource LargeText}">
+        <Setter Property="Foreground" Value="{StaticResource AccentColorBrush}" />
+    </Style>
+
+    <DataTemplate x:Key="PlusButtonContent">
+        <Canvas Width="76" Height="76">
+            <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{StaticResource AccentColorBrush}" Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z "/>
+        </Canvas>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MinusButtonContent">
+        <Canvas Width="76" Height="76">
+            <Path Width="38" Height="6" Canvas.Left="19" Canvas.Top="35" Stretch="Fill" Fill="{StaticResource AccentColorBrush}" Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z "/>
+        </Canvas>
+    </DataTemplate>
+
+    <!-- FlatButtonStyle -->
+    <Style x:Key="FlatButtonStyle" TargetType="ButtonBase">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Border Background="{TemplateBinding Background}">
+                        <Border Name="Bd" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" />
+                        </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver" />
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Bd" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BackgroundPressedColorBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="Opacity" To="0.3" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused" />
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked" />
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Indeterminate" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- StoreButtonStyle -->
+    <Style x:Key="StoreButtonStyle" TargetType="ButtonBase">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="White" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                        <Border Name="Bd" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" />
+                        </Border>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver" />
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Bd" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BackgroundPressedColorBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="Opacity" To="0.3" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused" />
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked" />
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Indeterminate" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- DarkStoreButtonStyle -->
+    <Style x:Key="DarkStoreButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource StoreButtonStyle}">
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+
+    <!-- RoundButtonStyle -->
+    <Style x:Key="RoundButtonStyle" TargetType="ButtonBase">
+        <Setter Property="BorderThickness" Value="1.5" />
+        <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Width" Value="50" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ButtonBase">
+                    <Grid>
+                        <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" CornerRadius="38">
+                        </Border>
+                        <Border Name="Bd" CornerRadius="38" Margin="{TemplateBinding Padding}">
+                            <Viewbox HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                            </Viewbox>
+                        </Border>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver" />
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Bd" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BackgroundPressedColorBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="Opacity" To="0.3" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused" />
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked" />
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Indeterminate" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- NoButtonStyle -->
+    <Style x:Key="NoStyleButtonStyle" TargetType="ButtonBase">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" Margin="{TemplateBinding Padding}">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
+    
+    
+    <Style x:Key="FlatListBoxItemStyle" TargetType="ListBoxItem">
+        <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">                                        
+                    <Border Background="{TemplateBinding Background}">                        
+                        <Grid>
+                            <Border Name="Bd" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" />
+                            </Border>
+                            <Border x:Name="Underline" BorderThickness="0,0,0,3" BorderBrush="{TemplateBinding BorderBrush}" Opacity="0" />
+                        </Grid>
+                        
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="PointerOver" />
+                                <VisualState x:Name="Pressed">                                    
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Bd" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource BackgroundPressedColorBrush}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Underline" Storyboard.TargetProperty="Opacity" To="0" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>                                        
+                                        <DoubleAnimation Storyboard.TargetName="Underline" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SelectedUnfocused">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Underline" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SelectedPointerOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Underline" Storyboard.TargetProperty="Opacity" To="1" Duration="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused" />
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked" />
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Indeterminate" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>                    
+                    <!--<ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="#15000000" />
+                            <Setter Property="Cursor" Value="Hand"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Underline" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>        
+    </Style>
+
+    <Style x:Key="FlatListBox" TargetType="ListBox">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource FlatListBoxItemStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <Border>
+                        <ItemsPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+
+
+    <ItemsPanelTemplate x:Key="PointOfSalePanelTemplate">
+        <WrapGrid Orientation="Horizontal" />
+    </ItemsPanelTemplate>
+
+    <DataTemplate x:Key="PointOfSaleContentItemTemplate">
+        <Grid Background="White" Margin="0,0,25,25" Width="250" Height="160" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button Style="{StaticResource NoStyleButtonStyle}" c:Message.Attach="AddItem($dataContext)" Padding="10,10,10,25">
+                <Image Source="{Binding ImageSource}" Margin="5" />
+            </Button>
+
+            <!-- Quantity Layer-->
+            <Border Visibility="{Binding QuantityVisibility}" Background="#DDFFFFFF">
+                <Grid Margin="20,0,20,25">
+                    <TextBlock Text="{Binding Quantity}" Foreground="{StaticResource AccentColorBrush}" FontSize="50" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Style="{StaticResource RoundButtonStyle}" ContentTemplate="{StaticResource PlusButtonContent}" c:Message.Attach="AddItem($dataContext)" VerticalAlignment="Center" />
+                        <Button Style="{StaticResource RoundButtonStyle}" ContentTemplate="{StaticResource MinusButtonContent}" c:Message.Attach="RemoveItem($dataContext)" VerticalAlignment="Center" Margin="15,0,0,0" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border VerticalAlignment="Bottom">
+                <Grid Margin="20,5" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Description}" FontSize="20" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding Price}" FontSize="20" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Right" />
+                </Grid>
+            </Border>
+
+            <Border BorderThickness="1" BorderBrush="#25000000" />
+        </Grid>
+    </DataTemplate>
+
+    <Style x:Key="PointOfSaleContent" TargetType="ItemsControl">
+        <Setter Property="ItemsPanel" Value="{StaticResource PointOfSalePanelTemplate}" />
+        <Setter Property="ItemTemplate" Value="{StaticResource PointOfSaleContentItemTemplate}" />
+    </Style>
+
+    <!-- Entity Data Templates -->
+    <DataTemplate x:Key="GroupHomeItemViewModel">
+        <Grid>
+            <Border BorderThickness="0,0,0,1" BorderBrush="Gainsboro">
+                <TextBlock Text="{Binding Group}" Style="{StaticResource LargeAccentText}" VerticalAlignment="Bottom" Margin="5" />
+            </Border>
+        </Grid>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="AccountHomeItemViewModel">
+        <Grid>            
+            <Button c:Message.Attach="NewTransaction($dataContext)" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <StackPanel>
+                    <TextBlock Text="{Binding Customer.Name}" />
+                    <TextBlock Text="{Binding BalanceText}" Style="{StaticResource NormalText}" Foreground="{Binding BalanceColorBrush}" />
+                </StackPanel>
+            </Button>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CashHomeItemViewModel">
+        <Grid>
+            <Button c:Message.Attach="NewTransaction($dataContext)" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <TextBlock Text="{Binding Customer.Name}" Style="{StaticResource NormalText}" />
+            </Button>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CustomerTransactionInfo">
+        <Grid HorizontalAlignment="Stretch">
+            <StackPanel HorizontalAlignment="Stretch">
+                <TextBlock Text="Thank you" Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center" />
+                <TextBlock Text="{Binding NewBalanceText}" Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="ErrorInfo">
+        <Grid Background="Firebrick">
+            <StackPanel Margin="100">
+                <TextBlock Text="Sorry, something has gone wrong" FontSize="50" FontWeight="Light" Foreground="White" TextAlignment="Center" />
+                <TextBlock Text="We will try and get up and running again as soon as we can." FontWeight="Light" Foreground="White" TextAlignment="Center" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

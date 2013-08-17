@@ -1,0 +1,25 @@
+﻿<Page
+    x:Class="PointOfSale.RT.Views.ShellView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PointOfSale.RT.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource BackgroundColorBrush}">
+        <Border Height="100" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <Viewbox Margin="25,15">
+                    <Canvas Width="60" Height="100">
+                        <Path Fill="{StaticResource AccentColorBrush}" Height="100" Stretch="Fill" Width="60" Data="M0,5 C0,2.2385763 2.2385763,0 5,0 L55,0 C57.761424,0 60,2.2385763 60,5 L60,95 C60,97.761424 57.761424,100 55,100 L5,100 C2.2385763,100 0,97.761424 0,95 z"/>
+                        <Path Fill="#99FFFFFF" Height="52" Stretch="Fill" Canvas.Top="15" Width="60" Data="M52,32 L55,32 55,52 52,52 z M0,25 L60,25 60,27 0,27 z M52,0 L55,0 55,20 52,20 z"/>
+                    </Canvas>
+                </Viewbox>
+                <TextBlock Text="le réfrigérateur" FontSize="50" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" VerticalAlignment="Center" Margin="0,0,0,10" />
+            </StackPanel>
+        </Border>
+
+        <ContentControl x:Name="ActiveItem" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+    </Grid>
+</Page>
