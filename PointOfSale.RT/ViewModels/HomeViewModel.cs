@@ -27,7 +27,7 @@ namespace PointOfSale.RT.ViewModels
         private readonly IEventAggregator EventAggregator;
 
         private readonly ScreenCoordinator ScreenCoordinator;
-
+        
         private readonly ICustomerService CustomerService;
 
         private readonly log4net.ILog Logger;

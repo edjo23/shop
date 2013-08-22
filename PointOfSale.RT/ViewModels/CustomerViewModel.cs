@@ -6,19 +6,27 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
+using Shop.Contracts.Services;
 using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
 {
     public class CustomerViewModel : Conductor<Screen>.Collection.OneActive
     {
-        public CustomerViewModel(ScreenCoordinator screenCoordinator)
+        public CustomerViewModel(ScreenCoordinator screenCoordinator, ImageService imageService, IApplicationService applicationService)
         {
             ScreenCoordinator = screenCoordinator;
+            ImageService = imageService;
+            ApplicationService = applicationService;
+
             Logger = log4net.LogManager.GetLogger(GetType());
         }
 
-        private ScreenCoordinator ScreenCoordinator;
+        private readonly ScreenCoordinator ScreenCoordinator;
+
+        private readonly ImageService ImageService;
+
+        private readonly IApplicationService ApplicationService;
 
         private readonly log4net.ILog Logger;
 
@@ -125,6 +133,17 @@ namespace PointOfSale.RT.ViewModels
 
             Task.Factory.StartNew(() =>
             {
+                // Load images from server.   
+                var serverImages = ApplicationService.GetImageList();
+                var cachedImages = ImageService.GetImageList();
+
+                foreach (var image in serverImages)
+                {
+                    if (!cachedImages.Contains(image, StringComparer.CurrentCultureIgnoreCase))
+                        ImageService.SetImage(image, ApplicationService.GetImage(image));
+                }
+
+                // Load view models.
                 saleViewModel.Load();
 
                 if (payViewModel != null)

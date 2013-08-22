@@ -12,6 +12,8 @@ namespace Service.Client
     {
         public CustomerServiceProxy()
         {
+            var serverAddress = Windows.Storage.ApplicationData.Current.LocalSettings.Values["ServerAddress"];
+
             EndPointAddress = "http://localhost:60233/Services/CustomerService.svc";
         }
 

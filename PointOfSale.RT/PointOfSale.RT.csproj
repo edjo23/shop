@@ -106,6 +106,9 @@
     <Compile Include="..\Contracts\Entities\CustomerTransaction.cs">
       <Link>Contracts\Entities\CustomerTransaction.cs</Link>
     </Compile>
+    <Compile Include="..\Contracts\Entities\Denomination.cs">
+      <Link>Contracts\Entities\Denomination.cs</Link>
+    </Compile>
     <Compile Include="..\Contracts\Entities\Discount.cs">
       <Link>Contracts\Entities\Discount.cs</Link>
     </Compile>
@@ -130,6 +133,9 @@
     <Compile Include="..\Contracts\Entities\ProductMovement.cs">
       <Link>Contracts\Entities\ProductMovement.cs</Link>
     </Compile>
+    <Compile Include="..\Contracts\Services\IApplicationService.cs">
+      <Link>Contracts\Services\IApplicationService.cs</Link>
+    </Compile>
     <Compile Include="..\Contracts\Services\ICustomerService.cs">
       <Link>Contracts\Services\ICustomerService.cs</Link>
     </Compile>
@@ -151,8 +157,10 @@
     <Compile Include="Models\CustomerTransactionInfo.cs" />
     <Compile Include="Models\ErrorInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ApplicationServiceProxy.cs" />
     <Compile Include="Services\CustomerServiceProxy.cs" />
     <Compile Include="Services\DiscountServiceProxy.cs" />
+    <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\InvoiceServiceProxy.cs" />
     <Compile Include="Services\ProductServiceProxy.cs" />
     <Compile Include="Services\ScreenCoordinator.cs" />
@@ -161,10 +169,8 @@
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\HomeItemViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\LoanItemViewModel.cs" />
     <Compile Include="ViewModels\LoanViewModel.cs" />
     <Compile Include="ViewModels\MessageBoxViewModel.cs" />
-    <Compile Include="ViewModels\PayItemViewModel.cs" />
     <Compile Include="ViewModels\PayViewModel.cs" />
     <Compile Include="ViewModels\ProcessViewModel.cs" />
     <Compile Include="ViewModels\SaleItemViewModel.cs" />

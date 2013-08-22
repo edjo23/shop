@@ -14,9 +14,10 @@ namespace PointOfSale.RT.ViewModels
 {
     public class SaleViewModel : Screen
     {
-        public SaleViewModel(ScreenCoordinator screenCoordinator, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService, IDiscountService discountService)
+        public SaleViewModel(ScreenCoordinator screenCoordinator, ImageService imageService, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService, IDiscountService discountService)
         {
             ScreenCoordinator = screenCoordinator;
+            ImageService = imageService;
             CustomerService = customerService;
             ProductService = productService;
             InvoiceService = invoiceService;
@@ -27,6 +28,8 @@ namespace PointOfSale.RT.ViewModels
         }
 
         private readonly ScreenCoordinator ScreenCoordinator;
+
+        private readonly ImageService ImageService;
 
         private readonly ICustomerService CustomerService;
 
@@ -123,7 +126,11 @@ namespace PointOfSale.RT.ViewModels
             var discounts = DiscountService.GetDiscounts();
             var discountProducts = DiscountService.GetDiscountProductsByCustomerId(Customer.Id);
 
-            Products.AddRange(products.Select(o => new SaleItemViewModel { Product = o, Discount = discountProducts.Where(p => p.ProductId == o.Id).Select(p => p.Discount).DefaultIfEmpty(0.0m).Max() }));
+            Products.AddRange(products.Select(o => new SaleItemViewModel(o)
+            { 
+                Discount = discountProducts.Where(p => p.ProductId == o.Id).Select(p => p.Discount).DefaultIfEmpty(0.0m).Max(),
+                ImageSource = ImageService.GetImage(o.Code)
+            }));
         }
 
         public void AddItem(SaleItemViewModel item)

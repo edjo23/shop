@@ -20,6 +20,13 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+// TODO
+// Images
+// Acount View
+// Logging
+// Settings
+// Portable Libraries
+
 namespace PointOfSale.RT
 {
     sealed partial class App
@@ -45,12 +52,14 @@ namespace PointOfSale.RT
             Container.PerRequest<ProcessViewModel>();
             Container.PerRequest<MessageBoxViewModel>();
 
+            Container.PerRequest<IApplicationService, ApplicationServiceProxy>();
             Container.PerRequest<ICustomerService, CustomerServiceProxy>();
             Container.PerRequest<IProductService, ProductServiceProxy>();
             Container.PerRequest<IInvoiceService, InvoiceServiceProxy>();
             Container.PerRequest<IDiscountService, DiscountServiceProxy>();
 
             Container.PerRequest<ScreenCoordinator>();
+            Container.PerRequest<ImageService>();            
         }
 
         protected override object GetInstance(Type service, string key)

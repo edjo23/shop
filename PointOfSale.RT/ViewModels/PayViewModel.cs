@@ -13,24 +13,30 @@ namespace PointOfSale.RT.ViewModels
 {
     public class PayViewModel : Screen
     {
-        public PayViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
+        public PayViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ImageService imageService, IApplicationService applicationService, ICustomerService customerService)
         {
             EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
+            ImageService = imageService;
+            ApplicationService = applicationService;
             CustomerService = customerService;
             DisplayName = "PAYMENT";
-            PaymentItems = new BindableCollection<PayItemViewModel>();
+            PaymentItems = new BindableCollection<TransactionItemViewModel>();
         }
 
         private readonly IEventAggregator EventAggregator;
 
         private readonly ScreenCoordinator ScreenCoordinator;
 
+        private readonly ImageService ImageService;
+
+        private readonly IApplicationService ApplicationService;
+
         private readonly ICustomerService CustomerService;
 
         public Customer Customer { get; set; }
 
-        public BindableCollection<PayItemViewModel> PaymentItems { get; set; }
+        public BindableCollection<TransactionItemViewModel> PaymentItems { get; set; }
 
         public decimal Total
         {
@@ -58,30 +64,22 @@ namespace PointOfSale.RT.ViewModels
 
         public void Load()
         {
-            PaymentItems.Add(new PayItemViewModel { Description = "$100", Price = 100.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "$50", Price = 50.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "$20", Price = 20.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "$10", Price = 10.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "$5", Price = 5.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "$2", Price = 2.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "$1", Price = 1.0m });
-            PaymentItems.Add(new PayItemViewModel { Description = "50c", Price = 0.50m });
-            PaymentItems.Add(new PayItemViewModel { Description = "20c", Price = 0.20m });
-            PaymentItems.Add(new PayItemViewModel { Description = "10c", Price = 0.10m });
-            PaymentItems.Add(new PayItemViewModel { Description = "5c", Price = 0.05m });
+            var denominations = ApplicationService.GetDenominations();
+
+            PaymentItems.AddRange(denominations.Select(o => new TransactionItemViewModel { Description = o.Description, BasePrice = o.Value, ImageSource = ImageService.GetImage(o.Description) }));
         }
 
-        public void AddItem(PayItemViewModel item)
+        public void AddItem(TransactionItemViewModel item)
         {
             UpdateQuantity(item, 1);
         }
 
-        public void RemoveItem(PayItemViewModel item)
+        public void RemoveItem(TransactionItemViewModel item)
         {
             UpdateQuantity(item, -1);
         }
 
-        protected void UpdateQuantity(PayItemViewModel item, int value)
+        protected void UpdateQuantity(TransactionItemViewModel item, int value)
         {
             item.Quantity += value;
 

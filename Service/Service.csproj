@@ -66,6 +66,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Services\ApplicationService.svc" />
     <Content Include="Services\DiscountService.svc" />
     <Content Include="Services\InvoiceService.svc" />
     <Content Include="Services\CustomerService.svc" />

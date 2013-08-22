@@ -18,11 +18,13 @@ namespace Shop.Service
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterType<ApplicationManager>();
             builder.RegisterType<ProductManager>();
             builder.RegisterType<CustomerManager>();
             builder.RegisterType<InvoiceManager>();
             builder.RegisterType<DiscountManager>();
 
+            builder.RegisterType<ApplicationService>().As<IApplicationService>();
             builder.RegisterType<ProductService>().As<IProductService>();
             builder.RegisterType<CustomerService>().As<ICustomerService>();
             builder.RegisterType<InvoiceService>().As<IInvoiceService>();

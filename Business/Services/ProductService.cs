@@ -46,6 +46,6 @@ namespace Shop.Business.Services
         public void AddMovement(ProductMovement movement)
         {
             Manager.AddMovement(movement);
-        }
+        }        
     }
 }

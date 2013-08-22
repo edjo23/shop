@@ -10,38 +10,19 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace PointOfSale.RT.ViewModels
 {
-    public class SaleItemViewModel : PropertyChangedBase
+    public class TransactionItemViewModel : PropertyChangedBase
     {
-        public SaleItemViewModel()
-        {
+        public string Description { get; set; }
 
-        }
-        public SaleItemViewModel(Product product)
-        {
-
-        }
-
-        public Product Product { get; set; }
-
-        public string Description
-        {
-            get
-            {
-                return Product.Description;
-            }
-        }
+        public decimal BasePrice { get; set; }
 
         public decimal Discount { get; set; }
 
-        public BitmapImage ImageSource
+        public decimal Price
         {
             get
             {
-                //var fileInfo = new FileInfo(String.Format(@"Images\{0}.png", Product.Code));
-                //if (fileInfo.Exists)
-                //    return new BitmapImage(new Uri(fileInfo.FullName));
-                //else
-                    return null;
+                return Math.Round(BasePrice * (100 - Discount) / 100, 2, MidpointRounding.ToEven);
             }
         }
 
@@ -65,14 +46,6 @@ namespace PointOfSale.RT.ViewModels
             }
         }
 
-        public decimal Price
-        {
-            get
-            {
-                return Math.Round(Product.Price * (100 - Discount) / 100, 2, MidpointRounding.ToEven);
-            }
-        }
-
         public decimal Total
         {
             get
@@ -88,6 +61,23 @@ namespace PointOfSale.RT.ViewModels
                 return Quantity > 0 ? Visibility.Visible : Visibility.Collapsed;
             }
         }
+
+        public BitmapImage ImageSource { get; set; }
     }
 
+    public class SaleItemViewModel : TransactionItemViewModel
+    {
+        public SaleItemViewModel()
+        {
+        }
+
+        public SaleItemViewModel(Product product)
+        {
+            Product = product;
+            Description = product.Description;
+            BasePrice = product.Price;
+        }
+
+        public Product Product { get; set; }
+    }
 }
