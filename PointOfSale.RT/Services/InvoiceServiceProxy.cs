@@ -10,10 +10,11 @@ namespace Service.Client
 {
     public class InvoiceServiceProxy : ServiceProxy<IInvoiceService>, IInvoiceService
     {
-        public InvoiceServiceProxy()
+        public InvoiceServiceProxy(IServiceClientConfiguration configuration)
+            : base(configuration)
         {
-            EndPointAddress = "http://localhost:60233/Services/InvoiceService.svc";
         }
+
         public void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items, decimal payment)
         {
             Invoke(s => s.AddInvoice(invoice, items, payment));

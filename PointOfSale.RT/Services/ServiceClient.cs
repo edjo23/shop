@@ -14,8 +14,8 @@ namespace Service.Client
         {
         }
 
-        public ServiceClient(string address)
-            : base(new BasicHttpBinding() { MaxReceivedMessageSize = 1000000 }, new EndpointAddress(address))
+        public ServiceClient(IServiceClientConfiguration configuration)
+            : base(configuration.Binding, new EndpointAddress(String.Format(configuration.EndpointAddressFormatString, configuration.Host, typeof(T).Name.Substring(1))))
         {
         }
 

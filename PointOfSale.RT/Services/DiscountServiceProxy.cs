@@ -10,10 +10,11 @@ namespace Service.Client
 {
     public class DiscountServiceProxy : ServiceProxy<IDiscountService>, IDiscountService
     {
-        public DiscountServiceProxy()
+        public DiscountServiceProxy(IServiceClientConfiguration configuration)
+            : base(configuration)
         {
-            EndPointAddress = "http://localhost:60233/Services/DiscountService.svc";
         }
+
         public IEnumerable<Discount> GetDiscounts()
         {
             return Invoke(s => s.GetDiscounts());

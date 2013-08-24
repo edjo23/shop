@@ -10,11 +10,9 @@ namespace Service.Client
 {
     public class CustomerServiceProxy : ServiceProxy<ICustomerService>, ICustomerService
     {
-        public CustomerServiceProxy()
+        public CustomerServiceProxy(IServiceClientConfiguration configuration)
+            : base(configuration)
         {
-            var serverAddress = Windows.Storage.ApplicationData.Current.LocalSettings.Values["ServerAddress"];
-
-            EndPointAddress = "http://localhost:60233/Services/CustomerService.svc";
         }
 
         public IEnumerable<Customer> GetCustomers()

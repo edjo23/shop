@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:l="using:PointOfSale.RT.Common"
     xmlns:m="using:PointOfSale.RT.Models"
-    xmlns:c="using:Caliburn.Micro">
+    xmlns:c="using:Caliburn.Micro"
+    xmlns:cc="using:Callisto.Controls">
     
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="#FFF0F0F0" />
     <SolidColorBrush x:Key="AccentColorBrush" Color="SteelBlue" />
@@ -223,7 +224,10 @@
     </Style>
 
     
-    
+    <Style TargetType="cc:SettingsFlyout">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="ContentForegroundBrush" Value="Black" />
+    </Style>
     
     <Style x:Key="FlatListBoxItemStyle" TargetType="ListBoxItem">
         <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />

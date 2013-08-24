@@ -11,10 +11,11 @@ namespace Service.Client
 {
     public class ProductServiceProxy : ServiceProxy<IProductService>, IProductService
     {
-        public ProductServiceProxy()
+        public ProductServiceProxy(IServiceClientConfiguration configuration)
+            : base(configuration)
         {
-            EndPointAddress = "http://localhost:60233/Services/ProductService.svc";
         }
+
         public IEnumerable<Product> GetProducts()
         {
             return Invoke(s => s.GetProducts());

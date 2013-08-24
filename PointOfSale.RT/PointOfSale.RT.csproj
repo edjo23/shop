@@ -162,6 +162,7 @@
     <Compile Include="Services\DiscountServiceProxy.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\InvoiceServiceProxy.cs" />
+    <Compile Include="Services\IServiceClientConfiguration.cs" />
     <Compile Include="Services\ProductServiceProxy.cs" />
     <Compile Include="Services\ScreenCoordinator.cs" />
     <Compile Include="Services\ServiceClient.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="ViewModels\ProcessViewModel.cs" />
     <Compile Include="ViewModels\SaleItemViewModel.cs" />
     <Compile Include="ViewModels\SaleViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\CustomerView.xaml.cs">
       <DependentUpon>CustomerView.xaml</DependentUpon>
@@ -215,6 +217,9 @@
     </Compile>
     <Compile Include="Views\Sale\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -297,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Sale\Toolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

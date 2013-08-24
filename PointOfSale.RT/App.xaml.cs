@@ -21,7 +21,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // TODO
-// Images
 // Acount View
 // Logging
 // Settings
@@ -51,6 +50,9 @@ namespace PointOfSale.RT
             Container.PerRequest<LoanViewModel>();
             Container.PerRequest<ProcessViewModel>();
             Container.PerRequest<MessageBoxViewModel>();
+            Container.PerRequest<SettingsViewModel>();
+
+            Container.Singleton<IServiceClientConfiguration, BasicHttpServiceClientConfiguration>();
 
             Container.PerRequest<IApplicationService, ApplicationServiceProxy>();
             Container.PerRequest<ICustomerService, CustomerServiceProxy>();
@@ -59,7 +61,10 @@ namespace PointOfSale.RT
             Container.PerRequest<IDiscountService, DiscountServiceProxy>();
 
             Container.PerRequest<ScreenCoordinator>();
-            Container.PerRequest<ImageService>();            
+            Container.PerRequest<ImageService>();
+
+            var settings = Container.RegisterSettingsService();
+            settings.RegisterCommand<SettingsViewModel>("Options");
         }
 
         protected override object GetInstance(Type service, string key)

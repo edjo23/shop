@@ -9,11 +9,16 @@ namespace Service.Client
     public abstract class ServiceProxy<TService>
         where TService : class
     {
-        protected string EndPointAddress;
+        public ServiceProxy (IServiceClientConfiguration configuration)
+	    {
+            Configuration = configuration;
+	    }
+
+        protected readonly IServiceClientConfiguration Configuration;
 
         protected TResult Invoke<TResult>(Func<TService, TResult> call)
         {
-            using (var client = new ServiceClient<TService>(EndPointAddress))
+            using (var client = new ServiceClient<TService>(Configuration))
             {
                 try
                 {
@@ -29,7 +34,7 @@ namespace Service.Client
 
         protected void Invoke(Action<TService> call)
         {
-            using (var client = new ServiceClient<TService>(EndPointAddress))
+            using (var client = new ServiceClient<TService>(Configuration))
             {
                 try
                 {

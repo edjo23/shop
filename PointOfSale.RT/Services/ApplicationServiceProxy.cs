@@ -10,9 +10,9 @@ namespace Service.Client
 {
     public class ApplicationServiceProxy : ServiceProxy<IApplicationService>, IApplicationService
     {
-        public ApplicationServiceProxy()
+        public ApplicationServiceProxy(IServiceClientConfiguration configuration)
+            : base(configuration)
         {
-            EndPointAddress = "http://localhost:60233/Services/ApplicationService.svc";
         }
 
         public IEnumerable<Denomination> GetDenominations()
