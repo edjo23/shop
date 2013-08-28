@@ -21,9 +21,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // TODO
-// Acount View
 // Logging
-// Settings
 // Portable Libraries
 
 namespace PointOfSale.RT
@@ -48,6 +46,7 @@ namespace PointOfSale.RT
             Container.PerRequest<SaleViewModel>();
             Container.PerRequest<PayViewModel>();
             Container.PerRequest<LoanViewModel>();
+            Container.PerRequest<AccountViewModel>();
             Container.PerRequest<ProcessViewModel>();
             Container.PerRequest<MessageBoxViewModel>();
             Container.PerRequest<SettingsViewModel>();

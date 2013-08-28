@@ -10,10 +10,6 @@
     d:DesignWidth="400">
 
     <Grid>
-        <!--<i:Interaction.Behaviors>
-            <b:ElementDeferredVisibilityBehaviour VisibileDelay="250" AnimationDuration="250" />
-        </i:Interaction.Behaviors>-->
-
         <StackPanel Margin="25">
             <TextBlock Foreground="{StaticResource LabelColorBrush}" Text="TOTAL" FontSize="17.5" TextAlignment="Right" />
             <TextBlock x:Name="TotalText" Foreground="{StaticResource NormalColorBrush}" Text="$9.99" TextAlignment="Right" />

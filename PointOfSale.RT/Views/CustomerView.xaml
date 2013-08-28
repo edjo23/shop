@@ -97,10 +97,10 @@
                 </ContentControl.ContentTransitions>
             </ContentControl>
 
-            <StackPanel Margin="25" VerticalAlignment="Bottom" Visibility="{Binding BalanceVisibility}">
+            <!--<StackPanel Margin="25" VerticalAlignment="Bottom" Visibility="{Binding BalanceVisibility}">
                 <TextBlock Text="CURRENT BALANCE" Foreground="DarkGray" FontSize="17.5" TextAlignment="Right" Margin="0,10,0,0" />
                 <TextBlock x:Name="BalanceText" Text="$99.99" Foreground="{StaticResource NormalColorBrush}" TextAlignment="Right" />
-            </StackPanel>
+            </StackPanel>-->
 
             <Border BorderThickness="1,0,0,0" BorderBrush="Gainsboro" />
         </Grid>

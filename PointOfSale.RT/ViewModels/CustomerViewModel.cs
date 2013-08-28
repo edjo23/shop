@@ -118,6 +118,7 @@ namespace PointOfSale.RT.ViewModels
 
             PayViewModel payViewModel = null;
             LoanViewModel loanViewModel = null;
+            AccountViewModel accountViewModel = null;
 
             if (!IsCashAccount)
             {
@@ -127,8 +128,12 @@ namespace PointOfSale.RT.ViewModels
                 loanViewModel = IoC.Get<LoanViewModel>();
                 loanViewModel.Customer = Customer;
 
+                accountViewModel = IoC.Get<AccountViewModel>();
+                accountViewModel.Customer = Customer;
+
                 Items.Add(payViewModel);
                 Items.Add(loanViewModel);
+                Items.Add(accountViewModel);
             }
 
             Task.Factory.StartNew(() =>
@@ -151,6 +156,9 @@ namespace PointOfSale.RT.ViewModels
 
                 if (loanViewModel != null)
                     loanViewModel.Load();
+
+                if (accountViewModel != null)
+                    accountViewModel.Load();
             })
             .ContinueWith(task =>
             {

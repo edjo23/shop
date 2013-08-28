@@ -14,7 +14,9 @@ namespace PointOfSale.RT.Models
         {
             get
             {
-                return String.Format("Your balance is now {0:C}", NewBalance);
+                var balanceText = String.Format("{0:C}{1}", Math.Abs(NewBalance), NewBalance < 0 ? " CR" : "");
+
+                return String.Format("Your balance is now {0:C}", balanceText);
             }
         }
     }
