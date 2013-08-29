@@ -8,7 +8,7 @@
     
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="#FFF0F0F0" />
     <SolidColorBrush x:Key="AccentColorBrush" Color="SteelBlue" />
-    <SolidColorBrush x:Key="NormalColorBrush" Color="Black" />
+    <SolidColorBrush x:Key="NormalColorBrush" Color="#FF232323" />
     <SolidColorBrush x:Key="LabelColorBrush" Color="DarkGray" />
     <SolidColorBrush x:Key="BorderColorBrush" Color="Gainsboro" />
 
@@ -418,8 +418,8 @@
 
     <DataTemplate x:Key="CustomerTransactionInfo">
         <Grid HorizontalAlignment="Stretch">
-            <StackPanel HorizontalAlignment="Stretch">
-                <TextBlock Text="Thank you" Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center" />
+            <StackPanel HorizontalAlignment="Stretch">                
+                <TextBlock Text="Merci beaucoup " Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center"><Run Text="{Binding Customer.Name}" /></TextBlock>
                 <TextBlock Text="{Binding NewBalanceText}" Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center" />
             </StackPanel>
         </Grid>

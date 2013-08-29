@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shop.Contracts.Entities;
 
 namespace PointOfSale.RT.Models
 {
     public class CustomerTransactionInfo
     {
+        public Customer Customer { get; set; }
+
         public decimal NewBalance { get; set; }
 
         public string NewBalanceText

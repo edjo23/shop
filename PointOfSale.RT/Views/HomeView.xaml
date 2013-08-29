@@ -58,33 +58,35 @@
             </ContentControl>            
         </Border>
 
-        <Border Grid.Row="2" Padding="0,0,10,10">
-            <ContentControl x:Name="Customers">
-                <ContentControl.ContentTransitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition />
-                    </TransitionCollection>
-                </ContentControl.ContentTransitions>
-                <ContentControl.ContentTemplate>
-                    <DataTemplate>
-                        <ItemsControl ItemsSource="{Binding}" Margin="15,25,0,0" ItemTemplateSelector="{StaticResource AppDataTemplateSelector}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapGrid Orientation="Vertical" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemContainerStyle>
-                                <Style TargetType="ContentPresenter">
-                                    <Setter Property="Width" Value="250"/>
-                                    <Setter Property="Height" Value="80"/>
-                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                    <Setter Property="Margin" Value="0,0,15,0" />
-                                </Style>
-                            </ItemsControl.ItemContainerStyle>
-                        </ItemsControl>
-                    </DataTemplate>
-                </ContentControl.ContentTemplate>
-            </ContentControl>
+        <Border x:Name="MainArea" Grid.Row="2" Padding="0,0,10,10">
+            <ScrollViewer VerticalScrollMode="Disabled">
+                <ContentControl x:Name="Customers" Height="{Binding ActualHeight, ElementName=MainArea }">
+                    <ContentControl.ContentTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition />
+                        </TransitionCollection>
+                    </ContentControl.ContentTransitions>
+                    <ContentControl.ContentTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding}" Margin="15,25,0,0" ItemTemplateSelector="{StaticResource AppDataTemplateSelector}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapGrid Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Width" Value="250"/>
+                                        <Setter Property="Height" Value="80"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                        <Setter Property="Margin" Value="0,0,15,0" />
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>
+                </ContentControl>
+            </ScrollViewer>
         </Border>
         
         <Grid Grid.RowSpan="3" Visibility="{Binding LoadingVisibility}">

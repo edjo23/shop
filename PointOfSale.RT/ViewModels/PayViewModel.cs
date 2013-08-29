@@ -112,7 +112,7 @@ namespace PointOfSale.RT.ViewModels
             processvm.CompleteAction = () =>
             {
                 var message = IoC.Get<MessageBoxViewModel>();
-                message.Content = new CustomerTransactionInfo { NewBalance = Customer.Balance };
+                message.Content = new CustomerTransactionInfo { Customer = Customer, NewBalance = Customer.Balance };
                 message.DismissAction = () => ScreenCoordinator.NavigateToHome();
                 message.DismissTimeout = 2500;
 

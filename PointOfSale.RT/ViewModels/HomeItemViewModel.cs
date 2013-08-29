@@ -36,7 +36,7 @@ namespace PointOfSale.RT.ViewModels
         {
             get
             {
-                return Customer.Balance > 0 ? new SolidColorBrush(Colors.Red) : new SolidColorBrush(Colors.Gray);
+                return Customer.Balance > 0 ? new SolidColorBrush(Colors.Gray) : new SolidColorBrush(Colors.Gray);
             }
         }
     }
