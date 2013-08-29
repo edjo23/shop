@@ -20,6 +20,6 @@
             </StackPanel>
         </Border>
 
-        <ContentControl x:Name="ActiveItem" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+        <ContentControl x:Name="ActiveItem" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Visibility="{Binding ContentVisibility}" />
     </Grid>
 </Page>

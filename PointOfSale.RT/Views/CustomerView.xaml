@@ -57,7 +57,7 @@
                                     </Canvas>
                                 </Viewbox>
                             </Border>
-                            <TextBlock Style="{StaticResource NormalAccentText}" Text="BACK" VerticalAlignment="Center" Margin="5,0,0,3" />
+                            <TextBlock Style="{StaticResource NormalAccentText}" Text="CANCEL" VerticalAlignment="Center" Margin="5,0,0,3" />
                         </StackPanel>
                     </Button>
                 </StackPanel>

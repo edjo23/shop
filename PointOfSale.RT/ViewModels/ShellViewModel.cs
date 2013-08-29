@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Service.Client;
 using Shop.Contracts.Services;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
 {
@@ -28,14 +31,29 @@ namespace PointOfSale.RT.ViewModels
 
         private readonly log4net.ILog Logger;
 
+        public Visibility ContentVisibility
+        {
+            get
+            {
+                return ApplicationView.Value == ApplicationViewState.FullScreenLandscape ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
+
+            Window.Current.SizeChanged += Window_SizeChanged;
 
             ConfigureServiceClients();
 
             Task.Factory.StartNew(() => Handle(IoC.Get<HomeViewModel>()));
         }
+
+        private void Window_SizeChanged(object sender, WindowSizeChangedEventArgs e)
+        {
+            NotifyOfPropertyChange(() => ContentVisibility);
+        }        
 
         public void Handle(SettingsChanged message)
         {
