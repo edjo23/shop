@@ -136,25 +136,28 @@ namespace PointOfSale.RT.ViewModels
                 Items.Add("ACCOUNT");
                 Items.Add("VISITOR");
 
-                var customers = CustomerService.GetCustomers();                
-                var termCustomers = customers.Where(o => !o.Name.IsMatch("Cash"));
-                var cashCustomers = customers.Where(o => o.Name.IsMatch("Cash"));
-
-                var previousGroup = "";
-                foreach (var customer in termCustomers.OrderBy(o => o.Name))
+                if (Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"] != null)
                 {
-                    var group = String.IsNullOrEmpty(customer.Name) ? "" : customer.Name.Substring(0, 1).ToUpper();
+                    var customers = CustomerService.GetCustomers();
+                    var termCustomers = customers.Where(o => !o.Name.IsMatch("Cash"));
+                    var cashCustomers = customers.Where(o => o.Name.IsMatch("Cash"));
 
-                    if (group != previousGroup)
+                    var previousGroup = "";
+                    foreach (var customer in termCustomers.OrderBy(o => o.Name))
                     {
-                        Accounts.Add(new GroupHomeItemViewModel { Group = group });
-                        previousGroup = group;
+                        var group = String.IsNullOrEmpty(customer.Name) ? "" : customer.Name.Substring(0, 1).ToUpper();
+
+                        if (group != previousGroup)
+                        {
+                            Accounts.Add(new GroupHomeItemViewModel { Group = group });
+                            previousGroup = group;
+                        }
+
+                        Accounts.Add(new AccountHomeItemViewModel { Customer = customer });
                     }
 
-                    Accounts.Add(new AccountHomeItemViewModel { Customer = customer });
+                    Visitors.AddRange(cashCustomers.Select(o => new CashHomeItemViewModel { Customer = o }));
                 }
-
-                Visitors.AddRange(cashCustomers.Select(o => new CashHomeItemViewModel { Customer = o }));
             })            
             .ContinueWith(task =>
             {               

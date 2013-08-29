@@ -15,9 +15,9 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="PointOfSale.RT.App">
-      <VisualElements DisplayName="PointOfSale.RT" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="PointOfSale.RT" ForegroundText="light" BackgroundColor="#464646">
+      <VisualElements DisplayName="Shop POS" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="Shop POS." ForegroundText="light" BackgroundColor="steelBlue">
         <DefaultTile ShowName="allLogos" />
-        <SplashScreen Image="Assets\SplashScreen.png" />
+        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="steelBlue" />
         <InitialRotationPreference>
           <Rotation Preference="landscape" />
         </InitialRotationPreference>

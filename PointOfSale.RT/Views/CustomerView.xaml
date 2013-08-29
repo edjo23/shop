@@ -57,7 +57,7 @@
                                     </Canvas>
                                 </Viewbox>
                             </Border>
-                            <TextBlock Text="BACK" VerticalAlignment="Center" FontSize="30" FontWeight="Light" Foreground="{StaticResource AccentColorBrush}" Margin="5,0,0,3" />
+                            <TextBlock Style="{StaticResource NormalAccentText}" Text="BACK" VerticalAlignment="Center" Margin="5,0,0,3" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -72,7 +72,7 @@
                     <ListBox x:Name="Items" Style="{StaticResource FlatListBox}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding DisplayName}" Foreground="{StaticResource AccentColorBrush}" Padding="10,0" />
+                                <TextBlock Style="{StaticResource NormalAccentText}" Text="{Binding DisplayName}" Padding="10,0" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ListBox>

@@ -17,6 +17,7 @@
     <Style TargetType="TextBlock">
         <Setter Property="FontSize" Value="30" />
         <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
     </Style>
 
     <Style x:Key="LabelText" TargetType="TextBlock">
@@ -28,16 +29,19 @@
     <Style x:Key="SmallText" TargetType="TextBlock">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
     </Style>
     
     <Style x:Key="NormalText" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontSize" Value="25" />
         <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
     </Style>
     
     <Style x:Key="LargeText" TargetType="TextBlock">
         <Setter Property="FontSize" Value="50" />
         <Setter Property="FontWeight" Value="Light" />
+        <Setter Property="Foreground" Value="{StaticResource NormalColorBrush}" />
     </Style>
 
     <Style x:Key="NormalAccentText" TargetType="TextBlock" BasedOn="{StaticResource NormalText}">
@@ -388,7 +392,7 @@
     <DataTemplate x:Key="GroupHomeItemViewModel">
         <Grid>
             <Border BorderThickness="0,0,0,1" BorderBrush="Gainsboro">
-                <TextBlock Text="{Binding Group}" Style="{StaticResource NormalAccentText}" VerticalAlignment="Bottom" Margin="5" />
+                <TextBlock Text="{Binding Group}" Style="{StaticResource NormalAccentText}" VerticalAlignment="Bottom" Margin="5,5,5,10" />
             </Border>
         </Grid>
     </DataTemplate>

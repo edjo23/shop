@@ -14,9 +14,6 @@
 
     <UserControl.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource DarkStoreButtonStyle}">
-            <!--<Setter Property="Width" Value="250" />
-            <Setter Property="MinHeight" Value="40" />-->
-            <!--<Setter Property="Margin" Value="0,0,15,0" />-->
             <Setter Property="FontSize" Value="30" />
             <Setter Property="FontWeight" Value="Light" />
             <Setter Property="BorderThickness" Value="0" />
@@ -54,7 +51,7 @@
                 <ListBox x:Name="Items" Style="{StaticResource FlatListBox}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}" Foreground="{StaticResource AccentColorBrush}" Padding="10,0" />
+                            <TextBlock Style="{StaticResource NormalAccentText}" Text="{Binding}" Padding="10,0" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ListBox>
@@ -79,57 +76,17 @@
                             <ItemsControl.ItemContainerStyle>
                                 <Style TargetType="ContentPresenter">
                                     <Setter Property="Width" Value="250"/>
-                                    <Setter Property="Height" Value="90"/>
+                                    <Setter Property="Height" Value="80"/>
                                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                                     <Setter Property="Margin" Value="0,0,15,0" />
                                 </Style>
                             </ItemsControl.ItemContainerStyle>
-                            <!--<ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid Visibility="{Binding GroupVisibility}">
-                                            <TextBlock Text="{Binding Group}" />
-                                        </Grid>
-                                        <Grid>
-                                            <Button c:Message.Attach="NewTransaction($dataContext)">
-                                                <StackPanel>
-                                                    <TextBlock Text="{Binding Customer.Name}" />
-                                                    <TextBlock Text="{Binding BalanceText}" Foreground="{Binding BalanceColorBrush}" />
-                                                </StackPanel>
-                                            </Button>
-                                        </Grid>
-                                    </Grid>                                    
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>-->
                         </ItemsControl>
                     </DataTemplate>
                 </ContentControl.ContentTemplate>
             </ContentControl>
         </Border>
-
-        <!--<Border Grid.Row="2" Padding="0,0,10,10" Visibility="{Binding AccountVisibility}">            
-            <ItemsControl x:Name="Accounts" Margin="15,25,0,0">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapGrid Orientation="Vertical" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>                            
-                            <Button c:Message.Attach="NewTransaction($dataContext)">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Customer.Name}" />
-                                    <TextBlock Text="{Binding BalanceText}" Foreground="{Binding BalanceColorBrush}" />
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-
-            </ItemsControl>
-        </Border>-->
-
+        
         <Grid Grid.RowSpan="3" Visibility="{Binding LoadingVisibility}">
             <ContentPresenter>
                 <i:Interaction.Behaviors>

@@ -30,7 +30,7 @@ namespace PointOfSale.RT.ViewModels
                 switch (Transaction.Type)
                 {
                     case CustomerTransactionType.Invoice:
-                        return "INVOICE";
+                        return "PURCHASE";
                     case CustomerTransactionType.Payment:
                         return "PAYMENT";
                     case CustomerTransactionType.Loan:

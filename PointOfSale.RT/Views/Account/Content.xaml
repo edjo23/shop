@@ -34,15 +34,7 @@
             <ItemsControl x:Name="Transactions" Margin="0,0,0,0" Background="Transparent">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Background="{Binding Background}" Padding="10" Margin="0,0,0,2">
-                            <Border.Resources>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="FontSize" Value="25" />
-                                    <Setter Property="FontWeight" Value="Light" />
-                                    <Setter Property="Foreground" Value="Black" />
-                                </Style>
-                            </Border.Resources>
-                            
+                        <Border Background="{Binding Background}" Padding="10" Margin="0,0,0,2">                            
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="350" />
@@ -50,9 +42,9 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 
-                                <TextBlock Grid.Column="0" Text="{Binding DateTimeText}" />
-                                <TextBlock Grid.Column="1" Text="{Binding TypeText}" />
-                                <TextBlock Grid.Column="2" Text="{Binding AmountText}" HorizontalAlignment="Right" TextAlignment="Right" />
+                                <TextBlock Grid.Column="0" Style="{StaticResource NormalText}" Text="{Binding DateTimeText}" />
+                                <TextBlock Grid.Column="1" Style="{StaticResource NormalText}" Text="{Binding TypeText}" />
+                                <TextBlock Grid.Column="2" Style="{StaticResource NormalText}" Text="{Binding AmountText}" HorizontalAlignment="Right" TextAlignment="Right" />
                             </Grid>
                         </Border>
                     </DataTemplate>
