@@ -139,24 +139,9 @@ namespace PointOfSale.RT.ViewModels
                 if (Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"] != null)
                 {
                     var customers = CustomerService.GetCustomers();
-                    var termCustomers = customers.Where(o => !o.Name.IsMatch("Cash"));
-                    var cashCustomers = customers.Where(o => o.Name.IsMatch("Cash"));
 
-                    var previousGroup = "";
-                    foreach (var customer in termCustomers.OrderBy(o => o.Name))
-                    {
-                        var group = String.IsNullOrEmpty(customer.Name) ? "" : customer.Name.Substring(0, 1).ToUpper();
-
-                        if (group != previousGroup)
-                        {
-                            Accounts.Add(new GroupHomeItemViewModel { Group = group });
-                            previousGroup = group;
-                        }
-
-                        Accounts.Add(new AccountHomeItemViewModel { Customer = customer });
-                    }
-
-                    Visitors.AddRange(cashCustomers.Select(o => new CashHomeItemViewModel { Customer = o }));
+                    Accounts.AddRange(customers.Where(o => !o.Name.IsMatch("Cash")).OrderBy(o => o.Name).Select(o => new AccountHomeItemViewModel { Customer = o }));
+                    Visitors.AddRange(customers.Where(o => o.Name.IsMatch("Cash")).Select(o => new CashHomeItemViewModel { Customer = o }));
                 }
             })            
             .ContinueWith(task =>

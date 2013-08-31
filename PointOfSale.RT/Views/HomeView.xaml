@@ -79,7 +79,7 @@
                                         <Setter Property="Width" Value="250"/>
                                         <Setter Property="Height" Value="80"/>
                                         <Setter Property="HorizontalAlignment" Value="Stretch" />
-                                        <Setter Property="Margin" Value="0,0,15,0" />
+                                        <Setter Property="Margin" Value="0,0,12.5,12.5" />
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
                             </ItemsControl>

@@ -388,31 +388,25 @@
         <Setter Property="ItemTemplate" Value="{StaticResource PointOfSaleContentItemTemplate}" />
     </Style>
 
-    <!-- Entity Data Templates -->
-    <DataTemplate x:Key="GroupHomeItemViewModel">
-        <Grid>
-            <Border BorderThickness="0,0,0,1" BorderBrush="Gainsboro">
-                <TextBlock Text="{Binding Group}" Style="{StaticResource NormalAccentText}" VerticalAlignment="Bottom" Margin="5,5,5,10" />
-            </Border>
-        </Grid>
-    </DataTemplate>
-    
+    <!-- Entity Data Templates -->       
     <DataTemplate x:Key="AccountHomeItemViewModel">
-        <Grid>            
+        <Grid Background="White">            
             <Button c:Message.Attach="NewTransaction($dataContext)" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <StackPanel>
-                    <TextBlock Text="{Binding Customer.Name}" Style="{StaticResource NormalText}" />
-                    <TextBlock Text="{Binding BalanceText}" Style="{StaticResource NormalText}" Foreground="{Binding BalanceColorBrush}" />
+                <StackPanel Margin="15,0,0,0">
+                    <TextBlock Text="{Binding Customer.Name}" Style="{StaticResource NormalAccentText}" />
+                    <TextBlock Text="{Binding BalanceText}" Style="{StaticResource NormalText}"  />
                 </StackPanel>
             </Button>
+            <Border BorderThickness="1" BorderBrush="#25000000" />
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="CashHomeItemViewModel">
-        <Grid>
+        <Grid Background="White">
             <Button c:Message.Attach="NewTransaction($dataContext)" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <TextBlock Text="{Binding Customer.Name}" Style="{StaticResource NormalText}" />
+                <TextBlock Text="{Binding Customer.Name}" Style="{StaticResource NormalAccentText}" Margin="15,0,0,0" />
             </Button>
+            <Border BorderThickness="1" BorderBrush="#25000000" />
         </Grid>
     </DataTemplate>
 

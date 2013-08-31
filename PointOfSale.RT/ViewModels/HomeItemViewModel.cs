@@ -13,16 +13,29 @@ namespace PointOfSale.RT.ViewModels
 {
     public class HomeItemViewModel : PropertyChangedBase
     {
-    }
-
-    public class GroupHomeItemViewModel : HomeItemViewModel
-    {
-        public string Group { get; set; }
+        public virtual Brush TileColorBrush
+        {
+            get
+            {
+                return new SolidColorBrush(Colors.White);
+            }
+        }
     }
 
     public class AccountHomeItemViewModel : HomeItemViewModel
     {
         public Customer Customer { get; set; }
+
+        public override Brush TileColorBrush
+        {
+            get
+            {
+                var alpha = (byte)(((String.IsNullOrEmpty(Customer.Name) ? 0 : Convert.ToInt32(Customer.Name.ToCharArray()[0])) % 5) * 10);
+
+                alpha = 255;
+                return new SolidColorBrush(Color.FromArgb(255, alpha, alpha, alpha));
+            }
+        }
 
         public string BalanceText
         {
@@ -30,15 +43,7 @@ namespace PointOfSale.RT.ViewModels
             {
                 return String.Format("{0:C}{1}", Math.Abs(Customer.Balance), Customer.Balance < 0 ? " CR" : "");
             }
-        }
-       
-        public Brush BalanceColorBrush
-        {
-            get
-            {
-                return Customer.Balance > 0 ? new SolidColorBrush(Colors.Gray) : new SolidColorBrush(Colors.Gray);
-            }
-        }
+        }      
     }
 
     public class CashHomeItemViewModel : AccountHomeItemViewModel
