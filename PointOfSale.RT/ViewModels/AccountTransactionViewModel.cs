@@ -51,6 +51,22 @@ namespace PointOfSale.RT.ViewModels
             }
         }
 
+        public string DebitText
+        {
+            get
+            {
+                return Transaction.Amount >= 0.0m ? AmountText : "";
+            }
+        }
+
+        public string CreditText
+        {
+            get
+            {
+                return Transaction.Amount < 0.0m ? AmountText : "";
+            }
+        }
+
         public Brush Background
         {
             get

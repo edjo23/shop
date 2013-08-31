@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="800">
+    d:DesignWidth="1200">
     
     <Grid>        
         <Grid.RowDefinitions>
@@ -23,11 +23,13 @@
                 <ColumnDefinition Width="350" />
                 <ColumnDefinition Width="350" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200" />
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Style="{StaticResource LabelText}" Foreground="{StaticResource AccentColorBrush}" Text="DATE/TIME" />
             <TextBlock Grid.Column="1" Style="{StaticResource LabelText}" Foreground="{StaticResource AccentColorBrush}" Text="TYPE" />
-            <TextBlock Grid.Column="2" Style="{StaticResource LabelText}" Foreground="{StaticResource AccentColorBrush}" Text="AMOUNT" HorizontalAlignment="Right" TextAlignment="Right" />
+            <TextBlock Grid.Column="2" Style="{StaticResource LabelText}" Foreground="{StaticResource AccentColorBrush}" Text="DEBIT" HorizontalAlignment="Right" TextAlignment="Right" />
+            <TextBlock Grid.Column="3" Style="{StaticResource LabelText}" Foreground="{StaticResource AccentColorBrush}" Text="CREDIT" HorizontalAlignment="Right" TextAlignment="Right" />
         </Grid>
 
         <ScrollViewer Grid.Row="2" Padding="0,0,25,25" HorizontalScrollMode="Disabled">
@@ -40,11 +42,13 @@
                                     <ColumnDefinition Width="350" />
                                     <ColumnDefinition Width="350" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="200" />
                                 </Grid.ColumnDefinitions>
                                 
                                 <TextBlock Grid.Column="0" Style="{StaticResource NormalText}" Text="{Binding DateTimeText}" />
                                 <TextBlock Grid.Column="1" Style="{StaticResource NormalText}" Text="{Binding TypeText}" />
-                                <TextBlock Grid.Column="2" Style="{StaticResource NormalText}" Text="{Binding AmountText}" HorizontalAlignment="Right" TextAlignment="Right" />
+                                <TextBlock Grid.Column="2" Style="{StaticResource NormalText}" Text="{Binding DebitText}" HorizontalAlignment="Right" TextAlignment="Right" />
+                                <TextBlock Grid.Column="3" Style="{StaticResource NormalText}" Text="{Binding CreditText}" HorizontalAlignment="Right" TextAlignment="Right" />
                             </Grid>
                         </Border>
                     </DataTemplate>
