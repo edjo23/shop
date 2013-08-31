@@ -413,12 +413,12 @@
     <DataTemplate x:Key="CustomerTransactionInfo">
         <Grid HorizontalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Stretch">                
-                <TextBlock Text="Merci beaucoup " Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center"><Run Text="{Binding Customer.Name}" /></TextBlock>
-                <TextBlock Text="{Binding NewBalanceText}" Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center" />
+                <TextBlock Text="Merci beaucoup " Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center"><Run Text="{Binding DisplayName}" /></TextBlock>
+                <TextBlock Text="{Binding NewBalanceText}" Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center" Visibility="{Binding NewBalanceVisibility}" />
             </StackPanel>
         </Grid>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="ErrorInfo">
         <Grid Background="Firebrick">
             <StackPanel Margin="100">
