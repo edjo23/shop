@@ -59,7 +59,7 @@
         </Border>
 
         <Border x:Name="MainArea" Grid.Row="2" Padding="0,0,10,10">
-            <ScrollViewer VerticalScrollMode="Disabled">
+            <ScrollViewer VerticalScrollMode="Disabled" ZoomMode="Disabled">
                 <ContentControl x:Name="Customers" Height="{Binding ActualHeight, ElementName=MainArea }">
                     <ContentControl.ContentTransitions>
                         <TransitionCollection>

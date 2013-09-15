@@ -153,8 +153,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\ElementDeferredVisibilityBehaviour.cs" />
+    <Compile Include="Controls\Button.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Log4NetFacade.cs" />
+    <Compile Include="Messages\ShowPopup.cs" />
     <Compile Include="Models\CustomerTransactionInfo.cs" />
     <Compile Include="Models\ErrorInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\HomeItemViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\InvoicePopupViewModel.cs" />
     <Compile Include="ViewModels\LoanViewModel.cs" />
     <Compile Include="ViewModels\MessageBoxViewModel.cs" />
     <Compile Include="ViewModels\PayViewModel.cs" />
@@ -196,6 +199,9 @@
     <Compile Include="Views\AppDataTemplateSelector.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InvoicePopupView.xaml.cs">
+      <DependentUpon>InvoicePopupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Loan\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
@@ -282,6 +288,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InvoicePopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

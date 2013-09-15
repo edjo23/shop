@@ -19,5 +19,10 @@ namespace Service.Client
         {
             Invoke(s => s.AddInvoice(invoice, items, payment));
         }
+
+        public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
+        {
+            return Invoke(s => s.GetInvoiceItems(invoiceId));
+        }
     }
 }

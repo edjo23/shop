@@ -5,6 +5,7 @@
     xmlns:local="using:PointOfSale.RT.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="using:Caliburn.Micro"
     mc:Ignorable="d">
 
     <Grid Background="{StaticResource BackgroundColorBrush}">
@@ -21,5 +22,17 @@
         </Border>
 
         <ContentControl x:Name="ActiveItem" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Visibility="{Binding ContentVisibility}" />
+
+        <Popup x:Name="PopupContent" IsOpen="{Binding PopupIsOpen, Mode=TwoWay}" IsLightDismissEnabled="True" Width="800" Height="400" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Popup.Transitions>
+                <TransitionCollection>
+                    <PopupThemeTransition />
+                </TransitionCollection>
+            </Popup.Transitions>
+            
+            <Border BorderThickness="2" BorderBrush="Black" Background="White" Width="{Binding Width, ElementName=PopupContent}" Height="{Binding Height, ElementName=PopupContent}">
+                <ContentControl c:View.Model="{Binding PopupItem}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+            </Border>
+        </Popup>
     </Grid>
 </Page>

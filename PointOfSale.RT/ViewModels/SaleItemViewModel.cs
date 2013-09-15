@@ -26,6 +26,14 @@ namespace PointOfSale.RT.ViewModels
             }
         }
 
+        public string PriceText
+        {
+            get
+            {
+                return Price.ToString("C");
+            }
+        }
+
         private int _Quantity;
 
         public int Quantity
@@ -41,6 +49,7 @@ namespace PointOfSale.RT.ViewModels
                     _Quantity = value;
                     NotifyOfPropertyChange(() => Quantity);
                     NotifyOfPropertyChange(() => Total);
+                    NotifyOfPropertyChange(() => TotalText);
                     NotifyOfPropertyChange(() => QuantityVisibility);
                 }
             }
@@ -51,6 +60,14 @@ namespace PointOfSale.RT.ViewModels
             get
             {
                 return Quantity * Price;
+            }
+        }
+
+        public string TotalText
+        {
+            get
+            {
+                return Total.ToString("C");
             }
         }
 

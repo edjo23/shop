@@ -107,6 +107,14 @@ namespace Shop.Business.Managers
 
         }
 
+        public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
+        {
+            using (var connection = new ConnectionScope())
+            {
+                return connection.Connection.GetList<InvoiceItem>(new { InvoiceId = invoiceId }).ToList();
+            }
+        }
+
         public IEnumerable<dynamic> GetInvoiceItemHistory(DateTimeOffset startDateTime)
         {
             using (var connection = new ConnectionScope())

@@ -14,7 +14,7 @@ namespace Shop.Contracts.Services
         [OperationContract]
         void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items, decimal payment);
 
-        //[OperationContract]
-        //IEnumerable<dynamic> GetInvoiceItemHistory(DateTimeOffset startDateTime);
+        [OperationContract]
+        IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId);
     }
 }

@@ -50,6 +50,7 @@ namespace PointOfSale.RT
             Container.PerRequest<ProcessViewModel>();
             Container.PerRequest<MessageBoxViewModel>();
             Container.PerRequest<SettingsViewModel>();
+            Container.PerRequest<InvoicePopupViewModel>();
 
             Container.Singleton<IServiceClientConfiguration, BasicHttpServiceClientConfiguration>();
 

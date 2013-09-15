@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using PointOfSale.RT.Messages;
 using PointOfSale.RT.Models;
 using PointOfSale.RT.ViewModels;
 using Shop.Contracts.Entities;
@@ -40,6 +41,11 @@ namespace PointOfSale.RT.Services
             screen.Customer = customer;
 
             NavigateToScreen(screen);
+        }
+
+        public void ShowPopup(PopupViewModel popup)
+        {
+            EventAggregator.Publish(new ShowPopup { Popup = popup });
         }
 
         public void HandleFault(AggregateException ex)

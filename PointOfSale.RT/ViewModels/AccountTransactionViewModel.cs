@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Shop.Contracts.Entities;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace PointOfSale.RT.ViewModels
@@ -75,6 +76,16 @@ namespace PointOfSale.RT.ViewModels
                     return new SolidColorBrush(Color.FromArgb(10, 0, 0, 0));
                 else
                     return new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+            }
+        }
+
+        public bool CanViewDetail { get; set; }
+
+        public Visibility ViewDetailVisibility
+        {
+            get
+            {
+                return CanViewDetail ? Visibility.Visible : Visibility.Collapsed;
             }
         }
     }

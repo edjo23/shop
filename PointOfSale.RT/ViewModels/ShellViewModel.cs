@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using PointOfSale.RT.Messages;
 using Service.Client;
 using Shop.Contracts.Services;
 using Windows.UI.Core;
@@ -12,7 +13,7 @@ using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
 {
-    public class ShellViewModel : Conductor<Screen>.Collection.OneActive, IHandle<SettingsChanged>, IHandle<Screen>
+    public class ShellViewModel : Conductor<Screen>.Collection.OneActive, IHandle<SettingsChanged>, IHandle<Screen>, IHandle<ShowPopup>
     {
         public ShellViewModel(IEventAggregator eventAggregator, IServiceClientConfiguration serviceClientConfiguration)
         {
@@ -36,6 +37,49 @@ namespace PointOfSale.RT.ViewModels
             get
             {
                 return ApplicationView.Value == ApplicationViewState.FullScreenLandscape ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private PopupViewModel _PopupItem;
+
+        public PopupViewModel PopupItem
+        {
+            get
+            {
+                return _PopupItem;
+            }
+            set
+            {
+                if (value != _PopupItem)
+                {
+                    _PopupItem = value;
+
+                    NotifyOfPropertyChange(() => PopupItem);
+                }
+            }
+        }
+
+        private bool _PopupIsOpen;
+
+        public bool PopupIsOpen
+        {
+            get
+            {
+                return _PopupIsOpen;
+            }
+            set
+            {
+                if (value != _PopupIsOpen)
+                {
+                    _PopupIsOpen = value;
+
+                    if (_PopupIsOpen == false)
+                    {
+                        PopupItem = null;
+                    }                
+
+                    NotifyOfPropertyChange(() => PopupIsOpen);
+                }
             }
         }
 
@@ -83,6 +127,16 @@ namespace PointOfSale.RT.ViewModels
             ActivateItem(message);
 
             Logger.Debug(String.Format("Active screen is [Type: {0}]", ActiveItem.GetType()));
+        }
+
+        public void Handle(ShowPopup message)
+        {
+            if (!PopupIsOpen)
+            {
+                PopupItem = message.Popup;
+                PopupItem.Activate();
+                PopupIsOpen = true;         
+            }
         }
     }
 }

@@ -23,9 +23,9 @@ namespace Shop.Business.Services
             Manager.AddInvoice(invoice, items, payment);
         }
 
-        //public IEnumerable<dynamic> GetInvoiceItemHistory(DateTimeOffset startDateTime)
-        //{
-        //    return Manager.GetInvoiceItemHistory(startDateTime);
-        //}
+        public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
+        {
+            return Manager.GetInvoiceItems(invoiceId);
+        }
     }
 }
