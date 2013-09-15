@@ -47,6 +47,7 @@ namespace PointOfSale.RT
             Container.PerRequest<PayViewModel>();
             Container.PerRequest<LoanViewModel>();
             Container.PerRequest<AccountViewModel>();
+            Container.PerRequest<AccountTransactionListViewModel>();
             Container.PerRequest<ProcessViewModel>();
             Container.PerRequest<MessageBoxViewModel>();
             Container.PerRequest<SettingsViewModel>();

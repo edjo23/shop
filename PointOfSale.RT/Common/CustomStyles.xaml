@@ -65,6 +65,24 @@
         </Canvas>
     </DataTemplate>
 
+    <DataTemplate x:Key="LeftArrowButtonContent">
+        <Canvas Width="76" Height="76">
+            <Path Width="39.25" Height="28" Canvas.Left="17.75" Canvas.Top="24" Stretch="Fill" Fill="White" Data="F1 M 57,42L 57,34L 32.25,34L 42.25,24L 31.75,24L 17.75,38L 31.75,52L 42.25,52L 32.25,42L 57,42 Z "/>
+        </Canvas>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RightArrowButtonContent">
+        <Canvas Width="76" Height="76">
+            <Path Width="39.25" Height="28" Canvas.Left="19.0002" Canvas.Top="24" Stretch="Fill" Fill="White" Data="F1 M 19.0002,34L 19.0002,42L 43.7502,42L 33.7502,52L 44.2502,52L 58.2502,38L 44.2502,24L 33.7502,24L 43.7502,34L 19.0002,34 Z "/>
+        </Canvas>
+    </DataTemplate>
+
+    <DataTemplate x:Key="EyeButtonContent">
+        <Canvas Width="76" Height="76">
+            <Path Width="42" Height="25.8461" Canvas.Left="17" Canvas.Top="25.0769" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 38,33.1538C 40.6765,33.1538 42.8462,35.3235 42.8462,38C 42.8462,40.6765 40.6765,42.8461 38,42.8461C 35.3235,42.8461 33.1539,40.6765 33.1539,38C 33.1539,35.3235 35.3236,33.1538 38,33.1538 Z M 38,25.0769C 49.3077,25.0769 59,33.1538 59,38C 59,42.8461 49.3077,50.9231 38,50.9231C 26.6923,50.9231 17,42.8461 17,38C 17,33.1538 26.6923,25.0769 38,25.0769 Z M 38,29.1154C 33.0932,29.1154 29.1154,33.0932 29.1154,38C 29.1154,42.9068 33.0932,46.8846 38,46.8846C 42.9068,46.8846 46.8846,42.9068 46.8846,38C 46.8846,33.0932 42.9068,29.1154 38,29.1154 Z "/>
+        </Canvas>
+    </DataTemplate>
+    
     <!-- FlatButtonStyle -->
     <Style x:Key="FlatButtonStyle" TargetType="ButtonBase">
         <Setter Property="Background" Value="Transparent" />
@@ -220,6 +238,20 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!-- InlineRoundButtonStyle -->
+    <Style x:Key="InlineRoundButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource RoundButtonStyle}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Width" Value="35" />
+        <Setter Property="Height" Value="35" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
     </Style>
 
     <!-- NoStyleButtonStyle -->

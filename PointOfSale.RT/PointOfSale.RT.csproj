@@ -170,6 +170,7 @@
     <Compile Include="Services\ScreenCoordinator.cs" />
     <Compile Include="Services\ServiceClient.cs" />
     <Compile Include="Services\ServiceProxy.cs" />
+    <Compile Include="ViewModels\AccountTransactionListViewModel.cs" />
     <Compile Include="ViewModels\AccountTransactionViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
@@ -184,6 +185,9 @@
     <Compile Include="ViewModels\SaleViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\AccountTransactionListView.xaml.cs">
+      <DependentUpon>AccountTransactionListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Account\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
     </Compile>
@@ -270,6 +274,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\AccountTransactionListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Account\Content.xaml">
       <SubType>Designer</SubType>

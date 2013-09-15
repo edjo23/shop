@@ -21,7 +21,8 @@ namespace PointOfSale.RT.ViewModels
 
             DisplayName = "ACCOUNT";
 
-            Transactions = new BindableCollection<AccountTransactionViewModel>();
+            MaximumDate = new DateTimeOffset(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, 1, 0, 0, 0, TimeSpan.Zero);
+            MinimumDate = new DateTimeOffset(2013, 07, 1, 0, 0, 0, TimeSpan.Zero);
         }
 
         private readonly ScreenCoordinator ScreenCoordinator;
@@ -30,7 +31,24 @@ namespace PointOfSale.RT.ViewModels
 
         public Customer Customer { get; set; }
 
-        public BindableCollection<AccountTransactionViewModel> Transactions { get; set; }
+        private AccountTransactionListViewModel _TransactionListView;
+
+        public AccountTransactionListViewModel TransactionListView
+        {
+            get
+            {
+                return _TransactionListView;
+            }
+            set
+            {
+                if (value != _TransactionListView)
+                {
+                    _TransactionListView = value;
+
+                    NotifyOfPropertyChange(() => TransactionListView);
+                }
+            }
+        }
 
         public string BalanceText
         {
@@ -48,11 +66,99 @@ namespace PointOfSale.RT.ViewModels
             }
         }
 
+        public DateTimeOffset MaximumDate { get; set; }
+
+        public DateTimeOffset MinimumDate { get; set; }
+
+        public DateTimeOffset? _FromDate = null;
+
+        public DateTimeOffset? FromDate 
+        {
+            get
+            {
+                return _FromDate;
+            }
+            set
+            {
+                if (value != _FromDate)
+                {
+                    _FromDate = value;
+                    NotifyOfPropertyChange(() => FromDate);
+                    NotifyOfPropertyChange(() => FromDateText);
+                    NotifyOfPropertyChange(() => CanShowNext);
+                    NotifyOfPropertyChange(() => CanShowPrevious);
+                }
+            }
+        }
+
+        public string FromDateText
+        {
+            get
+            {
+                return FromDate.HasValue ? String.Format("{0:MMMM, yyyy}", FromDate.Value).ToUpper() : "";
+            }
+        }
+
+        public bool CanShowNext
+        {
+            get
+            {
+                return FromDate.HasValue && FromDate.Value.AddDays(1) < MaximumDate;
+            }
+        }
+
+        public bool CanShowPrevious
+        {
+            get
+            {
+                return FromDate.HasValue && FromDate.Value.AddDays(-1) > MinimumDate; ;
+            }
+        }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+
+            if (!FromDate.HasValue)
+            {
+                FromDate = MaximumDate;
+                LoadTransactionView();
+            }
+        }
+
         public void Load()
         {
-            var transactions = CustomerService.GetTransactions(Customer.Id, DateTime.Today.AddDays(-7), null);
+        }
 
-            Transactions.AddRange(transactions.OrderByDescending(o => o.DateTime).Select((o, i) => new AccountTransactionViewModel { Transaction = o, Index = i, CanViewDetail = o.Type == CustomerTransactionType.Invoice }));
+        public void ShowPrevious()
+        {
+            LoadOffset(-1);
+        }
+
+        public void ShowNext()
+        {
+            LoadOffset(1);
+        }
+
+        private void LoadOffset(int offset)
+        {
+            if (!FromDate.HasValue)
+                return;
+
+            TransactionListView = null;
+            FromDate = FromDate.Value.AddMonths(offset);
+            LoadTransactionView();
+        }
+
+        private void LoadTransactionView()
+        {
+            var view = IoC.Get<AccountTransactionListViewModel>();
+            view.CustomerId = Customer.Id;
+            view.FromDate = FromDate.Value;
+            view.ToDate = FromDate.Value.AddMonths(1).AddSeconds(-1);
+            view.Load();
+
+            TransactionListView = view;
         }
 
         public void ShowDetail(AccountTransactionViewModel item)
