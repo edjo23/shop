@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
 
-namespace Service.Client
+namespace Shop.Service.Client
 {
     public class ApplicationServiceProxy : ServiceProxy<IApplicationService>, IApplicationService
     {
+        public ApplicationServiceProxy(IServiceClientFactory factory)
+            : base(factory)
+        {
+        }
+
         public IEnumerable<Denomination> GetDenominations()
         {
             return Invoke(s => s.GetDenominations());

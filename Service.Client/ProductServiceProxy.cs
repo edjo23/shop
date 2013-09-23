@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
 
-namespace Service.Client
+namespace Shop.Service.Client
 {
     public class ProductServiceProxy : ServiceProxy<IProductService>, IProductService
     {
+        public ProductServiceProxy(IServiceClientFactory factory)
+            : base(factory)
+        {
+        }
+
         public IEnumerable<Product> GetProducts()
         {
             return Invoke(s => s.GetProducts());

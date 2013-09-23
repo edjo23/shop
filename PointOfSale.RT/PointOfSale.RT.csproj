@@ -101,54 +101,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Contracts\Entities\Customer.cs">
-      <Link>Contracts\Entities\Customer.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\CustomerTransaction.cs">
-      <Link>Contracts\Entities\CustomerTransaction.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\Denomination.cs">
-      <Link>Contracts\Entities\Denomination.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\Discount.cs">
-      <Link>Contracts\Entities\Discount.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\DiscountCustomer.cs">
-      <Link>Contracts\Entities\DiscountCustomer.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\DiscountModel.cs">
-      <Link>Contracts\Entities\DiscountModel.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\DiscountProduct.cs">
-      <Link>Contracts\Entities\DiscountProduct.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\Invoice.cs">
-      <Link>Contracts\Entities\Invoice.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\InvoiceItem.cs">
-      <Link>Contracts\Entities\InvoiceItem.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\Product.cs">
-      <Link>Contracts\Entities\Product.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Entities\ProductMovement.cs">
-      <Link>Contracts\Entities\ProductMovement.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Services\IApplicationService.cs">
-      <Link>Contracts\Services\IApplicationService.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Services\ICustomerService.cs">
-      <Link>Contracts\Services\ICustomerService.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Services\IDiscountService.cs">
-      <Link>Contracts\Services\IDiscountService.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Services\IInvoiceService.cs">
-      <Link>Contracts\Services\IInvoiceService.cs</Link>
-    </Compile>
-    <Compile Include="..\Contracts\Services\IProductService.cs">
-      <Link>Contracts\Services\IProductService.cs</Link>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -160,16 +112,9 @@
     <Compile Include="Models\CustomerTransactionInfo.cs" />
     <Compile Include="Models\ErrorInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ApplicationServiceProxy.cs" />
-    <Compile Include="Services\CustomerServiceProxy.cs" />
-    <Compile Include="Services\DiscountServiceProxy.cs" />
     <Compile Include="Services\ImageService.cs" />
-    <Compile Include="Services\InvoiceServiceProxy.cs" />
-    <Compile Include="Services\IServiceClientConfiguration.cs" />
-    <Compile Include="Services\ProductServiceProxy.cs" />
     <Compile Include="Services\ScreenCoordinator.cs" />
-    <Compile Include="Services\ServiceClient.cs" />
-    <Compile Include="Services\ServiceProxy.cs" />
+    <Compile Include="Services\ServiceClientFactory.cs" />
     <Compile Include="ViewModels\AccountTransactionListViewModel.cs" />
     <Compile Include="ViewModels\AccountTransactionViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
@@ -369,6 +314,16 @@
     <Reference Include="Windows.UI.Interactivity">
       <HintPath>..\packages\Windows.UI.Interactivity.1.1.0.0\lib\win\Windows.UI.Interactivity.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\Contracts.csproj">
+      <Project>{f964b318-7bb8-4efe-8724-a2df741e91b4}</Project>
+      <Name>Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Service.Client\Service.Client.csproj">
+      <Project>{f7543423-e620-46d1-bae4-7c915d1484e8}</Project>
+      <Name>Service.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

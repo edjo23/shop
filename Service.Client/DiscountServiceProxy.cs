@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
 
-namespace Service.Client
+namespace Shop.Service.Client
 {
     public class DiscountServiceProxy : ServiceProxy<IDiscountService>, IDiscountService
     {
+        public DiscountServiceProxy(IServiceClientFactory factory)
+            : base(factory)
+        {
+        }
+
         public IEnumerable<Discount> GetDiscounts()
         {
             return Invoke(s => s.GetDiscounts());

@@ -4,13 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service.Client
+namespace Shop.Service.Client
 {
     public abstract class ServiceProxy<TService> where TService : class
     {
+        public ServiceProxy(IServiceClientFactory factory)
+        {
+            Factory = factory;
+        }
+
+        protected readonly IServiceClientFactory Factory;
+
         protected TResult Invoke<TResult>(Func<TService, TResult> call)
         {
-            using (var client = new ServiceClient<TService>())
+            using (var client = Factory.GetClient<TService>())
             {
                 try
                 {
@@ -26,7 +33,7 @@ namespace Service.Client
 
         protected void Invoke(Action<TService> call)
         {
-            using (var client = new ServiceClient<TService>())
+            using (var client = Factory.GetClient<TService>())
             {
                 try
                 {
@@ -38,6 +45,6 @@ namespace Service.Client
                     throw;
                 }
             }
-        }
+        }        
     }
 }

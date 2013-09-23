@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
 
-namespace Service.Client
+namespace Shop.Service.Client
 {
     public class CustomerServiceProxy : ServiceProxy<ICustomerService>, ICustomerService
     {
+        public CustomerServiceProxy(IServiceClientFactory factory)
+            : base(factory)
+        {
+        }
+
         public IEnumerable<Customer> GetCustomers()
         {
             return Invoke(s => s.GetCustomers());

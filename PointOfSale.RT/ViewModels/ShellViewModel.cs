@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using PointOfSale.RT.Messages;
-using Service.Client;
+using PointOfSale.RT.Services;
 using Shop.Contracts.Services;
+using Shop.Service.Client;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -15,10 +16,10 @@ namespace PointOfSale.RT.ViewModels
 {
     public class ShellViewModel : Conductor<Screen>.Collection.OneActive, IHandle<SettingsChanged>, IHandle<Screen>, IHandle<ShowPopup>
     {
-        public ShellViewModel(IEventAggregator eventAggregator, IServiceClientConfiguration serviceClientConfiguration)
+        public ShellViewModel(IEventAggregator eventAggregator, IServiceClientFactory serviceClientFactory)
         {
             EventAggregator = eventAggregator;
-            ServiceClientConfiguration = serviceClientConfiguration;
+            ServiceClientFactory = serviceClientFactory as WindowsStoreServiceClientFactory;
             Logger = log4net.LogManager.GetLogger(GetType());
 
             DisplayName = "The Shop";
@@ -28,7 +29,7 @@ namespace PointOfSale.RT.ViewModels
 
         private readonly IEventAggregator EventAggregator;
 
-        private readonly IServiceClientConfiguration ServiceClientConfiguration;
+        private readonly WindowsStoreServiceClientFactory ServiceClientFactory;
 
         private readonly log4net.ILog Logger;
 
@@ -108,8 +109,8 @@ namespace PointOfSale.RT.ViewModels
 
         private void ConfigureServiceClients()
         {
-            ServiceClientConfiguration.EndpointAddressFormatString = "http://{0}/Services/{1}.svc";
-            ServiceClientConfiguration.Host = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"];
+            ServiceClientFactory.EndpointAddressFormatString = "http://{0}/Services/{1}.svc";
+            ServiceClientFactory.Host = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"];
         }
 
         public void Handle(Screen message)

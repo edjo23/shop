@@ -6,8 +6,8 @@ using Caliburn.Micro;
 using PointOfSale.RT.Services;
 using PointOfSale.RT.ViewModels;
 using PointOfSale.RT.Views;
-using Service.Client;
 using Shop.Contracts.Services;
+using Shop.Service.Client;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -53,7 +53,7 @@ namespace PointOfSale.RT
             Container.PerRequest<SettingsViewModel>();
             Container.PerRequest<InvoicePopupViewModel>();
 
-            Container.Singleton<IServiceClientConfiguration, BasicHttpServiceClientConfiguration>();
+            Container.Singleton<IServiceClientFactory, WindowsStoreServiceClientFactory>();
 
             Container.PerRequest<IApplicationService, ApplicationServiceProxy>();
             Container.PerRequest<ICustomerService, CustomerServiceProxy>();
