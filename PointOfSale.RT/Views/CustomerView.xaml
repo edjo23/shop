@@ -89,7 +89,7 @@
         </Border>
 
         <Grid Grid.Row="2" Grid.Column="1" Margin="0" Visibility="{Binding ContentVisibility}">
-            <ContentControl VerticalAlignment="Top" c:View.Model="{Binding ActiveItem}" c:View.Context="Summary" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <ContentControl VerticalAlignment="Stretch" c:View.Model="{Binding ActiveItem}" c:View.Context="Summary" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 <ContentControl.ContentTransitions>
                     <TransitionCollection>
                         <EntranceThemeTransition  />

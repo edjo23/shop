@@ -108,7 +108,9 @@
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Log4NetFacade.cs" />
+    <Compile Include="Messages\HidePopup.cs" />
     <Compile Include="Messages\ShowPopup.cs" />
+    <Compile Include="Messages\UpdatePin.cs" />
     <Compile Include="Models\CustomerTransactionInfo.cs" />
     <Compile Include="Models\ErrorInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,6 +127,8 @@
     <Compile Include="ViewModels\LoanViewModel.cs" />
     <Compile Include="ViewModels\MessageBoxViewModel.cs" />
     <Compile Include="ViewModels\PayViewModel.cs" />
+    <Compile Include="ViewModels\PinEntryViewModel.cs" />
+    <Compile Include="ViewModels\PinPopupViewModel.cs" />
     <Compile Include="ViewModels\ProcessViewModel.cs" />
     <Compile Include="ViewModels\SaleItemViewModel.cs" />
     <Compile Include="ViewModels\SaleViewModel.cs" />
@@ -172,6 +176,12 @@
     </Compile>
     <Compile Include="Views\Pay\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PinEntryView.xaml.cs">
+      <DependentUpon>PinEntryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PinPopupView.xaml.cs">
+      <DependentUpon>PinPopupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProcessView.xaml.cs">
       <DependentUpon>ProcessView.xaml</DependentUpon>
@@ -273,6 +283,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pay\Toolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PinEntryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PinPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

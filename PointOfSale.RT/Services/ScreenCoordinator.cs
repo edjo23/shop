@@ -35,6 +35,14 @@ namespace PointOfSale.RT.Services
             NavigateToScreen(screen);
         }
 
+        public void NavigateToPinEntry(Customer customer)
+        {
+            var screen = IoC.Get<PinEntryViewModel>();
+            screen.Customer = customer;
+
+            NavigateToScreen(screen);
+        }
+
         public void NavigateToCustomer(Customer customer)
         {
             var screen = IoC.Get<CustomerViewModel>();
@@ -43,9 +51,9 @@ namespace PointOfSale.RT.Services
             NavigateToScreen(screen);
         }
 
-        public void ShowPopup(PopupViewModel popup)
+        public void ShowPopup(PopupViewModel popup, double width = 800, double height = 400)
         {
-            EventAggregator.Publish(new ShowPopup { Popup = popup });
+            EventAggregator.Publish(new ShowPopup { Popup = popup, Width = width, Height = height });
         }
 
         public void HandleFault(AggregateException ex)

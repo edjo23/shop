@@ -14,7 +14,7 @@ using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
 {
-    public class ShellViewModel : Conductor<Screen>.Collection.OneActive, IHandle<SettingsChanged>, IHandle<Screen>, IHandle<ShowPopup>
+    public class ShellViewModel : Conductor<Screen>.Collection.OneActive, IHandle<SettingsChanged>, IHandle<Screen>, IHandle<ShowPopup>, IHandle<HidePopup>
     {
         public ShellViewModel(IEventAggregator eventAggregator, IServiceClientFactory serviceClientFactory)
         {
@@ -38,6 +38,44 @@ namespace PointOfSale.RT.ViewModels
             get
             {
                 return ApplicationView.Value == ApplicationViewState.FullScreenLandscape ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private double _PopupWidth;
+
+        public double PopupWidth
+        {
+            get
+            {
+                return _PopupWidth;
+            }
+            set
+            {
+                if (value != _PopupWidth)
+                {
+                    _PopupWidth = value;
+
+                    NotifyOfPropertyChange(() => PopupWidth);
+                }
+            }
+        }
+
+        private double _PopupHeight;
+
+        public double PopupHeight
+        {
+            get
+            {
+                return _PopupHeight;
+            }
+            set
+            {
+                if (value != _PopupHeight)
+                {
+                    _PopupHeight = value;
+
+                    NotifyOfPropertyChange(() => PopupHeight);
+                }
             }
         }
 
@@ -134,10 +172,17 @@ namespace PointOfSale.RT.ViewModels
         {
             if (!PopupIsOpen)
             {
+                PopupWidth = message.Width;
+                PopupHeight = message.Height;
                 PopupItem = message.Popup;
                 PopupItem.Activate();
                 PopupIsOpen = true;         
             }
+        }
+
+        public void Handle(HidePopup message)
+        {
+            PopupIsOpen = false;
         }
     }
 }

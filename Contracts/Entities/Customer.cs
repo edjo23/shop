@@ -15,5 +15,7 @@ namespace Shop.Contracts.Entities
         public string Name { get; set; }
 
         public decimal Balance { get; set; }
+
+        public string Pin { get; set; }
     }
 }

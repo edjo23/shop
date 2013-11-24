@@ -10,6 +10,10 @@ namespace PointOfSale.RT.Messages
 {   
     public class ShowPopup
     {
+        public double Width { get; set; }
+
+        public double Height { get; set; }
+
         public PopupViewModel Popup { get; set; }
     }
 }

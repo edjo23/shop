@@ -6,13 +6,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignHeight="600"
+    d:DesignWidth="250">
     
     <Grid>
         <StackPanel Margin="25">
             <TextBlock Text="CURRENT BALANCE" Foreground="{StaticResource LabelColorBrush}" FontSize="17.5" TextAlignment="Right" />
             <TextBlock x:Name="BalanceText" Text="$99.99" Foreground="{StaticResource NormalColorBrush}" TextAlignment="Right" />
+        </StackPanel>
+        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource AccentButtonStyle}">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="MinHeight" Value="40" />
+                    <Setter Property="Margin" Value="10,0,10,10" />
+                    <Setter Property="FontSize" Value="17.5" />
+                </Style>
+            </StackPanel.Resources>
+            <Button x:Name="AddPin" Content="ADD PIN" Visibility="{Binding AddPinVisibility}" />
+            <Button x:Name="ChangePin" Content="CHANGE PIN" Visibility="{Binding ChangePinVisibility}" />
+            <Button x:Name="RemovePin" Content="REMOVE PIN" Visibility="{Binding RemovePinVisibility}" />
+            <Border>
+                <TextBlock x:Name="PinUpdatingText" TextAlignment="Center" Margin="10" FontSize="17.5" Foreground="{StaticResource AccentColorBrush}" Visibility="{Binding PinUpdatingVisibility}" />
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>

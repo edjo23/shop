@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -69,6 +70,34 @@ namespace Shop.Business.Managers
 
                 return connectionScope.Connection.GetList<CustomerTransaction>(where).ToList();
             }
+        }
+
+        public bool CheckPin(Guid customerId, string pin)
+        {
+            var customer = GetCustomer(customerId);
+            if (customer == null)
+                throw new ArgumentOutOfRangeException("customerId");
+
+            return (GetPinHash(customerId, pin) == customer.Pin);
+        }
+
+        public void UpdatePin(Guid customerId, string pin)
+        {
+            var customer = GetCustomer(customerId);
+            if (customer == null)
+                throw new ArgumentOutOfRangeException("customerId");
+
+            customer.Pin = String.IsNullOrEmpty(pin) ? null : GetPinHash(customerId, pin);
+
+            UpdateCustomer(customer);
+        }
+
+        public string GetPinHash(Guid customerId, string pin)
+        {
+            var buffer = ASCIIEncoding.Default.GetBytes(pin).Concat(customerId.ToByteArray()).ToArray();
+            var hash = new SHA256Managed().ComputeHash(buffer);           
+
+            return ASCIIEncoding.UTF8.GetString(hash);
         }
     }
 }

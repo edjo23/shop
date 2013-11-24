@@ -47,5 +47,15 @@ namespace Shop.Business.Services
         {
             Manager.AddTransaction(transaction);
         }
+
+        public bool CheckPin(Guid customerId, string pin)
+        {
+            return Manager.CheckPin(customerId, pin);
+        }
+
+        public void UpdatePin(Guid customerId, string pin)
+        {
+            Manager.UpdatePin(customerId, pin);
+        }
     }
 }

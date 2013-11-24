@@ -28,5 +28,11 @@ namespace Shop.Contracts.Services
 
         [OperationContract]
         void AddTransaction(CustomerTransaction transaction);
+
+        [OperationContract]
+        bool CheckPin(Guid customerId, string pin);
+
+        [OperationContract]
+        void UpdatePin(Guid customerId, string pin);
     }
 }

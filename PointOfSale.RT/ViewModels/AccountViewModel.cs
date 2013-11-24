@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using PointOfSale.RT.Messages;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace PointOfSale.RT.ViewModels
@@ -115,6 +117,111 @@ namespace PointOfSale.RT.ViewModels
             }
         }
 
+        private bool _HasPin;
+
+        public bool HasPin
+        {
+            get 
+            { 
+                return _HasPin; 
+            }
+            set 
+            {
+                if (value != _HasPin)
+                {
+                    _HasPin = value;
+
+                    NotifyOfPropertyChange(() => HasPin);
+                    NotifyOfPropertyChange(() => CanAddPin);
+                    NotifyOfPropertyChange(() => CanChangePin);
+                    NotifyOfPropertyChange(() => CanRemovePin);
+                    NotifyOfPropertyChange(() => AddPinVisibility);
+                    NotifyOfPropertyChange(() => ChangePinVisibility);
+                    NotifyOfPropertyChange(() => RemovePinVisibility);
+                }
+            }
+        }
+
+        public bool CanAddPin
+        {
+            get { return !PinUpdating && !HasPin; }
+        }
+
+        public bool CanChangePin
+        {
+            get { return !PinUpdating && HasPin; }
+        }
+
+        public bool CanRemovePin
+        {
+            get { return !PinUpdating && HasPin; }
+        }
+
+        public Visibility AddPinVisibility
+        {
+            get { return CanAddPin ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public Visibility ChangePinVisibility
+        {
+            get { return CanChangePin ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        public Visibility RemovePinVisibility
+        {
+            get { return CanRemovePin ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
+        private bool _PinUpdating;
+
+        public bool PinUpdating
+        {
+            get
+            {
+                return _PinUpdating;
+            }
+            set
+            {
+                if (value != _PinUpdating)
+                {
+                    _PinUpdating = value;
+
+                    NotifyOfPropertyChange(() => PinUpdating);
+                    NotifyOfPropertyChange(() => PinUpdatingVisibility);
+                    NotifyOfPropertyChange(() => CanAddPin);
+                    NotifyOfPropertyChange(() => CanChangePin);
+                    NotifyOfPropertyChange(() => CanRemovePin);
+                    NotifyOfPropertyChange(() => AddPinVisibility);
+                    NotifyOfPropertyChange(() => ChangePinVisibility);
+                    NotifyOfPropertyChange(() => RemovePinVisibility);
+                }
+            }
+        }
+
+        private string _PinUpdatingText = "UPDATING PIN...";
+
+        public string PinUpdatingText
+        {
+            get
+            {
+                return _PinUpdatingText;
+            }
+            set
+            {
+                if (value != _PinUpdatingText)
+                {
+                    _PinUpdatingText = value;
+
+                    NotifyOfPropertyChange(() => PinUpdatingText);
+                }
+            }
+        }
+
+        public Visibility PinUpdatingVisibility
+        {
+            get { return PinUpdating ? Visibility.Visible : Visibility.Collapsed; }
+        }
+
         protected override void OnActivate()
         {
             base.OnActivate();
@@ -128,6 +235,7 @@ namespace PointOfSale.RT.ViewModels
 
         public void Load()
         {
+            HasPin = !String.IsNullOrEmpty(Customer.Pin);
         }
 
         public void ShowPrevious()
@@ -167,6 +275,52 @@ namespace PointOfSale.RT.ViewModels
             popup.InvoiceId = item.Transaction.SourceId.GetValueOrDefault();
 
             ScreenCoordinator.ShowPopup(popup);
+        }
+
+        public void AddPin()
+        {
+            var popup = IoC.Get<PinPopupViewModel>();
+            popup.OnPinEntered = pin => UpdatePin(pin);
+
+            ScreenCoordinator.ShowPopup(popup, 500, 500);
+        }
+
+        public void ChangePin()
+        {
+            var popup = IoC.Get<PinPopupViewModel>();
+            popup.OnPinEntered = pin => UpdatePin(pin);
+
+            ScreenCoordinator.ShowPopup(popup, 500, 500);
+        }
+
+        public void RemovePin()
+        {
+            PinUpdating = true;
+            UpdatePin(null);
+        }
+
+        private Task UpdatePin(string pin)
+        {
+            PinUpdating = true;
+
+            return Task.Factory
+                .StartNew(() =>
+                {
+                    Execute.OnUIThread(() => { }); // TODO Status Test.
+                    CustomerService.UpdatePin(Customer.Id, pin);
+                })
+                .ContinueWith(t => Execute.OnUIThread(() =>
+                {
+                    if (t.Exception == null)
+                    {
+                        HasPin = !String.IsNullOrEmpty(pin);
+                        PinUpdating = false;
+                    }
+                    else
+                    {
+                        PinUpdatingText = "PIN UPDATE FAILED";
+                    }
+                }));
         }
     }
 }

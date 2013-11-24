@@ -44,5 +44,15 @@ namespace Shop.Service.Client
         {
             Invoke(s => s.AddTransaction(transaction));
         }
+
+        public bool CheckPin(Guid customerId, string pin)
+        {
+            return Invoke(s => s.CheckPin(customerId, pin));
+        }
+
+        public void UpdatePin(Guid customerId, string pin)
+        {
+            Invoke(s => s.UpdatePin(customerId, pin));
+        }
     }
 }

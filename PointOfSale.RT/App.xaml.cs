@@ -43,6 +43,7 @@ namespace PointOfSale.RT
             Container.PerRequest<ShellViewModel>();
             Container.PerRequest<HomeViewModel>();
             Container.PerRequest<CustomerViewModel>();
+            Container.PerRequest<PinEntryViewModel>();
             Container.PerRequest<SaleViewModel>();
             Container.PerRequest<PayViewModel>();
             Container.PerRequest<LoanViewModel>();
@@ -52,6 +53,7 @@ namespace PointOfSale.RT
             Container.PerRequest<MessageBoxViewModel>();
             Container.PerRequest<SettingsViewModel>();
             Container.PerRequest<InvoicePopupViewModel>();
+            Container.PerRequest<PinPopupViewModel>();
 
             Container.Singleton<IServiceClientFactory, WindowsStoreServiceClientFactory>();
 

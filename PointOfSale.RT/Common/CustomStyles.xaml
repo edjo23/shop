@@ -185,6 +185,12 @@
         <Setter Property="Foreground" Value="Black" />
     </Style>
 
+    <!-- AccentButtonStyle -->
+    <Style x:Key="AccentButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource StoreButtonStyle}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
+    </Style>
+
     <!-- RoundButtonStyle -->
     <Style x:Key="RoundButtonStyle" TargetType="ButtonBase">
         <Setter Property="BorderThickness" Value="1.5" />

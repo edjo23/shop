@@ -163,7 +163,10 @@ namespace PointOfSale.RT.ViewModels
 
         public void NewTransaction(AccountHomeItemViewModel item)
         {
-            ScreenCoordinator.NavigateToCustomer(item.Customer);
+            if (String.IsNullOrEmpty(item.Customer.Pin))
+                ScreenCoordinator.NavigateToCustomer(item.Customer);
+            else
+                ScreenCoordinator.NavigateToPinEntry(item.Customer);
         }
     }
 
