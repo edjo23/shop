@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
@@ -94,7 +95,7 @@ namespace Shop.Business.Managers
 
         public string GetPinHash(Guid customerId, string pin)
         {
-            var buffer = ASCIIEncoding.Default.GetBytes(pin).Concat(customerId.ToByteArray()).ToArray();
+            var buffer = ASCIIEncoding.Default.GetBytes(pin + ConfigurationManager.AppSettings["PinSalt"]).Concat(customerId.ToByteArray()).ToArray();
             var hash = new SHA256Managed().ComputeHash(buffer);           
 
             return ASCIIEncoding.UTF8.GetString(hash);
