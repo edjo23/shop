@@ -23,8 +23,8 @@ namespace PointOfSale.RT.ViewModels
 
             DisplayName = "ACCOUNT";
 
-            MaximumDate = new DateTimeOffset(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, 1, 0, 0, 0, TimeSpan.Zero);
-            MinimumDate = new DateTimeOffset(2013, 07, 1, 0, 0, 0, TimeSpan.Zero);
+            MaximumDate = new DateTimeOffset(new DateTime(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, 1, 0, 0, 0));
+            MinimumDate = new DateTimeOffset(new DateTime(2013, 07, 1, 0, 0, 0));
         }
 
         private readonly ScreenCoordinator ScreenCoordinator;
