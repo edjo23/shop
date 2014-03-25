@@ -8,7 +8,7 @@
     xmlns:cc="using:Callisto.Controls">
     
     <SolidColorBrush x:Key="BackgroundColorBrush" Color="#FFF0F0F0" />
-    <SolidColorBrush x:Key="AccentColorBrush" Color="SteelBlue" />
+    <SolidColorBrush x:Key="AccentColorBrush" Color="Firebrick" />
     <SolidColorBrush x:Key="NormalColorBrush" Color="#FF232323" />
     <SolidColorBrush x:Key="LabelColorBrush" Color="DarkGray" />
     <SolidColorBrush x:Key="BorderColorBrush" Color="Gainsboro" />
@@ -484,8 +484,8 @@
 
     <DataTemplate x:Key="CustomerTransactionInfo">
         <Grid HorizontalAlignment="Stretch">
-            <StackPanel HorizontalAlignment="Stretch">                
-                <TextBlock Text="Merci beaucoup " Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center"><Run Text="{Binding DisplayName}" /></TextBlock>
+            <StackPanel HorizontalAlignment="Stretch">
+                <TextBlock Text="Spasibo comrade " Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center"><Run Text="{Binding DisplayName}" /></TextBlock>
                 <TextBlock Text="{Binding NewBalanceText}" Style="{StaticResource LargeAccentText}" HorizontalAlignment="Center" Visibility="{Binding NewBalanceVisibility}" />
             </StackPanel>
         </Grid>
