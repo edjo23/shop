@@ -69,7 +69,7 @@ namespace Shop.Business.Managers
                 if (toDate.HasValue)
                     where.Predicates.Add(Predicates.Field<CustomerTransaction>(f => f.DateTime, Operator.Le, toDate.Value));
 
-                return connectionScope.Connection.GetList<CustomerTransaction>(where).ToList();
+                return connectionScope.Connection.GetList<CustomerTransaction>(where.Predicates.Any() ? where : null).ToList();
             }
         }
 

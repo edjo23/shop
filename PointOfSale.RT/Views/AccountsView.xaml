@@ -1,0 +1,119 @@
+﻿<UserControl
+    x:Class="PointOfSale.RT.Views.AccountsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:l="using:PointOfSale.RT.Views"
+    xmlns:b="using:PointOfSale.RT.Behaviors"
+    xmlns:c="using:Caliburn.Micro"
+    xmlns:i="using:Windows.UI.Interactivity"
+    mc:Ignorable="d"
+    d:DesignHeight="500"
+    d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource DarkStoreButtonStyle}">
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Padding" Value="5,5,0,5" />
+        </Style>
+
+        <l:AppDataTemplateSelector x:Key="AppDataTemplateSelector">
+            <l:AppDataTemplateSelector.DefaultDataTemplate>
+                <DataTemplate>
+                    <ContentPresenter Content="{Binding Content}" />
+                </DataTemplate>
+            </l:AppDataTemplateSelector.DefaultDataTemplate>
+        </l:AppDataTemplateSelector>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <ContentControl HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,25,0">
+                <ContentControl.ContentTransitions>
+                    <TransitionCollection>
+                        <ContentThemeTransition  />
+                    </TransitionCollection>
+                </ContentControl.ContentTransitions>
+
+                <TextBlock Text="accounts" Style="{StaticResource LargeAccentText}" TextAlignment="Right"/>
+            </ContentControl>
+        </Grid>
+        
+        <Border Grid.Row="1" Background="#FFE0E0E0" Visibility="{Binding ContentVisibility}">
+            <i:Interaction.Behaviors>
+                <b:ElementDeferredVisibilityBehaviour />
+            </i:Interaction.Behaviors>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="15,0">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <ContentThemeTransition  />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <Button x:Name="GoHome" Style="{StaticResource FlatButtonStyle}" HorizontalAlignment="Left" Padding="10,5">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch">
+                        <Border BorderThickness="1.5" BorderBrush="{StaticResource AccentColorBrush}" CornerRadius="100">
+                            <Viewbox>
+                                <Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="appbar_arrow_left" Width="76" Height="76">
+                                    <Path Width="39.25" Height="28" Canvas.Left="17.75" Canvas.Top="24" Stretch="Fill" Fill="{StaticResource AccentColorBrush}" Data="F1 M 57,42L 57,34L 32.25,34L 42.25,24L 31.75,24L 17.75,38L 31.75,52L 42.25,52L 32.25,42L 57,42 Z "/>
+                                </Canvas>
+                            </Viewbox>
+                        </Border>
+                        <TextBlock Style="{StaticResource NormalAccentText}" Text="CANCEL" VerticalAlignment="Center" Margin="5,0,0,3" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <Border x:Name="MainArea" Grid.Row="2" Padding="0,0,10,10">
+            <ScrollViewer VerticalScrollMode="Disabled" ZoomMode="Disabled">
+                <ContentControl x:Name="Accounts" Height="{Binding ActualHeight, ElementName=MainArea }">
+                    <ContentControl.ContentTransitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition />
+                        </TransitionCollection>
+                    </ContentControl.ContentTransitions>
+                    <ContentControl.ContentTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding}" Margin="15,25,0,0" ItemTemplateSelector="{StaticResource AppDataTemplateSelector}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapGrid Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Width" Value="250"/>
+                                        <Setter Property="Height" Value="80"/>
+                                        <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                        <Setter Property="Margin" Value="0,0,12.5,12.5" />
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>
+                </ContentControl>
+            </ScrollViewer>
+        </Border>
+
+        <Grid Grid.RowSpan="3" Visibility="{Binding LoadingVisibility}">
+            <ContentPresenter>
+                <i:Interaction.Behaviors>
+                    <b:ElementDeferredVisibilityBehaviour VisibileDelay="1500" />
+                </i:Interaction.Behaviors>
+
+                <TextBlock Text="Loading..." FontSize="50" Foreground="{StaticResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </ContentPresenter>
+        </Grid>
+    </Grid>
+</UserControl>

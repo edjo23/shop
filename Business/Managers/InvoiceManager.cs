@@ -84,7 +84,7 @@ namespace Shop.Business.Managers
                     CustomerId = invoice.CustomerId,
                     DateTime = invoice.DateTime,
                     Type = CustomerTransactionType.Invoice,
-                    Amount = items.Aggregate(0.0m, (total, item) => total += item.Quantity * Math.Round(item.Price * (100 - item.Discount) / 100, 2, MidpointRounding.ToEven)),
+                    Amount = items.Aggregate(0.0m, (total, item) => total += item.Quantity * Math.Round(item.Price * (100 - item.Discount) / 100, 2, MidpointRounding.AwayFromZero)),
                     SourceId = invoice.Id
                 });
 

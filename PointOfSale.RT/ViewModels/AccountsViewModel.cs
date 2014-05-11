@@ -5,23 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using PointOfSale.RT.Services;
-using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
 {
-    public class HomeViewModel : Screen
+    public class AccountsViewModel : Screen
     {
-        public HomeViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
+        public AccountsViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
         {
             EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
 
-            Options = new BindableCollection<HomeOption>();
             Logger = log4net.LogManager.GetLogger(GetType());
+            Accounts = new BindableCollection<HomeItemViewModel>();
         }
 
         private readonly IEventAggregator EventAggregator;
@@ -30,7 +28,7 @@ namespace PointOfSale.RT.ViewModels
         
         private readonly ICustomerService CustomerService;
 
-        private readonly log4net.ILog Logger;
+        private readonly log4net.ILog Logger;        
 
         #region IsLoading Property
 
@@ -73,14 +71,12 @@ namespace PointOfSale.RT.ViewModels
 
         #endregion
 
-        public BindableCollection<HomeOption> Options { get; set; }
-
-        public Customer CashCustomer { get; set; }
+        public BindableCollection<HomeItemViewModel> Accounts { get; set; }
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
-
+            
             IsLoading = true;
 
             Task.Factory.StartNew(() =>
@@ -88,46 +84,43 @@ namespace PointOfSale.RT.ViewModels
                 if (Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"] != null)
                 {
                     var customers = CustomerService.GetCustomers();
-                    var cash = customers.FirstOrDefault(o => o.Name.IsMatch("Cash"));
 
+                    Accounts.AddRange(customers.Where(o => !o.Name.IsMatch("Cash")).OrderBy(o => o.Name).Select(o => new AccountHomeItemViewModel { Customer = o }));
+                }
+            })            
+            .ContinueWith(task =>
+            {               
+                if (task.IsFaulted)
+                {
+                    ScreenCoordinator.HandleFault(task.Exception);
+                }
+                else
+                {
                     Execute.OnUIThread(() =>
                     {
-                        CashCustomer = cash;
-
-                        if (cash != null)
-                        {
-                            Options.Add(new HomeOption
-                            {
-                                Option = HomeOption.OptionEnum.Cash,
-                                Text = "price list + cash",
-                                Help = "Touch here to see the price list and to pay with cash."
-                            });
-                        }
-
-                        Options.Add(new HomeOption
-                        {
-                            Option = HomeOption.OptionEnum.Account,
-                            Text = "account",
-                            Help = "Touch here to select an account."
-                        });
-
                         IsLoading = false;
+
+                        Task.Delay(10000).ContinueWith(t =>
+                            {
+                                if (IsActive)
+                                    Execute.OnUIThread(() => GoHome());
+                            });
                     });
                 }
             });
         }
 
-        public void SelectItem(HomeOption item)
+        public void NewTransaction(AccountHomeItemViewModel item)
         {
-            if (item.Option == HomeOption.OptionEnum.Account)
-            {
-                ScreenCoordinator.NavigateToScreen(IoC.Get<AccountsViewModel>());
-            }
-            else if (item.Option == HomeOption.OptionEnum.Cash)
-            {
-                ScreenCoordinator.NavigateToCustomer(CashCustomer);                       
-            }
+            if (String.IsNullOrEmpty(item.Customer.Pin))
+                ScreenCoordinator.NavigateToCustomer(item.Customer);
+            else
+                ScreenCoordinator.NavigateToPinEntry(item.Customer);
+        }
+
+        public void GoHome()
+        {
+            ScreenCoordinator.NavigateToHome();
         }
     }
-
 }

@@ -42,6 +42,7 @@ namespace PointOfSale.RT
 
             Container.PerRequest<ShellViewModel>();
             Container.PerRequest<HomeViewModel>();
+            Container.PerRequest<AccountsViewModel>();
             Container.PerRequest<CustomerViewModel>();
             Container.PerRequest<PinEntryViewModel>();
             Container.PerRequest<SaleViewModel>();

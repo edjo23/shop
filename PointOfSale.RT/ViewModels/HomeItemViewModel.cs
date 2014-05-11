@@ -5,12 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using Shop.Contracts.Entities;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace PointOfSale.RT.ViewModels
 {
+
+    public class HomeOption
+    {
+        public enum OptionEnum
+        {
+            Cash,
+            Account
+        }
+
+        public string Text { get; set; }
+
+        public string Help { get; set; }
+
+        public OptionEnum Option { get; set; }
+    }
+
     public class HomeItemViewModel : PropertyChangedBase
     {
         public virtual Brush TileColorBrush

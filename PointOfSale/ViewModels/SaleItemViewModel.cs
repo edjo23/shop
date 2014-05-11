@@ -70,7 +70,7 @@ namespace Shop.PointOfSale.ViewModels
         {
             get
             {
-                return Math.Round(Product.Price * (100 - Discount) / 100, 2, MidpointRounding.ToEven);
+                return Math.Round(Product.Price * (100 - Discount) / 100, 2, MidpointRounding.AwayFromZero);
             }
         }
 

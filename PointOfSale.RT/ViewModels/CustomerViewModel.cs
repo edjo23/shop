@@ -176,7 +176,10 @@ namespace PointOfSale.RT.ViewModels
 
         public void GoHome()
         {
-            ScreenCoordinator.NavigateToHome();
+            if (IsCashAccount)
+                ScreenCoordinator.NavigateToHome();
+            else
+                ScreenCoordinator.NavigateToScreen(IoC.Get<AccountsViewModel>());
         }
     }
 }
