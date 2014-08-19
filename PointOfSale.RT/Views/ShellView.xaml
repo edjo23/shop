@@ -5,8 +5,15 @@
     xmlns:local="using:PointOfSale.RT.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Windows.UI.Interactivity"
     xmlns:c="using:Caliburn.Micro"
-    mc:Ignorable="d">
+    xmlns:b="using:PointOfSale.RT.Behaviors"
+    mc:Ignorable="d">      
+    <i:Interaction.Triggers>        
+        <b:IdleTrigger>
+            <c:ActionMessage MethodName="LogPointerPressed" />
+        </b:IdleTrigger>
+    </i:Interaction.Triggers>
 
     <Grid Background="{StaticResource BackgroundColorBrush}">
         <Border Height="100" VerticalAlignment="Top">

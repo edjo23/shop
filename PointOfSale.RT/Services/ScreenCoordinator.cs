@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using PointOfSale.RT.Messages;
@@ -13,6 +14,8 @@ namespace PointOfSale.RT.Services
 {
     public class ScreenCoordinator
     {
+        public const int IdleTimeout = 30000;
+
         public ScreenCoordinator(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
@@ -23,9 +26,16 @@ namespace PointOfSale.RT.Services
 
         private readonly log4net.ILog Logger;
 
-        public void NavigateToScreen(Screen screen)
+        private CancellationTokenSource CancellationTokenSource { get; set; }
+
+        public void NavigateToScreen(Screen screen, bool endableIdleTimeout = false)
         {
+            StopIdleTimeout();
+
             EventAggregator.Publish(screen);
+
+            if (endableIdleTimeout)
+                StartIdleTimeout();
         }
 
         public void NavigateToHome()
@@ -40,7 +50,7 @@ namespace PointOfSale.RT.Services
             var screen = IoC.Get<CashHomeViewModel>();
             screen.CashCustomer = cashCustomer;
 
-            NavigateToScreen(screen);
+            NavigateToScreen(screen, true);
         }
 
         public void NavigateToPinEntry(Customer customer)
@@ -48,7 +58,7 @@ namespace PointOfSale.RT.Services
             var screen = IoC.Get<PinEntryViewModel>();
             screen.Customer = customer;
 
-            NavigateToScreen(screen);
+            NavigateToScreen(screen, true);
         }
 
         public void NavigateToCustomer(Customer customer)
@@ -56,7 +66,7 @@ namespace PointOfSale.RT.Services
             var screen = IoC.Get<CustomerViewModel>();
             screen.Customer = customer;
 
-            NavigateToScreen(screen);
+            NavigateToScreen(screen, true);
         }
 
         public void ShowPopup(PopupViewModel popup, double width = 800, double height = 400)
@@ -76,6 +86,41 @@ namespace PointOfSale.RT.Services
 
             NavigateToScreen(message);
         }
-    }
 
+        public void StartIdleTimeout()
+        {
+            ResetIdleTimeout();
+        }        
+
+        public void StopIdleTimeout()
+        {
+            ResetIdleTimeout(false);
+        }
+
+        public void LogButtonPressed()
+        {
+            if (CancellationTokenSource != null)
+                ResetIdleTimeout();
+        }
+
+        public void ResetIdleTimeout(bool restart = true)
+        {
+            if (CancellationTokenSource != null)
+            {
+                CancellationTokenSource.Cancel();
+                CancellationTokenSource = null;
+            }
+
+            if (restart)
+            {
+                CancellationTokenSource = new CancellationTokenSource();
+
+                Task.Delay(IdleTimeout, CancellationTokenSource.Token).ContinueWith(t =>
+                {
+                    if (t.IsCompleted && !t.IsCanceled)
+                        Execute.OnUIThread(() => NavigateToHome());
+                });
+            }
+        }
+    }
 }

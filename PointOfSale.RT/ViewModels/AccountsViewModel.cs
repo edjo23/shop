@@ -96,16 +96,7 @@ namespace PointOfSale.RT.ViewModels
                 }
                 else
                 {
-                    Execute.OnUIThread(() =>
-                    {
-                        IsLoading = false;
-
-                        Task.Delay(10000).ContinueWith(t =>
-                            {
-                                if (IsActive)
-                                    Execute.OnUIThread(() => GoHome());
-                            });
-                    });
+                    Execute.OnUIThread(() => IsLoading = false);
                 }
             });
         }

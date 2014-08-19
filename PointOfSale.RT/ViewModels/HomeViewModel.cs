@@ -121,7 +121,7 @@ namespace PointOfSale.RT.ViewModels
         {
             if (item.Option == HomeOption.OptionEnum.Account)
             {
-                ScreenCoordinator.NavigateToScreen(IoC.Get<AccountsViewModel>());
+                ScreenCoordinator.NavigateToScreen(IoC.Get<AccountsViewModel>(), true);
             }
             else if (item.Option == HomeOption.OptionEnum.Cash)
             {

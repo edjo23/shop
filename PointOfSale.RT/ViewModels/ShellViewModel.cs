@@ -16,10 +16,11 @@ namespace PointOfSale.RT.ViewModels
 {
     public class ShellViewModel : Conductor<Screen>.Collection.OneActive, IHandle<SettingsChanged>, IHandle<Screen>, IHandle<ShowPopup>, IHandle<HidePopup>
     {
-        public ShellViewModel(IEventAggregator eventAggregator, IServiceClientFactory serviceClientFactory)
+        public ShellViewModel(IEventAggregator eventAggregator, IServiceClientFactory serviceClientFactory, ScreenCoordinator screenCoordinator)
         {
             EventAggregator = eventAggregator;
             ServiceClientFactory = serviceClientFactory as WindowsStoreServiceClientFactory;
+            ScreenCoordinator = screenCoordinator;
             Logger = log4net.LogManager.GetLogger(GetType());
 
             DisplayName = "The Shop";
@@ -30,6 +31,8 @@ namespace PointOfSale.RT.ViewModels
         private readonly IEventAggregator EventAggregator;
 
         private readonly WindowsStoreServiceClientFactory ServiceClientFactory;
+
+        private readonly ScreenCoordinator ScreenCoordinator;
 
         private readonly log4net.ILog Logger;
 
@@ -149,6 +152,11 @@ namespace PointOfSale.RT.ViewModels
         {
             ServiceClientFactory.EndpointAddressFormatString = "http://{0}/Services/{1}.svc";
             ServiceClientFactory.Host = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"];
+        }
+
+        public void LogPointerPressed()
+        {
+            ScreenCoordinator.LogButtonPressed();
         }
 
         public void Handle(Screen message)
