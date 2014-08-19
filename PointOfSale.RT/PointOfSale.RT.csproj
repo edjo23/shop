@@ -121,6 +121,7 @@
     <Compile Include="ViewModels\AccountTransactionListViewModel.cs" />
     <Compile Include="ViewModels\AccountTransactionViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
+    <Compile Include="ViewModels\CashHomeViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\HomeItemViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
@@ -149,6 +150,9 @@
     </Compile>
     <Compile Include="Views\Account\Toolbar.xaml.cs">
       <DependentUpon>Toolbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CashHomeView.xaml.cs">
+      <DependentUpon>CashHomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomerView.xaml.cs">
       <DependentUpon>CustomerView.xaml</DependentUpon>
@@ -251,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Account\Toolbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CashHomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

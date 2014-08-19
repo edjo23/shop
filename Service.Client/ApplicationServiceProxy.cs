@@ -29,5 +29,10 @@ namespace Shop.Service.Client
         {
             return Invoke(s => s.GetImage(code));
         }
+
+        public string[] GetText(string code)
+        {
+            return Invoke(s => s.GetText(code));
+        }
     }
 }

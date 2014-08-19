@@ -19,5 +19,8 @@ namespace Shop.Contracts.Services
 
         [OperationContract]
         byte[] GetImage(string code);
+
+        [OperationContract]
+        string[] GetText(string code);
     }
 }

@@ -209,6 +209,16 @@ namespace Shop.Management.ViewModels
 
                     IsLoading = false;
                 });
+            })
+            .ContinueWith(t =>
+            {
+                if (t.Exception != null)
+                {
+                    foreach (var exception in t.Exception.InnerExceptions)
+                    {
+                        MessageBox.Show(exception.Message + Environment.NewLine + exception.StackTrace, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             });
         }
 

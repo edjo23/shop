@@ -35,6 +35,14 @@ namespace PointOfSale.RT.Services
             NavigateToScreen(screen);
         }
 
+        public void NavigateToCashHome(Customer cashCustomer)
+        {
+            var screen = IoC.Get<CashHomeViewModel>();
+            screen.CashCustomer = cashCustomer;
+
+            NavigateToScreen(screen);
+        }
+
         public void NavigateToPinEntry(Customer customer)
         {
             var screen = IoC.Get<PinEntryViewModel>();

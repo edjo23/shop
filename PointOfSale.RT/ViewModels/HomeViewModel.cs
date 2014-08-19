@@ -125,7 +125,7 @@ namespace PointOfSale.RT.ViewModels
             }
             else if (item.Option == HomeOption.OptionEnum.Cash)
             {
-                ScreenCoordinator.NavigateToCustomer(CashCustomer);                       
+                ScreenCoordinator.NavigateToCashHome(CashCustomer);                       
             }
         }
     }

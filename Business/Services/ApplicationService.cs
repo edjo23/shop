@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -32,6 +33,11 @@ namespace Shop.Business.Services
         public byte[] GetImage(string code)
         {
             return Manager.GetImage(code);
+        }
+
+        public string[] GetText(string code)
+        {
+            return Manager.GetText(code);
         }
     }
 }

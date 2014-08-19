@@ -46,5 +46,13 @@ namespace Shop.Business.Managers
 
             return file.Exists ? File.ReadAllBytes(file.FullName) : new byte[0];
         }
+
+        public string[] GetText(string code)
+        {
+            var folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Text");
+            var file = new FileInfo(Path.Combine(folder, code + ".txt"));
+
+            return file.Exists ? File.ReadAllLines(file.FullName) : new string[0];
+        }
     }
 }
