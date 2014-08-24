@@ -118,6 +118,7 @@ namespace PointOfSale.RT.ViewModels
 
             PayViewModel payViewModel = null;
             LoanViewModel loanViewModel = null;
+            ReceiptViewModel receiptViewModel = null;
             AccountViewModel accountViewModel = null;
 
             if (!IsCashAccount)
@@ -128,11 +129,15 @@ namespace PointOfSale.RT.ViewModels
                 loanViewModel = IoC.Get<LoanViewModel>();
                 loanViewModel.Customer = Customer;
 
+                receiptViewModel = IoC.Get<ReceiptViewModel>();
+                receiptViewModel.Customer = Customer;
+
                 accountViewModel = IoC.Get<AccountViewModel>();
                 accountViewModel.Customer = Customer;
 
                 Items.Add(payViewModel);
                 Items.Add(loanViewModel);
+                Items.Add(receiptViewModel);
                 Items.Add(accountViewModel);
             }
 
@@ -156,6 +161,9 @@ namespace PointOfSale.RT.ViewModels
 
                 if (loanViewModel != null)
                     loanViewModel.Load();
+
+                if (receiptViewModel != null)
+                    receiptViewModel.Load();
 
                 if (accountViewModel != null)
                     accountViewModel.Load();

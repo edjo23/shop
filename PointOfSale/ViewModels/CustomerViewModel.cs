@@ -103,7 +103,7 @@ namespace Shop.PointOfSale.ViewModels
             Items.Add(saleViewModel);
 
             PayViewModel payViewModel = null;
-            LoanViewModel loanViewModel = null;
+            LoanViewModel loanViewModel = null;             
 
             if (!IsCashAccount)
             {

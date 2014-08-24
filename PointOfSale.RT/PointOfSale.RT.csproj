@@ -134,6 +134,7 @@
     <Compile Include="ViewModels\PinEntryViewModel.cs" />
     <Compile Include="ViewModels\PinPopupViewModel.cs" />
     <Compile Include="ViewModels\ProcessViewModel.cs" />
+    <Compile Include="ViewModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModels\SaleItemViewModel.cs" />
     <Compile Include="ViewModels\SaleViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -195,6 +196,15 @@
     </Compile>
     <Compile Include="Views\ProcessView.xaml.cs">
       <DependentUpon>ProcessView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Receipt\Content.xaml.cs">
+      <DependentUpon>Content.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Receipt\Summary.xaml.cs">
+      <DependentUpon>Summary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Receipt\Toolbar.xaml.cs">
+      <DependentUpon>Toolbar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Sale\Content.xaml.cs">
       <DependentUpon>Content.xaml</DependentUpon>
@@ -315,6 +325,18 @@
     <Page Include="Views\ProcessView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Receipt\Content.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Receipt\Summary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Receipt\Toolbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Sale\Content.xaml">
       <SubType>Designer</SubType>
