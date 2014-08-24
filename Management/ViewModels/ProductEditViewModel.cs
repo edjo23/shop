@@ -92,6 +92,28 @@ namespace Shop.Management.ViewModels
 
         #endregion
 
+        #region Cost Property
+
+        private decimal _Cost;
+
+        public decimal Cost
+        {
+            get
+            {
+                return _Cost;
+            }
+            set
+            {
+                if (value != _Cost)
+                {
+                    _Cost = value;
+                    NotifyOfPropertyChange(() => Cost);
+                }
+            }
+        }
+
+        #endregion
+
         #region Price Property
 
         private decimal _Price;
@@ -118,9 +140,12 @@ namespace Shop.Management.ViewModels
         {
             base.OnInitialize();
 
+            Product = ProductService.GetProduct(Product.Id);
+
             Code = Product.Code;
             Group = Product.Group;
             Description = Product.Description;
+            Cost = Product.Cost;
             Price = Product.Price;
         }
 
@@ -130,6 +155,7 @@ namespace Shop.Management.ViewModels
             product.Code = Code;
             product.Group = Group;
             product.Description = Description;
+            product.Cost = Cost;
             product.Price = Price;
 
             ProductService.UpdateProduct(product);

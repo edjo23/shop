@@ -15,6 +15,9 @@ namespace Shop.Contracts.Services
         void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items, decimal payment);
 
         [OperationContract]
+        void AddReceipt(Invoice invoice, IEnumerable<InvoiceItem> items);
+
+        [OperationContract]
         IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId);
     }
 }

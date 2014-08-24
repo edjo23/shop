@@ -33,6 +33,8 @@
             <TextBox x:Name="Group" />
             <TextBlock Text="DESCRIPTION" />
             <TextBox x:Name="Description" />
+            <TextBlock Text="COST" />
+            <TextBox x:Name="Cost" />
             <TextBlock Text="PRICE" />
             <TextBox x:Name="Price" />
             <StackPanel Style="{StaticResource FormToolbarStyle}" Orientation="Horizontal">

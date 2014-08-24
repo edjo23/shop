@@ -12,6 +12,7 @@
                     <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="300" />
                     <GridViewColumn Header="Code" DisplayMemberBinding="{Binding Code}" Width="150" />
                     <GridViewColumn Header="Quantity on hand" DisplayMemberBinding="{Binding QuantityOnHand}" Width="150" />
+                    <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}" Width="150" />
                     <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}" Width="150" />
                 </GridView>
             </ListView.View>

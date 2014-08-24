@@ -146,13 +146,19 @@ namespace Shop.Management.ViewModels
                 EventAggregator.Publish(new ActivateItem<CustomerEditViewModel>(o => o.Customer = SelectedCustomer));
         }
 
-        public void ShowPaymentReceipt()
+        public void ShowCashPayment()
         {
             if (SelectedCustomer != null)
                 EventAggregator.Publish(new ActivateItem<CustomerAccountPaymentViewModel>(o => o.Customer = SelectedCustomer));
         }
 
-        public void ShowStockAdjustment()
+        public void ShowStockPayment()
+        {
+            if (SelectedCustomer != null)
+                EventAggregator.Publish(new ActivateItem<CustomerReceiptViewModel>(o => o.Customer = SelectedCustomer));
+        }
+
+        public void ShowAccountAdjustment()
         {
             if (SelectedCustomer != null)
                 EventAggregator.Publish(new ActivateItem<CustomerAccountAdjustmentViewModel>(o => o.Customer = SelectedCustomer));

@@ -82,6 +82,8 @@
     <Compile Include="ViewModels\CustomerInvoiceItemViewModel.cs" />
     <Compile Include="ViewModels\CustomerNewViewModel.cs" />
     <Compile Include="ViewModels\CustomerAccountPaymentViewModel.cs" />
+    <Compile Include="ViewModels\CustomerReceiptItemViewModel.cs" />
+    <Compile Include="ViewModels\CustomerReceiptViewModel.cs" />
     <Compile Include="ViewModels\CustomersViewModel.cs" />
     <Compile Include="ViewModels\CustomerInvoiceViewModel.cs" />
     <Compile Include="Models\CustomerTransactionModel.cs" />
@@ -116,6 +118,9 @@
     </Compile>
     <Compile Include="Views\CustomerAccountPaymentView.xaml.cs">
       <DependentUpon>CustomerAccountPaymentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomerReceiptView.xaml.cs">
+      <DependentUpon>CustomerReceiptView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomersView.xaml.cs">
       <DependentUpon>CustomersView.xaml</DependentUpon>
@@ -207,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CustomerAccountPaymentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CustomerReceiptView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

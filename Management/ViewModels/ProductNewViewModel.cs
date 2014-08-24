@@ -90,6 +90,28 @@ namespace Shop.Management.ViewModels
 
         #endregion
 
+        #region Cost Property
+
+        private decimal _Cost;
+
+        public decimal Cost
+        {
+            get
+            {
+                return _Cost;
+            }
+            set
+            {
+                if (value != _Cost)
+                {
+                    _Cost = value;
+                    NotifyOfPropertyChange(() => Cost);
+                }
+            }
+        }
+
+        #endregion
+
         #region Price Property
 
         private decimal _Price;
@@ -124,6 +146,7 @@ namespace Shop.Management.ViewModels
             product.Code = Code;
             product.Group = Group;
             product.Description = Description;
+            product.Cost = Cost;
             product.Price = Price;
 
             ProductService.AddProduct(product);

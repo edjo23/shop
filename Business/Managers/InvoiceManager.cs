@@ -107,6 +107,52 @@ namespace Shop.Business.Managers
 
         }
 
+        public void AddReceipt(Invoice invoice, IEnumerable<InvoiceItem> items)
+        {
+            using (var transaction = new TransactionScope())
+            using (var connection = new ConnectionScope())
+            {
+                if (invoice.Id == Guid.Empty)
+                    invoice.Id = Guid.NewGuid();                
+
+                // Update Inventory.
+                foreach (var item in items)
+                {
+                    var product = ProductManager.GetProduct(item.ProductId);
+                    if (product == null)
+                        throw new Exception("Product not found.");
+
+                    // Stock Correction?
+                    // TODO.
+
+                    // Movement.
+                    ProductManager.AddMovement(new ProductMovement
+                    {
+                        Id = Guid.NewGuid(),
+                        ProductId = item.ProductId,
+                        DateTime = invoice.DateTime,
+                        MovementType = ProductMovementType.Receipt,
+                        Quantity = item.Quantity,
+                        SourceId = invoice.Id,
+                        SourceItemNumber = item.ItemNumber
+                    });
+                }
+
+                // Add Customer Transaction.
+                CustomerManager.AddTransaction(new CustomerTransaction()
+                {
+                    Id = Guid.NewGuid(),
+                    CustomerId = invoice.CustomerId,
+                    DateTime = invoice.DateTime,
+                    Type = CustomerTransactionType.Payment,
+                    Amount = items.Aggregate(0.0m, (total, item) => total += item.Quantity * item.Price) * -1.0m,
+                    SourceId = invoice.Id
+                });
+
+                transaction.Complete();
+            }
+        }
+
         public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
         {
             using (var connection = new ConnectionScope())

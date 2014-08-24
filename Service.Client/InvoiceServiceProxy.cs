@@ -20,6 +20,11 @@ namespace Shop.Service.Client
             Invoke(s => s.AddInvoice(invoice, items, payment));
         }
 
+        public void AddReceipt(Invoice invoice, IEnumerable<InvoiceItem> items)
+        {
+            Invoke(s => s.AddReceipt(invoice, items));
+        }
+
         public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
         {
             return Invoke(s => s.GetInvoiceItems(invoiceId));

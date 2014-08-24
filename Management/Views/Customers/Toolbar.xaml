@@ -15,8 +15,9 @@
             </Button>
             <Button x:Name="ShowCustomerNew" Content="New" />
             <Button x:Name="ShowInvoiceNew" Content="Invoice" Visibility="{Binding ItemCommandVisibility}" />
-            <Button x:Name="ShowPaymentReceipt" Content="Payment" Visibility="{Binding ItemCommandVisibility}" />
-            <Button x:Name="ShowStockAdjustment" Content="Adjustment" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="ShowCashPayment" Content="Cash Payment" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="ShowStockPayment" Content="Stock Payment" Visibility="{Binding ItemCommandVisibility}" />
+            <Button x:Name="ShowAccountAdjustment" Content="Adjustment" Visibility="{Binding ItemCommandVisibility}" />
             <Button x:Name="ShowCustomerEdit" Content="Edit" Visibility="{Binding ItemCommandVisibility}" />
             <Button x:Name="ShowCustomerTransactions" Content="Transactions" Visibility="{Binding ItemCommandVisibility}" />
         </StackPanel>

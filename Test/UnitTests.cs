@@ -219,5 +219,46 @@ namespace Test
             // Check customer balance.
             Assert.AreEqual<decimal>(customer.Balance - 10.0m, customerService.GetCustomer(customer.Id).Balance);
         }
+
+        [TestMethod]
+        public void AddStockPayment()
+        {
+            IProductService productService = new ProductService(new ProductManager());
+            ICustomerService customerService = new CustomerService(new CustomerManager());
+            IInvoiceService invoiceService = new InvoiceService(new InvoiceManager(new ProductManager(), new CustomerManager()));
+
+            var products = productService.GetProducts();
+            var customer = customerService.GetCustomers().First();
+
+            var invoice = new Invoice
+            {
+                Id = Guid.NewGuid(),
+                DateTime = DateTimeOffset.Now,
+                CustomerId = customer.Id
+            };
+
+            var items = products.Select((product, i) =>
+                new InvoiceItem
+                {
+                    Id = Guid.NewGuid(),
+                    InvoiceId = invoice.Id,
+                    ItemNumber = i + 1,
+                    ProductId = product.Id,
+                    Price = product.Cost,
+                    Quantity = 1
+                });
+
+            invoiceService.AddReceipt(invoice, items);
+
+            // Check products balances.
+            foreach (var product in products)
+            {
+                Assert.AreEqual<int>(product.QuantityOnHand + 1, productService.GetProduct(product.Id).QuantityOnHand, "Product quantity on hand");
+            }
+
+            // Check customer balance.
+            Assert.AreEqual<decimal>(customer.Balance - products.Sum(o => o.Cost), customerService.GetCustomer(customer.Id).Balance, "Customer balance");
+
+        }
     }
 }

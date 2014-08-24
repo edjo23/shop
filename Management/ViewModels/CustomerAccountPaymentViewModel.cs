@@ -17,7 +17,7 @@ namespace Shop.Management.ViewModels
             EventAggregator = eventAggregator;
             CustomerService = customerService;
 
-            DisplayName = "New Payment Receipt";
+            DisplayName = "New Cash Payment";
         }
 
         public IEventAggregator EventAggregator { get; set; }

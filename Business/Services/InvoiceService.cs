@@ -23,6 +23,12 @@ namespace Shop.Business.Services
             Manager.AddInvoice(invoice, items, payment);
         }
 
+        public void AddReceipt(Invoice invoice, IEnumerable<InvoiceItem> items)
+        {
+            Manager.AddReceipt(invoice, items);
+        }
+
+
         public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
         {
             return Manager.GetInvoiceItems(invoiceId);
