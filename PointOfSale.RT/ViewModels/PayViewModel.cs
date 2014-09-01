@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using PointOfSale.RT.Messages;
 using PointOfSale.RT.Models;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
@@ -11,7 +12,7 @@ using Shop.Contracts.Services;
 
 namespace PointOfSale.RT.ViewModels
 {
-    public class PayViewModel : Screen
+    public class PayViewModel : Screen, IEnabled
     {
         public PayViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ImageService imageService, IApplicationService applicationService, ICustomerService customerService)
         {
@@ -37,6 +38,25 @@ namespace PointOfSale.RT.ViewModels
         public Customer Customer { get; set; }
 
         public BindableCollection<TransactionItemViewModel> PaymentItems { get; set; }
+
+        private bool _IsEnabled = true;
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+            set
+            {
+                if (value != _IsEnabled)
+                {
+                    _IsEnabled = value;
+
+                    NotifyOfPropertyChange(() => IsEnabled);
+                }
+            }
+        }
 
         public decimal Total
         {
@@ -81,11 +101,19 @@ namespace PointOfSale.RT.ViewModels
 
         protected void UpdateQuantity(TransactionItemViewModel item, int value)
         {
+            var canComplete = CanCompletePayment;
+
             item.Quantity += value;
 
             NotifyOfPropertyChange(() => CanCompletePayment);
             NotifyOfPropertyChange(() => Total);
             NotifyOfPropertyChange(() => TotalText);
+
+            if (!canComplete && CanCompletePayment)
+                EventAggregator.Publish(new TransactionStarted { Source = this });
+
+            if (canComplete && !CanCompletePayment)
+                EventAggregator.Publish(new TransactionStopped { Source = this });
         }
 
         public void CompletePayment()

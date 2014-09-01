@@ -109,7 +109,7 @@
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="Opacity" To="0.3" Duration="0" />
+                                        <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="Opacity" To="0.3" Duration="0:0:0.25" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -344,7 +344,11 @@
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="Disabled" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="Opacity" To="0.3" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="SelectionStates">
                                 <VisualState x:Name="Unselected">
@@ -393,7 +397,7 @@
                     </ControlTemplate.Triggers>-->
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>        
+        </Setter>               
     </Style>
 
     <Style x:Key="FlatListBox" TargetType="ListBox">

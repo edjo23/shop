@@ -105,6 +105,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\BindingBehaviour.cs" />
     <Compile Include="Behaviors\ElementDeferredVisibilityBehaviour.cs" />
     <Compile Include="Behaviors\IdleTrigger.cs" />
     <Compile Include="Controls\Button.cs" />
@@ -112,6 +113,8 @@
     <Compile Include="Log4NetFacade.cs" />
     <Compile Include="Messages\HidePopup.cs" />
     <Compile Include="Messages\ShowPopup.cs" />
+    <Compile Include="Messages\TransactionStarted.cs" />
+    <Compile Include="Messages\TransactionStopped.cs" />
     <Compile Include="Messages\UpdatePin.cs" />
     <Compile Include="Models\CustomerTransactionInfo.cs" />
     <Compile Include="Models\ErrorInfo.cs" />

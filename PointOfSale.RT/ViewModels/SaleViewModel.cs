@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using PointOfSale.RT.Messages;
 using PointOfSale.RT.Models;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
@@ -12,9 +13,9 @@ using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
 {
-    public class SaleViewModel : Screen
+    public class SaleViewModel : Screen, IEnabled
     {
-        public SaleViewModel(ScreenCoordinator screenCoordinator, ImageService imageService, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService, IDiscountService discountService)
+        public SaleViewModel(ScreenCoordinator screenCoordinator, ImageService imageService, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService, IDiscountService discountService, IEventAggregator eventAggregator)
         {
             ScreenCoordinator = screenCoordinator;
             ImageService = imageService;
@@ -22,6 +23,7 @@ namespace PointOfSale.RT.ViewModels
             ProductService = productService;
             InvoiceService = invoiceService;
             DiscountService = discountService;
+            EventAggregator = eventAggregator;
 
             DisplayName = "PURCHASE";
             Products = new BindableCollection<SaleItemViewModel>();
@@ -38,6 +40,27 @@ namespace PointOfSale.RT.ViewModels
         private readonly IInvoiceService InvoiceService;
 
         private readonly IDiscountService DiscountService;
+
+        private readonly IEventAggregator EventAggregator;
+
+        private bool _IsEnabled = true;
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+            set
+            {
+                if (value != _IsEnabled)
+                {
+                    _IsEnabled = value;
+
+                    NotifyOfPropertyChange(() => IsEnabled);
+                }
+            }
+        }
 
         private bool _IsLoading = false;
 
@@ -145,12 +168,20 @@ namespace PointOfSale.RT.ViewModels
 
         protected void UpdateQuantity(SaleItemViewModel item, int value)
         {
+            var totalQuantity = TotalQuantity;
+
             item.Quantity += value;
 
             NotifyOfPropertyChange(() => CanCheckout);
             NotifyOfPropertyChange(() => TotalQuantity);
             NotifyOfPropertyChange(() => Total);
             NotifyOfPropertyChange(() => TotalText);
+
+            if (totalQuantity == 0 && value > 0)
+                EventAggregator.Publish(new TransactionStarted { Source = this });
+
+            if (TotalQuantity == 0)
+                EventAggregator.Publish(new TransactionStopped { Source = this });
         }
 
         public void Checkout()

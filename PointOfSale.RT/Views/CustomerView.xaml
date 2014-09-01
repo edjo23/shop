@@ -70,6 +70,17 @@
                     </ContentControl.ContentTransitions>
 
                     <ListBox x:Name="Items" Style="{StaticResource FlatListBox}">
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource FlatListBoxItemStyle}">
+                                <Setter Property="b:StyleBindingSetter.StyleBindings">
+                                    <Setter.Value>
+                                        <b:StyleBindings>
+                                            <b:StyleBinding Property="IsEnabled" Binding="{Binding IsEnabled}" />
+                                        </b:StyleBindings>
+                                    </Setter.Value>                                    
+                                </Setter>                                
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Style="{StaticResource NormalAccentText}" Text="{Binding DisplayName}" Padding="10,0" />

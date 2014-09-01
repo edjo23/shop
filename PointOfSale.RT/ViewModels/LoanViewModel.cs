@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using PointOfSale.RT.Messages;
 using PointOfSale.RT.Models;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
@@ -11,7 +12,7 @@ using Shop.Contracts.Services;
 
 namespace PointOfSale.RT.ViewModels
 {
-    public class LoanViewModel : Screen
+    public class LoanViewModel : Screen, IEnabled
     {
         public LoanViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ImageService imageService, IApplicationService applicationService, ICustomerService customerService)
         {
@@ -62,6 +63,25 @@ namespace PointOfSale.RT.ViewModels
             }
         }
 
+        private bool _IsEnabled = true;
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+            set
+            {
+                if (value != _IsEnabled)
+                {
+                    _IsEnabled = value;
+
+                    NotifyOfPropertyChange(() => IsEnabled);
+                }
+            }
+        }
+
         public void Load()
         {
             var denominations = ApplicationService.GetDenominations();
@@ -81,11 +101,19 @@ namespace PointOfSale.RT.ViewModels
 
         protected void UpdateQuantity(TransactionItemViewModel item, int value)
         {
+            var canComplete = CanCompleteLoan;
+
             item.Quantity += value;
 
             NotifyOfPropertyChange(() => CanCompleteLoan);
             NotifyOfPropertyChange(() => Total);
             NotifyOfPropertyChange(() => TotalText);
+
+            if (!canComplete && CanCompleteLoan)
+                EventAggregator.Publish(new TransactionStarted { Source = this });
+
+            if (canComplete && !CanCompleteLoan)
+                EventAggregator.Publish(new TransactionStopped { Source = this });
         }
 
         public void CompleteLoan()

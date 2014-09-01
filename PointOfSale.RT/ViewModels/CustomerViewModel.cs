@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using PointOfSale.RT.Messages;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
@@ -11,15 +12,23 @@ using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
 {
-    public class CustomerViewModel : Conductor<Screen>.Collection.OneActive
+    public interface IEnabled
     {
-        public CustomerViewModel(ScreenCoordinator screenCoordinator, ImageService imageService, IApplicationService applicationService)
+        bool IsEnabled { get; set; }
+    }
+
+    public class CustomerViewModel : Conductor<Screen>.Collection.OneActive, IHandle<TransactionStarted>, IHandle<TransactionStopped>
+    {
+        public CustomerViewModel(ScreenCoordinator screenCoordinator, ImageService imageService, IApplicationService applicationService, IEventAggregator eventAggregator)
         {
             ScreenCoordinator = screenCoordinator;
             ImageService = imageService;
             ApplicationService = applicationService;
+            EventAggregator = eventAggregator;
 
             Logger = log4net.LogManager.GetLogger(GetType());
+
+            EventAggregator.Subscribe(this);
         }
 
         private readonly ScreenCoordinator ScreenCoordinator;
@@ -27,6 +36,8 @@ namespace PointOfSale.RT.ViewModels
         private readonly ImageService ImageService;
 
         private readonly IApplicationService ApplicationService;
+
+        private readonly IEventAggregator EventAggregator;
 
         private readonly log4net.ILog Logger;
 
@@ -188,6 +199,24 @@ namespace PointOfSale.RT.ViewModels
                 ScreenCoordinator.NavigateToHome();
             else
                 ScreenCoordinator.NavigateToScreen(IoC.Get<AccountsViewModel>(), true);
+        }
+
+        public void Handle(TransactionStarted message)
+        {
+            if (Object.Equals(ActiveItem, message.Source))
+            {
+                foreach(var item in Items.Where(o => !o.IsActive).OfType<IEnabled>())
+                    item.IsEnabled = false;
+            }
+        }
+
+        public void Handle(TransactionStopped message)
+        {
+            if (Object.Equals(ActiveItem, message.Source))
+            {
+                foreach (var item in Items.Where(o => !o.IsActive).OfType<IEnabled>())
+                    item.IsEnabled = true;
+            }
         }
     }
 }
