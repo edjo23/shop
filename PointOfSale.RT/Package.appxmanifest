@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="5851e5f0-ec1a-45ad-b1a8-c7b371a3a677" Publisher="CN=Daniel" Version="1.0.0.11" />
+  <Identity Name="5851e5f0-ec1a-45ad-b1a8-c7b371a3a677" Publisher="CN=Daniel" Version="1.0.0.12" />
   <Properties>
     <DisplayName>PointOfSale.RT</DisplayName>
     <PublisherDisplayName>Daniel</PublisherDisplayName>

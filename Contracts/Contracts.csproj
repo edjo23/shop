@@ -53,8 +53,10 @@
     <Compile Include="Entities\InvoiceItem.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ProductMovement.cs" />
+    <Compile Include="Messages\CardMessages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IApplicationService.cs" />
+    <Compile Include="Services\ICardService.cs" />
     <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Services\IDiscountService.cs" />
     <Compile Include="Services\IInvoiceService.cs" />
