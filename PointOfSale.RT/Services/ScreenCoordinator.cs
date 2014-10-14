@@ -61,10 +61,11 @@ namespace PointOfSale.RT.Services
             NavigateToScreen(screen, true);
         }
 
-        public void NavigateToCustomer(Customer customer)
+        public void NavigateToCustomer(Customer customer, bool cardSession = false)
         {
             var screen = IoC.Get<CustomerViewModel>();
             screen.Customer = customer;
+            screen.CardSession = cardSession;
 
             NavigateToScreen(screen, true);
         }

@@ -17,18 +17,32 @@ namespace PointOfSale.RT.Services
             return new ServiceClient<TChannel>(GetBinding<TChannel>(), GetAddress<TChannel>());
         }
 
+        public DuplexServiceClient<TChannel> GetDuplexClient<TChannel>(InstanceContext callbackInstance) where TChannel : class
+        {
+            return new DuplexServiceClient<TChannel>(callbackInstance, GetDuplexBinding<TChannel>(), GetAddress<TChannel>());
+        }
+
         public string Host { get; set; }
 
         public string EndpointAddressFormatString { get; set; }
+
+        public Dictionary<Type, string> EndpointAddressFormatStrings = new Dictionary<Type, string>();
 
         public Binding GetBinding<TChannel>()
         {
             return new BasicHttpBinding() { MaxReceivedMessageSize = 1000000 };
         }
 
+        public Binding GetDuplexBinding<TChannel>()
+        {
+            return new NetHttpBinding() { MaxReceivedMessageSize = 1000000 };
+        }
+
         public EndpointAddress GetAddress<TChannel>()
         {
-            return new EndpointAddress(String.Format(EndpointAddressFormatString, Host, typeof(TChannel).Name.StartsWith("I") ? typeof(TChannel).Name.Substring(1) : typeof(TChannel).Name));
+            var format = EndpointAddressFormatStrings.ContainsKey(typeof(TChannel)) ? EndpointAddressFormatStrings[typeof(TChannel)] : EndpointAddressFormatString;
+
+            return new EndpointAddress(String.Format(format, Host, typeof(TChannel).Name.StartsWith("I") ? typeof(TChannel).Name.Substring(1) : typeof(TChannel).Name));
         }
     }
 }

@@ -15,11 +15,12 @@ namespace PointOfSale.RT.ViewModels
         public const string EmptyPinState = "enter your pin";
         public const string IncorrectPinState = "incorrect pin";
 
-        public PinEntryViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
+        public PinEntryViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService, CardService cardService)
         {
             EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
             CustomerService = customerService;
+            CardService = cardService;
         }
 
         private readonly IEventAggregator EventAggregator;
@@ -27,6 +28,8 @@ namespace PointOfSale.RT.ViewModels
         private readonly ScreenCoordinator ScreenCoordinator;
 
         private readonly ICustomerService CustomerService;
+
+        private readonly CardService CardService;
 
         private bool Working = false;
 
@@ -115,6 +118,7 @@ namespace PointOfSale.RT.ViewModels
                     }
                     else
                     {
+                        Task.Factory.StartNew(() => CardService.Write(Customer));
                         Execute.OnUIThread(() => ScreenCoordinator.NavigateToCustomer(Customer));
                     }
                 })

@@ -12,6 +12,9 @@ namespace Shop.Service.Client
     {
         ServiceClient<TChannel> GetClient<TChannel>()
             where TChannel : class;
+
+        DuplexServiceClient<TChannel> GetDuplexClient<TChannel>(InstanceContext callbackInstance)
+            where TChannel : class;
     }
 
     public class ServiceClientFactory : IServiceClientFactory
@@ -21,5 +24,11 @@ namespace Shop.Service.Client
         {
             return new ServiceClient<TChannel>();
         }
-    }
+
+        public DuplexServiceClient<TChannel> GetDuplexClient<TChannel>(InstanceContext callbackInstance)
+            where TChannel : class
+        {
+            return new DuplexServiceClient<TChannel>(callbackInstance);
+        }
+    }    
 }

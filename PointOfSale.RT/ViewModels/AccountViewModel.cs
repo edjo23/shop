@@ -31,6 +31,25 @@ namespace PointOfSale.RT.ViewModels
 
         private readonly ICustomerService CustomerService;
 
+        private bool _IsEnabled = true;
+
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+            set
+            {
+                if (value != _IsEnabled)
+                {
+                    _IsEnabled = value;
+
+                    NotifyOfPropertyChange(() => IsEnabled);
+                }
+            }
+        }
+
         public Customer Customer { get; set; }
 
         private AccountTransactionListViewModel _TransactionListView;

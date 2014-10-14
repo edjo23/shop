@@ -18,6 +18,9 @@ namespace Shop.Contracts.Services
         Customer GetCustomer(Guid id);
 
         [OperationContract]
+        Customer GetCustomerByNumber(string number);
+
+        [OperationContract]
         void AddCustomer(Customer product);
 
         [OperationContract]

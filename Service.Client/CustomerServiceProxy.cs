@@ -25,6 +25,11 @@ namespace Shop.Service.Client
             return Invoke(s => s.GetCustomer(id));
         }
 
+        public Customer GetCustomerByNumber(string number)
+        {
+            return Invoke(s => s.GetCustomerByNumber(number));
+        }
+
         public void AddCustomer(Customer product)
         {
             Invoke(s => s.AddCustomer(product));

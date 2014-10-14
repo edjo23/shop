@@ -25,6 +25,17 @@ namespace Shop.Business.Managers
             return Extensions.SelectById<Customer>(id);
         }
 
+        public Customer GetCustomerByNumber(string number)
+        {
+            using (var connectionScope = new ConnectionScope())
+            {
+                var where = new PredicateGroup { Operator = GroupOperator.And, Predicates = new List<IPredicate>() };
+                where.Predicates.Add(Predicates.Field<Customer>(f => f.Number, Operator.Eq, number));
+
+                return connectionScope.Connection.GetList<Customer>(where.Predicates.Any() ? where : null).FirstOrDefault();
+            }
+        }
+
         public void AddCustomer(Customer customer)
         {
             if (customer.Id == Guid.Empty)

@@ -20,7 +20,7 @@ namespace Card.Service.Business
         public const ushort Mifare1KCard = 1;
         public const ushort Mifare4KCard = 2;
         public const ushort MifareUltralightCard = 3;
-        public const string CardUri = "http://www.bing.com";
+        public const string CardUri = "http://has.azurewebsites.net";
 
         public CardWriter(ILog log)
         {

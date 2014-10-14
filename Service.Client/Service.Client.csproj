@@ -43,14 +43,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServiceProxy.cs" />
+    <Compile Include="CardReadServiceProxy.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CardWriteServiceProxy.cs" />
     <Compile Include="CustomerServiceProxy.cs" />
     <Compile Include="DiscountServiceProxy.cs" />
+    <Compile Include="DuplexServiceClient.cs" />
     <Compile Include="InvoiceServiceProxy.cs" />
-    <Compile Include="IServiceClientFactory.cs" />
+    <Compile Include="IServiceClientFactory.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ProductServiceProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceProxy.cs" />
     <Compile Include="ServiceClient.cs" />
+    <Compile Include="ServiceProxy.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contracts\Contracts.csproj">

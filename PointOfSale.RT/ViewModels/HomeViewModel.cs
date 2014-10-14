@@ -6,27 +6,33 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
+using Shop.Contracts.Messages;
 using Shop.Contracts.Services;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
 {
-    public class HomeViewModel : Screen
+    public class HomeViewModel : Screen, IHandle<CardInserted>
     {
-        public HomeViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, ICustomerService customerService)
+        public HomeViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator, CardService cardService, ICustomerService customerService)
         {
             EventAggregator = eventAggregator;
             ScreenCoordinator = screenCoordinator;
+            CardService = cardService;
             CustomerService = customerService;
 
             Options = new BindableCollection<HomeOption>();
             Logger = log4net.LogManager.GetLogger(GetType());
+
+            EventAggregator.Subscribe(this);
         }
 
         private readonly IEventAggregator EventAggregator;
 
         private readonly ScreenCoordinator ScreenCoordinator;
+
+        private readonly CardService CardService;
         
         private readonly ICustomerService CustomerService;
 
@@ -128,6 +134,18 @@ namespace PointOfSale.RT.ViewModels
                 ScreenCoordinator.NavigateToCashHome(CashCustomer);                       
             }
         }
-    }
 
+        public void Handle(CardInserted message)
+        {
+            if (IsActive)
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    var customer = CustomerService.GetCustomerByNumber(message.CardId);
+                    if (customer != null)
+                        Execute.OnUIThread(() => ScreenCoordinator.NavigateToCustomer(customer, true));
+                });
+            }
+        }
+    }
 }

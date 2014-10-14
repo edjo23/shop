@@ -37,7 +37,7 @@ namespace Card.Service.Business
         public const ushort Mifare1KCard = 1;
         public const ushort Mifare4KCard = 2;
         public const ushort MifareUltralightCard = 3;
-        public const string CardUri = "http://www.bing.com";
+        public const string CardUri = "http://has.azurewebsites.net";
 
         public CardReader(ILog log, IEventAggregator eventAggregator)
         {
@@ -193,6 +193,7 @@ namespace Card.Service.Business
 
             var buffer = new List<byte>();
             var bufferSize = 0;
+            var pageSize = 16;
 
             while (currentPage <= lastPage)
             {
@@ -202,7 +203,7 @@ namespace Card.Service.Business
                     Instruction = InstructionCode.ReadBinary,
                     P1 = 0x00,
                     P2 = currentPage,
-                    Le = 16
+                    Le = pageSize
                 };
 
                 var response = reader.Transmit(readBinaryCmd);
@@ -211,7 +212,7 @@ namespace Card.Service.Business
                     return new byte[0];
 
                 var data = response.GetData();
-                var dataSize = 16;
+                var dataSize = pageSize;
 
                 if (currentPage == 0x04)
                 {
@@ -220,20 +221,18 @@ namespace Card.Service.Business
 
                     bufferSize = 2 + data[1];
 
-                    lastPage = ((byte)(4 + (bufferSize / 16) - 1));
-
-                    if (bufferSize % 16 > 0)
-                        lastPage += 1;
+                    lastPage = ((byte)(currentPage + (bufferSize / pageSize)));
+                    lastPage = (byte)(currentPage + ((lastPage - currentPage) * 4)); // 16 bytes = 4 pages.
                 }
 
                 if (currentPage == lastPage)
                 {
-                    dataSize = bufferSize % 16;
+                    dataSize = bufferSize % pageSize;
                 }
 
                 buffer.AddRange(data.Take(dataSize));
 
-                currentPage++;
+                currentPage += 4; // 16 bytes = 4 pages.
             }
 
             Log.Debug(String.Format("ReadBinary: {0}", BitConverter.ToString(buffer.ToArray())));

@@ -151,6 +151,8 @@ namespace PointOfSale.RT.ViewModels
         private void ConfigureServiceClients()
         {
             ServiceClientFactory.EndpointAddressFormatString = "http://{0}/Services/{1}.svc";
+            ServiceClientFactory.EndpointAddressFormatStrings.Add(typeof(ICardReadService), "http://localhost:26398/Services/{1}.svc");
+            ServiceClientFactory.EndpointAddressFormatStrings.Add(typeof(ICardWriteService), "http://localhost:26398/Services/{1}.svc");
             ServiceClientFactory.Host = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"];
         }
 

@@ -28,6 +28,11 @@ namespace Shop.Business.Services
             return Manager.GetCustomer(id);
         }
 
+        public Customer GetCustomerByNumber(string number)
+        {
+            return Manager.GetCustomerByNumber(number);
+        }
+
         public void AddCustomer(Customer customer)
         {
             Manager.AddCustomer(customer);

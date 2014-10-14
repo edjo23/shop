@@ -82,7 +82,9 @@ namespace PointOfSale.RT.ViewModels
 
         #endregion
 
-        public Customer Customer { get; set; }        
+        public Customer Customer { get; set; }
+
+        public bool CardSession { get; set; }
 
         public bool IsCashAccount
         {
@@ -195,7 +197,7 @@ namespace PointOfSale.RT.ViewModels
 
         public void GoHome()
         {
-            if (IsCashAccount)
+            if (IsCashAccount || CardSession)
                 ScreenCoordinator.NavigateToHome();
             else
                 ScreenCoordinator.NavigateToScreen(IoC.Get<AccountsViewModel>(), true);

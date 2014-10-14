@@ -66,7 +66,12 @@ namespace PointOfSale.RT
             Container.PerRequest<IInvoiceService, InvoiceServiceProxy>();
             Container.PerRequest<IDiscountService, DiscountServiceProxy>();
 
+            Container.PerRequest<ICardHandler, CardReadHandler>();
+            Container.PerRequest<ICardReadService, CardReadServiceProxy>();
+            Container.PerRequest<ICardWriteService, CardWriteServiceProxy>();
+
             Container.Singleton<ScreenCoordinator>();
+            Container.Singleton<CardService>();
             Container.PerRequest<ImageService>();
 
             var settings = Container.RegisterSettingsService();
