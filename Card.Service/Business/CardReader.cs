@@ -188,57 +188,50 @@ namespace Card.Service.Business
 
         private byte[] GetAllCardBytes(IsoReader reader)
         {
-            byte currentPage = 0x04;
-            byte lastPage = 0x04;
-
-            var buffer = new List<byte>();
-            var bufferSize = 0;
-            var pageSize = 16;
-
-            while (currentPage <= lastPage)
+            try
             {
-                var readBinaryCmd = new CommandApdu(IsoCase.Case2Short, SCardProtocol.Any)
+                var firstDataBlock = 4;
+                var pageSize = 4;
+                var readSize = pageSize * 4;
+                var bytesToRead = 0;
+                var buffer = new List<byte>();
+
+                while (true)
                 {
-                    CLA = 0xFF,
-                    Instruction = InstructionCode.ReadBinary,
-                    P1 = 0x00,
-                    P2 = currentPage,
-                    Le = pageSize
-                };
+                    var blockToRead = (byte)(firstDataBlock + (buffer.Count / pageSize));
 
-                var response = reader.Transmit(readBinaryCmd);
+                    var readBinaryCmd = new CommandApdu(IsoCase.Case2Short, SCardProtocol.Any)
+                    {
+                        CLA = 0xFF,
+                        Instruction = InstructionCode.ReadBinary,
+                        P1 = 0x00,
+                        P2 = blockToRead,
+                        Le = readSize
+                    };
 
-                if (response.SW1 != (byte)PCSC.Iso7816.SW1Code.Normal)
-                    return new byte[0];
+                    var response = reader.Transmit(readBinaryCmd);
 
-                var data = response.GetData();
-                var dataSize = pageSize;
+                    var data = response.GetData();
 
-                if (currentPage == 0x04)
-                {
-                    if (data.Length < 2)
-                        return new byte[0];
+                    if (buffer.Count == 0)
+                        bytesToRead = data[1] + 1 + 1;
 
-                    bufferSize = 2 + data[1];
-
-                    lastPage = ((byte)(currentPage + (bufferSize / pageSize)));
-                    lastPage = (byte)(currentPage + ((lastPage - currentPage) * 4)); // 16 bytes = 4 pages.
+                    buffer.AddRange(data.Take(bytesToRead - buffer.Count < readSize ? bytesToRead - buffer.Count : readSize).ToArray());
+                    if (buffer.Count >= bytesToRead)
+                        break;
                 }
 
-                if (currentPage == lastPage)
-                {
-                    dataSize = bufferSize % pageSize;
-                }
+                Log.Debug(String.Format("ReadBinary: {0}", BitConverter.ToString(buffer.ToArray())));
+                Log.Debug(String.Format("Buffersize: Reported: {0}, Actual: {1}", bytesToRead, buffer.Count));
 
-                buffer.AddRange(data.Take(dataSize));
-
-                currentPage += 4; // 16 bytes = 4 pages.
+                return buffer.ToArray();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
             }
 
-            Log.Debug(String.Format("ReadBinary: {0}", BitConverter.ToString(buffer.ToArray())));
-            Log.Debug(String.Format("Buffersize: Reported: {0}, Actual: {1}", bufferSize, buffer.Count));
-
-            return buffer.ToArray();
+            return new byte[0];
         }
 
         private bool IsShopCard(byte[] buffer)
@@ -276,14 +269,14 @@ namespace Card.Service.Business
                 {
                     var id = GetCardId(reader);
                     var status = GetReaderStatus(reader);
-                    var bytes = GetAllCardBytes(reader);
+                    //var bytes = GetAllCardBytes(reader);
 
                     var cardName = GetCardName(status.Atr);
                     var cardType = GetInt16(cardName);
 
                     var isMifare = cardType == Mifare1KCard || cardType == Mifare4KCard;
                     var isMifareUltralight = cardType == MifareUltralightCard;
-                    var isShopCard = IsShopCard(bytes);
+                    var isShopCard = true; // IsShopCard(bytes);
 
                     Log.Debug(String.Format("Card Id: {0}, Shop Card: {1}", BitConverter.ToString(id), isShopCard));
 
