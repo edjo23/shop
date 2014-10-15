@@ -150,10 +150,14 @@ namespace PointOfSale.RT.ViewModels
 
         private void ConfigureServiceClients()
         {
-            ServiceClientFactory.EndpointAddressFormatString = "http://{0}/Services/{1}.svc";
-            ServiceClientFactory.EndpointAddressFormatStrings.Add(typeof(ICardReadService), "http://localhost:26398/Services/{1}.svc");
-            ServiceClientFactory.EndpointAddressFormatStrings.Add(typeof(ICardWriteService), "http://localhost:26398/Services/{1}.svc");
             ServiceClientFactory.Host = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"];
+            ServiceClientFactory.EndpointAddressFormatString = "http://{0}/Services/{1}.svc";
+
+            var cardReaderHost = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["CardReaderHostAddress"];
+
+            ServiceClientFactory.EndpointAddressFormatStrings.Clear();
+            ServiceClientFactory.EndpointAddressFormatStrings.Add(typeof(ICardReadService), String.Format("http://{0}/Services/CardReadService.svc", cardReaderHost));
+            ServiceClientFactory.EndpointAddressFormatStrings.Add(typeof(ICardWriteService), String.Format("http://{0}/Services/CardWriteService.svc", cardReaderHost));
         }
 
         public void LogPointerPressed()

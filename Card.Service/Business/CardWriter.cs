@@ -17,11 +17,6 @@ namespace Card.Service.Business
 
     public class CardWriter : ICardWriter
     {
-        public const ushort Mifare1KCard = 1;
-        public const ushort Mifare4KCard = 2;
-        public const ushort MifareUltralightCard = 3;
-        public const string CardUri = "http://has.azurewebsites.net";
-
         public CardWriter(ILog log)
         {
             Log = log;
@@ -96,16 +91,21 @@ namespace Card.Service.Business
                     var cardName = GetCardName(status.Atr);
                     var cardType = GetInt16(cardName);
 
-                    var isMifare = cardType == Mifare1KCard || cardType == Mifare4KCard;
-                    var isMifareUltralight = cardType == MifareUltralightCard;
+                    var isMifare = cardType == CardReader.Mifare1KCard || cardType == CardReader.Mifare4KCard;
+                    var isMifareUltralight = cardType == CardReader.MifareUltralightCard;
 
                     Log.Debug(String.Format("Card Id: {0}", BitConverter.ToString(id)));
 
-                    var msg = new NdefMessage { new NdefUriRecord { Uri = CardReader.CardUri } };
-                    var data = msg.ToByteArray();
-                    var buffer = new List<byte>(new byte[] { 0x03, (byte)data.Length }.Concat(data));
+                    var cardString = BitConverter.ToString(cardName.Concat(id).ToArray()).Replace("-", "");
 
-                    WriteAllCardBytes(reader, buffer.ToArray());
+                    if (isMifareUltralight)
+                    {
+                        var msg = new NdefMessage { new NdefUriRecord { Uri = CardReader.CardUri + "/#/" + cardString } };
+                        var data = msg.ToByteArray();
+                        var buffer = new List<byte>(new byte[] { 0x03, (byte)data.Length }.Concat(data));
+
+                        WriteAllCardBytes(reader, buffer.ToArray(), isMifareUltralight ? 4 : 16);
+                    }
 
                     return BitConverter.ToString(cardName.Concat(id).ToArray()).Replace("-", "");
                 }
@@ -178,25 +178,25 @@ namespace Card.Service.Business
             return result.ToArray();
         }
 
-        private void WriteAllCardBytes(IsoReader isoReader, byte[] bytes)
+        private void WriteAllCardBytes(IsoReader isoReader, byte[] bytes, int packetSize)
         {
             var bytesToWrite = new List<byte>(bytes);
 
-            while (bytesToWrite.Count < 38 * 4)
+            //while (bytesToWrite.Count < 38 * 4)
+            //    bytesToWrite.Add(0x00);
+
+            while (bytesToWrite.Count % packetSize != 0)
                 bytesToWrite.Add(0x00);
 
-            while (bytesToWrite.Count % 4 != 0)
-                bytesToWrite.Add(0x00);
-
-            for (int i = 0; i < bytesToWrite.Count / 4; i++)
+            for (int i = 0; i < bytesToWrite.Count / packetSize; i++)
             {
                 var updateBinaryCmd = new CommandApdu(IsoCase.Case3Short, SCardProtocol.Any)
                 {
                     CLA = 0xFF,
                     Instruction = InstructionCode.UpdateBinary,
                     P1 = 0x00,
-                    P2 = (byte)(0x04 + i),
-                    Data = bytesToWrite.Skip(i * 4).Take(4).ToArray()
+                    P2 = (byte)((16 / packetSize) + i),
+                    Data = bytesToWrite.Skip(i * packetSize).Take(packetSize).ToArray()
                 };
 
                 var response = isoReader.Transmit(updateBinaryCmd);

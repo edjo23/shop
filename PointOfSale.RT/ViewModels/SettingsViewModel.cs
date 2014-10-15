@@ -39,6 +39,25 @@ namespace PointOfSale.RT.ViewModels
             }
         }
 
+        private string _CardReaderHost;
+
+        public string CardReaderHost
+        {
+            get
+            {
+                return _CardReaderHost;
+            }
+            set
+            {
+                if (value != _CardReaderHost)
+                {
+                    _CardReaderHost = value;
+
+                    NotifyOfPropertyChange(() => CardReaderHost);
+                }
+            }
+        }
+
         protected override void OnInitialize()
         {
             base.OnInitialize();
@@ -47,19 +66,35 @@ namespace PointOfSale.RT.ViewModels
             var host = Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"];
             if (host != null)
                 Host = (string)host;
+
+            var cardReaderHost = Windows.Storage.ApplicationData.Current.LocalSettings.Values["CardReaderHostAddress"];
+            if (cardReaderHost != null)
+                CardReaderHost = (string)cardReaderHost;
         }
 
         protected override void OnDeactivate(bool close)
         {
             base.OnDeactivate(close);
 
+            var settingsChanged = false;
+
             // Set app setting.
             if (Host != (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"])
             {
                 Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"] = Host;
 
-                EventAggregator.Publish(new SettingsChanged());
+                settingsChanged = true;
             }
+
+            if (CardReaderHost != (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["CardReaderHostAddress"])
+            {
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values["CardReaderHostAddress"] = CardReaderHost;
+
+                settingsChanged = true;
+            }
+
+            if (settingsChanged)
+                EventAggregator.Publish(new SettingsChanged());
         }
     }
 }

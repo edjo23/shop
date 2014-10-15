@@ -186,19 +186,18 @@ namespace Card.Service.Business
             return response.GetData();
         }
 
-        private byte[] GetAllCardBytes(IsoReader reader)
+        private byte[] GetAllCardBytes(IsoReader reader, int packetSize)
         {
             try
             {
-                var firstDataBlock = 4;
-                var pageSize = 4;
-                var readSize = pageSize * 4;
+                var firstDataBlock = 16 / packetSize;
+                var readSize = 16;
                 var bytesToRead = 0;
                 var buffer = new List<byte>();
 
                 while (true)
                 {
-                    var blockToRead = (byte)(firstDataBlock + (buffer.Count / pageSize));
+                    var blockToRead = (byte)(firstDataBlock + (buffer.Count / packetSize));
 
                     var readBinaryCmd = new CommandApdu(IsoCase.Case2Short, SCardProtocol.Any)
                     {
@@ -248,7 +247,7 @@ namespace Card.Service.Business
                 {
                     var record = new NdefUriRecord(msg.First());
 
-                    return record.Uri == CardUri;
+                    return record.Uri.StartsWith(CardUri);
                 }
             }
             catch (Exception ex)
@@ -269,13 +268,14 @@ namespace Card.Service.Business
                 {
                     var id = GetCardId(reader);
                     var status = GetReaderStatus(reader);
-                    //var bytes = GetAllCardBytes(reader);
 
                     var cardName = GetCardName(status.Atr);
                     var cardType = GetInt16(cardName);
 
                     var isMifare = cardType == Mifare1KCard || cardType == Mifare4KCard;
                     var isMifareUltralight = cardType == MifareUltralightCard;
+
+                    //var bytes = GetAllCardBytes(reader, isMifareUltralight ? 4 : 16);
                     var isShopCard = true; // IsShopCard(bytes);
 
                     Log.Debug(String.Format("Card Id: {0}, Shop Card: {1}", BitConverter.ToString(id), isShopCard));
