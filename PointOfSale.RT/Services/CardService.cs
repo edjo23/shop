@@ -19,6 +19,11 @@ namespace PointOfSale.RT.Services
 
         private readonly IEventAggregator EventAggregator;
 
+        public void HandleKeepAlive()
+        {
+            System.Diagnostics.Debug.WriteLine("Keep Alive - {0}", DateTime.Now);
+        }
+
         public void HandleCardInserted(CardInserted message)
         {
             EventAggregator.Publish(message, Execute.OnUIThread);
@@ -37,7 +42,7 @@ namespace PointOfSale.RT.Services
             CardWriteService = cardWriteService;
             CustomerService = customerService;
 
-            cardReadService.Connect();
+            Connect();
         }
 
         private readonly ICardReadService CardReadService;
@@ -45,6 +50,19 @@ namespace PointOfSale.RT.Services
         private readonly ICardWriteService CardWriteService;
 
         private readonly ICustomerService CustomerService;
+
+        private void Connect()
+        {
+            var cardReaderHost = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["CardReaderHostAddress"];
+
+            if (!String.IsNullOrEmpty(cardReaderHost))
+            {
+                Task.Factory.StartNew(() =>
+                {
+                    CardReadService.Connect();
+                });
+            }
+        }
 
         public void Write(Customer customer)
         {

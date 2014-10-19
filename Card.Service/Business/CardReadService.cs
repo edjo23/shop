@@ -13,6 +13,8 @@ namespace Card.Service.Business
 {
     public class CardReadService : ICardReadService, IHandle<CardInserted>, IHandle<InvalidCardInserted>
     {
+        public const int KeepAliveInterval = 1000 * 60 * 1;
+
         public CardReadService(ICardReader cardReader, IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
@@ -21,15 +23,26 @@ namespace Card.Service.Business
             EventAggregator.Subscribe(this);
         }
 
-        private ICardReader CardReader;
+        private readonly ICardReader CardReader;
 
-        private IEventAggregator EventAggregator;
+        private readonly IEventAggregator EventAggregator;
 
         private ICardHandler ClientCallback;
+
+        private Timer KeepAliveTimer;
 
         public void Connect()
         {
             ClientCallback = OperationContext.Current.GetCallbackChannel<ICardHandler>();
+
+            //KeepAliveTimer = new Timer(s => 
+            //{
+            //    if (ClientCallback != null)
+            //        ClientCallback.HandleKeepAlive();
+            //    else
+            //        KeepAliveTimer.Change(Timeout.Infinite, KeepAliveInterval);
+            //},
+            //null, KeepAliveInterval, KeepAliveInterval);
         }
 
         public void Handle(CardInserted message)

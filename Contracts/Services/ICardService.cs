@@ -11,6 +11,9 @@ namespace Shop.Contracts.Services
     public interface ICardHandler
     {
         [OperationContract(IsOneWay = true)]
+        void HandleKeepAlive();
+
+        [OperationContract(IsOneWay = true)]
         void HandleCardInserted(CardInserted message);
 
         [OperationContract(IsOneWay = true)]

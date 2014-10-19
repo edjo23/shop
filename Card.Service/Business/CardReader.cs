@@ -82,13 +82,16 @@ namespace Card.Service.Business
                 Disconnect();
             }
 
-            if (!CardContext.IsValid())
+            if (CardContext == null || !CardContext.IsValid())
             {
-                // TODO - Log.
+                Log.Warn("Card reader connection failed");
+
                 Disconnect();
             }
-
-            Log.Info("Card reader connected");
+            else
+            {
+                Log.Info("Card reader connected");
+            }
         }
 
         public void Disconnect()

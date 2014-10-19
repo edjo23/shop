@@ -35,7 +35,7 @@ namespace PointOfSale.RT.Services
 
         public Binding GetDuplexBinding<TChannel>()
         {
-            return new NetHttpBinding() { MaxReceivedMessageSize = 1000000 };
+            return new NetHttpBinding() { MaxReceivedMessageSize = 1000000, ReceiveTimeout = TimeSpan.FromDays(7), SendTimeout = TimeSpan.FromDays(7) };
         }
 
         public EndpointAddress GetAddress<TChannel>()
