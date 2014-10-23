@@ -6,19 +6,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Caliburn.Micro;
+using log4net;
 using Shop.Contracts.Messages;
 using Shop.Contracts.Services;
 
 namespace Card.Service.Business
 {
-    public class CardReadService : ICardReadService, IHandle<CardInserted>, IHandle<InvalidCardInserted>
+    public class CardReadService : ICardReadService, IHandle<CardInserted>, IHandle<InvalidCardInserted>, IHandle<KeepAlive>
     {
-        public const int KeepAliveInterval = 1000 * 60 * 1;
-
-        public CardReadService(ICardReader cardReader, IEventAggregator eventAggregator)
+        public CardReadService(ICardReader cardReader, IEventAggregator eventAggregator, ILog log)
         {
-            EventAggregator = eventAggregator;
             CardReader = cardReader;
+            EventAggregator = eventAggregator;
+            Log = log;
 
             EventAggregator.Subscribe(this);
         }
@@ -27,22 +27,13 @@ namespace Card.Service.Business
 
         private readonly IEventAggregator EventAggregator;
 
-        private ICardHandler ClientCallback;
+        private readonly ILog Log;
 
-        private Timer KeepAliveTimer;
+        private ICardHandler ClientCallback;
 
         public void Connect()
         {
-            ClientCallback = OperationContext.Current.GetCallbackChannel<ICardHandler>();
-
-            //KeepAliveTimer = new Timer(s => 
-            //{
-            //    if (ClientCallback != null)
-            //        ClientCallback.HandleKeepAlive();
-            //    else
-            //        KeepAliveTimer.Change(Timeout.Infinite, KeepAliveInterval);
-            //},
-            //null, KeepAliveInterval, KeepAliveInterval);
+            ClientCallback = OperationContext.Current.GetCallbackChannel<ICardHandler>();            
         }
 
         public void Handle(CardInserted message)
@@ -55,6 +46,14 @@ namespace Card.Service.Business
         {
             if (ClientCallback != null)
                 ClientCallback.HandleInvalidCardInserted(message);
+        }
+
+        public void Handle(KeepAlive message)
+        {
+            Log.Debug("Keep alive received");
+
+            if (ClientCallback != null)
+                ClientCallback.HandleKeepAlive();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Caliburn.Micro;
@@ -28,6 +29,11 @@ namespace Card.Service.Business
         public byte[] Atr { get; set; }
     }
 
+    public class KeepAlive
+    {
+
+    }
+
     public interface ICardReader
     {
     }
@@ -39,6 +45,8 @@ namespace Card.Service.Business
         public const ushort MifareUltralightCard = 3;
         public const string CardUri = "http://has.azurewebsites.net";
 
+        public const int KeepAliveInterval = 1000 * 60 * 5;
+
         public CardReader(ILog log, IEventAggregator eventAggregator)
         {
             Log = log;
@@ -47,11 +55,15 @@ namespace Card.Service.Business
             Log.Debug("CardReader constructed");
 
             Connect();
+
+            KeepAliveTimer = new Timer(s => EventAggregator.Publish(new KeepAlive()), null, KeepAliveInterval, KeepAliveInterval);
         }
 
         private readonly ILog Log;
 
         private readonly IEventAggregator EventAggregator;
+
+        private readonly Timer KeepAliveTimer;
 
         public SCardContext CardContext { get; set; }
 
