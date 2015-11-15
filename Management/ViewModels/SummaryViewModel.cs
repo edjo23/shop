@@ -67,29 +67,15 @@ namespace Shop.Management.ViewModels
             }
         }
 
-        public decimal TotalBalanceAmount { get; set; }       
-
-        public decimal TotalAccountInvoiceAmount { get; set; }
-
-        public decimal TotalCashInvoiceAmount { get; set; }
-
-        public decimal TotalInvoiceAmount
-        {
-            get
-            {
-                return TotalAccountInvoiceAmount + TotalCashInvoiceAmount;
-            }
-        }
-
         public decimal TotalLoanAmount { get; set; }
 
-        public decimal TotalPaymentAmount { get; set; }
+        public decimal TotalCashPaymentAmount { get; set; }
 
         public decimal TotalCashAmount
         {
             get
             {
-                return TotalPaymentAmount + TotalLoanAmount;
+                return TotalCashPaymentAmount - TotalLoanAmount;
             }
         }
 
@@ -141,18 +127,14 @@ namespace Shop.Management.ViewModels
                 var transactions = CustomerService.GetTransactions(null, null, null).ToList();
                 var products = ProductService.GetProducts();
 
-                TotalBalanceAmount = 0;
-                TotalAccountInvoiceAmount = 0;
-                TotalCashInvoiceAmount = 0;
                 TotalLoanAmount = 0;
-                TotalPaymentAmount = 0;
+                TotalCashPaymentAmount = 0;
                 TotalAccountsReceivableAmount = 0;
                 TotalAccountsPayableAmount = 0;
                 TotalInventoryAmount = 0;
 
                 foreach (var customer in customers)
                 {
-                    TotalBalanceAmount += customer.Balance;
                     if (customer.Balance >= 0)
                         TotalAccountsReceivableAmount += customer.Balance;
                     else
@@ -161,42 +143,24 @@ namespace Shop.Management.ViewModels
 
                 foreach (var transaction in transactions)
                 {
-                    if (transaction.Type == CustomerTransactionType.Invoice)
+                    if (transaction.Type == CustomerTransactionType.Payment)
                     {
-                        var customer = customers.First(o => o.Id == transaction.CustomerId);
-                        if (customer.Name == "Cash")
-                            TotalCashInvoiceAmount += transaction.Amount;
-                        else
-                            TotalAccountInvoiceAmount += transaction.Amount;
+                        if (transaction.SourceId == null) // Not from a stock receipt.
+                            TotalCashPaymentAmount += transaction.Amount * -1;
                     }
                     else if (transaction.Type == CustomerTransactionType.Loan)
                     {
-                        TotalLoanAmount -= transaction.Amount;
-                    }
-                    else if (transaction.Type == CustomerTransactionType.Payment)
-                    {
-                        TotalPaymentAmount += transaction.Amount * -1;
+                        TotalLoanAmount += transaction.Amount;
                     }
                 }
 
                 foreach (var product in products)
                 {
-                    if (product.Price == 1.0m)
-                        TotalInventoryAmount += (0.75m * product.QuantityOnHand);
-                    else
-                        if (product.Price == 1.3m)
-                            TotalInventoryAmount += (1.1m * product.QuantityOnHand);
+                    TotalInventoryAmount += (product.Cost * product.QuantityOnHand);
                 }
 
                 Execute.OnUIThread(() =>
                 {
-                    //NotifyOfPropertyChange(() => TotalBalanceAmount);
-                    //NotifyOfPropertyChange(() => TotalAccountInvoiceAmount);
-                    //NotifyOfPropertyChange(() => TotalCashInvoiceAmount);
-                    //NotifyOfPropertyChange(() => TotalInvoiceAmount);
-                    //NotifyOfPropertyChange(() => TotalLoanAmount);
-                    //NotifyOfPropertyChange(() => TotalPaymentAmount);
-
                     NotifyOfPropertyChange(() => TotalCashAmount);
                     NotifyOfPropertyChange(() => TotalInventoryAmount);
                     NotifyOfPropertyChange(() => TotalAccountsReceivableAmount);
