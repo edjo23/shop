@@ -123,7 +123,7 @@ namespace Shop.Management.ViewModels
             Task.Factory.StartNew(() =>
             {
 
-                var customers = CustomerService.GetCustomers();
+                var customers = CustomerService.GetAllCustomers();
                 var transactions = CustomerService.GetTransactions(null, null, null).ToList();
                 var products = ProductService.GetProducts();
 

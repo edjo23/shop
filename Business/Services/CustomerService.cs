@@ -20,6 +20,11 @@ namespace Shop.Business.Services
 
         public IEnumerable<Customer> GetCustomers()
         {
+            return Manager.GetCustomers().Where(o => !String.IsNullOrEmpty(o.Number)).ToList();
+        }
+
+        public IEnumerable<Customer> GetAllCustomers()
+        {
             return Manager.GetCustomers();
         }
 

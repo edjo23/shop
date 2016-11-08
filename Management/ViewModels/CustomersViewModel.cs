@@ -113,7 +113,7 @@ namespace Shop.Management.ViewModels
             Task.Factory.StartNew(() =>
             {
                 Customers.Clear();
-                Customers.AddRange(CustomerService.GetCustomers());
+                Customers.AddRange(CustomerService.GetAllCustomers());
             }).ContinueWith(t =>
             {
                 Execute.OnUIThread(() =>

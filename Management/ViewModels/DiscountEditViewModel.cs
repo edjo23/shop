@@ -76,7 +76,7 @@ namespace Shop.Management.ViewModels
                 DiscountProducts.Add(new DiscountProductViewModel { Product = product, DiscountProduct = discountProduct ?? new DiscountProduct { DiscountId = Discount.Id, ProductId = product.Id } });
             }
 
-            foreach (var customer in CustomerService.GetCustomers())
+            foreach (var customer in CustomerService.GetAllCustomers())
             {
                 var discountCustomer = model.Customers.Where(o => o.CustomerId == customer.Id).FirstOrDefault();
                 DiscountCustomers.Add(new DiscountCustomerViewModel { Customer = customer, DiscountCustomer = discountCustomer ?? new DiscountCustomer { DiscountId = Discount.Id, CustomerId = customer.Id }, Selected = discountCustomer != null });

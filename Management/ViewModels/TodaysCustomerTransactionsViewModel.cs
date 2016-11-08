@@ -41,7 +41,7 @@ namespace Shop.Management.ViewModels
 
             Task.Factory.StartNew(() =>
                 {
-                    var customers = CustomerService.GetCustomers();
+                    var customers = CustomerService.GetAllCustomers();
                     var transactions = CustomerService.GetTransactions(null, DateTimeOffset.Now.Date, null);
 
                     Items.AddRange(transactions.OrderByDescending(o => o.DateTime).Select(o => new CustomerTransactionModel(o, customers.FirstOrDefault(c => c.Id == o.CustomerId))));

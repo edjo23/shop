@@ -15,6 +15,9 @@ namespace Shop.Contracts.Services
         IEnumerable<Customer> GetCustomers();
 
         [OperationContract]
+        IEnumerable<Customer> GetAllCustomers();
+
+        [OperationContract]
         Customer GetCustomer(Guid id);
 
         [OperationContract]

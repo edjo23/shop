@@ -20,6 +20,11 @@ namespace Shop.Service.Client
             return Invoke(s => s.GetCustomers());
         }
 
+        public IEnumerable<Customer> GetAllCustomers()
+        {
+            return Invoke(s => s.GetAllCustomers());
+        }
+
         public Customer GetCustomer(Guid id)
         {
             return Invoke(s => s.GetCustomer(id));

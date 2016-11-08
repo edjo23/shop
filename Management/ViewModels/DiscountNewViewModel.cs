@@ -69,7 +69,7 @@ namespace Shop.Management.ViewModels
                 DiscountProducts.Add(new DiscountProductViewModel { Product = product, DiscountProduct = new DiscountProduct { ProductId = product.Id }, Discount = 0.0m });
             }
 
-            foreach (var customer in CustomerService.GetCustomers())
+            foreach (var customer in CustomerService.GetAllCustomers())
             {
                 DiscountCustomers.Add(new DiscountCustomerViewModel { Customer = customer, DiscountCustomer = new DiscountCustomer { CustomerId = customer.Id }, Selected = false });
             }
