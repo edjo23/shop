@@ -76,15 +76,15 @@
         </Border>
 
         <Border x:Name="MainArea" Grid.Row="2" Padding="0,0,10,10">
-            <ScrollViewer VerticalScrollMode="Disabled" ZoomMode="Disabled">
-                <ContentControl x:Name="Accounts" Height="{Binding ActualHeight, ElementName=MainArea }">
+            <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden" ZoomMode="Disabled">
+            <ContentControl x:Name="Accounts" Height="{Binding ActualHeight, ElementName=MainArea }">
                     <ContentControl.ContentTransitions>
                         <TransitionCollection>
                             <EntranceThemeTransition />
                         </TransitionCollection>
                     </ContentControl.ContentTransitions>
                     <ContentControl.ContentTemplate>
-                        <DataTemplate>
+                        <DataTemplate>                       
                             <ItemsControl ItemsSource="{Binding}" Margin="15,25,0,0" ItemTemplateSelector="{StaticResource AppDataTemplateSelector}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -100,7 +100,7 @@
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
                             </ItemsControl>
-                        </DataTemplate>
+                    </DataTemplate>
                     </ContentControl.ContentTemplate>
                 </ContentControl>
             </ScrollViewer>
