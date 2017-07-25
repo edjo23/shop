@@ -75,7 +75,7 @@
             </StackPanel>
         </Border>
 
-        <Border x:Name="MainArea" Grid.Row="2" Padding="0,0,10,10">
+        <Border x:Name="MainArea" Grid.Row="2" Padding="0,0,0,10">
             <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden" ZoomMode="Disabled">
             <ContentControl x:Name="Accounts" Height="{Binding ActualHeight, ElementName=MainArea }">
                     <ContentControl.ContentTransitions>
