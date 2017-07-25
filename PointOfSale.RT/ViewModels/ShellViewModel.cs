@@ -40,7 +40,7 @@ namespace PointOfSale.RT.ViewModels
         {
             get
             {
-                return ApplicationView.Value == ApplicationViewState.FullScreenLandscape ? Visibility.Visible : Visibility.Collapsed;
+                return ApplicationView.Value == ApplicationViewState.FullScreenLandscape || (Window.Current.Bounds.Width >= 1024 && Window.Current.Bounds.Height >= 768) ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 

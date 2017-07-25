@@ -14,6 +14,9 @@ namespace Shop.Business.Database
         [ThreadStatic]
         private static ConnectionScope Current = null;
 
+        // private const string DefaultConnectionString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=Shop;Integrated Security=True;Pooling=False";
+        private const string DefaultConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Shop;Integrated Security=True;Pooling=False";
+
         private IDbConnection _Connection;
 
         public IDbConnection Connection 
@@ -36,7 +39,7 @@ namespace Shop.Business.Database
 
                 var config = ConfigurationManager.ConnectionStrings["Shop"];
 
-                Connection = new SqlConnection(config != null ? config.ConnectionString : @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=Shop;Integrated Security=True;Pooling=False");
+                Connection = new SqlConnection(config != null ? config.ConnectionString : DefaultConnectionString);
                 Connection.Open();
             }
         }

@@ -32,7 +32,7 @@ namespace PointOfSale.RT.Services
         {
             StopIdleTimeout();
 
-            EventAggregator.Publish(screen);
+            EventAggregator.PublishOnCurrentThread(screen);
 
             if (endableIdleTimeout)
                 StartIdleTimeout();
@@ -72,7 +72,7 @@ namespace PointOfSale.RT.Services
 
         public void ShowPopup(PopupViewModel popup, double width = 800, double height = 400)
         {
-            EventAggregator.Publish(new ShowPopup { Popup = popup, Width = width, Height = height });
+            EventAggregator.PublishOnCurrentThread(new ShowPopup { Popup = popup, Width = width, Height = height });
         }
 
         public void HandleFault(AggregateException ex)

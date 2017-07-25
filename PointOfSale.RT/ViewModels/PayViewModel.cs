@@ -110,10 +110,10 @@ namespace PointOfSale.RT.ViewModels
             NotifyOfPropertyChange(() => TotalText);
 
             if (!canComplete && CanCompletePayment)
-                EventAggregator.Publish(new TransactionStarted { Source = this });
+                EventAggregator.PublishOnCurrentThread(new TransactionStarted { Source = this });
 
             if (canComplete && !CanCompletePayment)
-                EventAggregator.Publish(new TransactionStopped { Source = this });
+                EventAggregator.PublishOnCurrentThread(new TransactionStopped { Source = this });
         }
 
         public void CompletePayment()

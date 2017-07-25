@@ -75,7 +75,7 @@ namespace PointOfSale.RT
             Container.PerRequest<ImageService>();
 
             var settings = Container.RegisterSettingsService();
-            settings.RegisterCommand<SettingsViewModel>("Options");
+            settings.RegisterFlyoutCommand<SettingsViewModel>("Options");
         }
 
         protected override object GetInstance(Type service, string key)

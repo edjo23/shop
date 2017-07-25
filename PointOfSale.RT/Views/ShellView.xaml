@@ -11,7 +11,7 @@
     mc:Ignorable="d">      
     <i:Interaction.Triggers>        
         <b:IdleTrigger>
-            <c:ActionMessage MethodName="LogPointerPressed" />
+            <!--<c:ActionMessage MethodName="LogPointerPressed" />-->
         </b:IdleTrigger>
     </i:Interaction.Triggers>
 

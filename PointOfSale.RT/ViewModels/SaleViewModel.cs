@@ -178,10 +178,10 @@ namespace PointOfSale.RT.ViewModels
             NotifyOfPropertyChange(() => TotalText);
 
             if (totalQuantity == 0 && value > 0)
-                EventAggregator.Publish(new TransactionStarted { Source = this });
+                EventAggregator.PublishOnCurrentThread(new TransactionStarted { Source = this });
 
             if (TotalQuantity == 0)
-                EventAggregator.Publish(new TransactionStopped { Source = this });
+                EventAggregator.PublishOnCurrentThread(new TransactionStopped { Source = this });
         }
 
         public void Checkout()

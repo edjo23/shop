@@ -48,7 +48,7 @@ namespace PointOfSale.RT.ViewModels
 
         public void PinEntered()
         {
-            EventAggregator.Publish(new HidePopup());
+            EventAggregator.PublishOnCurrentThread(new HidePopup());
 
             if (OnPinEntered != null)
                 OnPinEntered(Pin);

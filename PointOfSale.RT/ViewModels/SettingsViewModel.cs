@@ -94,7 +94,7 @@ namespace PointOfSale.RT.ViewModels
             }
 
             if (settingsChanged)
-                EventAggregator.Publish(new SettingsChanged());
+                EventAggregator.PublishOnCurrentThread(new SettingsChanged());
         }
     }
 }
