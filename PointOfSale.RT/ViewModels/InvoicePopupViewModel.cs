@@ -8,6 +8,7 @@ using Caliburn.Micro;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Services;
 using Windows.UI.Xaml;
+using Shop.Service.Client;
 
 namespace PointOfSale.RT.ViewModels
 {

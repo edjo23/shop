@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Messages;
 using Shop.Contracts.Services;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels

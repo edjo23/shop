@@ -9,6 +9,7 @@ using PointOfSale.RT.Models;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
+using Shop.Service.Client;
 using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
@@ -208,7 +209,7 @@ namespace PointOfSale.RT.ViewModels
                         Discount = o.Discount
                     }));
 
-                InvoiceService.AddInvoice(invoice, invoiceItems, IsCashAccount ? Total : 0.0m);
+                InvoiceService.AddInvoice(new InvoiceTransaction { Invoice = invoice, Items = invoiceItems, Payment = IsCashAccount ? Total : 0.0m });
 
                 Customer.Balance = CustomerService.GetCustomer(Customer.Id).Balance;
             };

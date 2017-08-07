@@ -7,9 +7,25 @@ using Caliburn.Micro;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Messages;
 using Shop.Contracts.Services;
+using Shop.Service.Client;
 
 namespace PointOfSale.RT.Services
 {
+    public class CardReadServiceStub : ICardReadService
+    {
+        public void Connect()
+        {            
+        }
+    }
+
+    public class CardWriteServiceStub : ICardWriteService
+    {
+        public string Write()
+        {
+            return null;
+        }
+    }
+
     public class CardReadHandler : ICardHandler
     {
         public CardReadHandler(IEventAggregator eventAggregator)

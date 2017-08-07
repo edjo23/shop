@@ -78,9 +78,14 @@
     <Reference Include="Caliburn.Micro.Autofac">
       <HintPath>..\packages\Caliburn.Micro.Autofac.1.5.0\lib\net40\Caliburn.Micro.Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.1.5.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -101,7 +106,83 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\Contracts\Entities\Customer.cs">
+      <Link>Clients\Entities\Customer.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\CustomerTransaction.cs">
+      <Link>Clients\Entities\CustomerTransaction.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\Denomination.cs">
+      <Link>Clients\Entities\Denomination.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\Discount.cs">
+      <Link>Clients\Entities\Discount.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\DiscountCustomer.cs">
+      <Link>Clients\Entities\DiscountCustomer.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\DiscountModel.cs">
+      <Link>Clients\Entities\DiscountModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\DiscountProduct.cs">
+      <Link>Clients\Entities\DiscountProduct.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\Invoice.cs">
+      <Link>Clients\Entities\Invoice.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\InvoiceItem.cs">
+      <Link>Clients\Entities\InvoiceItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\InvoiceTransaction.cs">
+      <Link>Clients\Entities\InvoiceTransaction.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\Product.cs">
+      <Link>Clients\Entities\Product.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\ProductMovement.cs">
+      <Link>Clients\Entities\ProductMovement.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\IApplicationService.cs">
+      <Link>Clients\Services\IApplicationService.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\ICustomerService.cs">
+      <Link>Clients\Services\ICustomerService.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\IDiscountService.cs">
+      <Link>Clients\Services\IDiscountService.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\IInvoiceService.cs">
+      <Link>Clients\Services\IInvoiceService.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\IProductService.cs">
+      <Link>Clients\Services\IProductService.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\ApplicationClient.cs">
+      <Link>Clients\ApplicationClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\CustomerClient.cs">
+      <Link>Clients\CustomerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\DiscountClient.cs">
+      <Link>Clients\DiscountClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\HttpClient.cs">
+      <Link>Clients\HttpClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\InvoiceClient.cs">
+      <Link>Clients\InvoiceClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\IUrlProvider.cs">
+      <Link>Clients\IUrlProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\ProductClient.cs">
+      <Link>Clients\ProductClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\ReceiptClient.cs">
+      <Link>Clients\ReceiptClient.cs</Link>
+    </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Clients\UrlProvider.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Messages\ActivateItem.cs" />
     <Compile Include="Messages\DeactivateItem.cs" />
@@ -367,20 +448,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Business\Business.csproj">
-      <Project>{01e09d2a-03c1-451f-9ec6-8bbe1f896baa}</Project>
-      <Name>Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Contracts\Contracts.csproj">
-      <Project>{f964b318-7bb8-4efe-8724-a2df741e91b4}</Project>
-      <Name>Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Service.Client\Service.Client.csproj">
-      <Project>{f7543423-e620-46d1-bae4-7c915d1484e8}</Project>
-      <Name>Service.Client</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\add_76.png" />

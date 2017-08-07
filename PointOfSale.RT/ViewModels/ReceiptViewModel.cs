@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Caliburn.Micro;
 using PointOfSale.RT.Messages;
 using PointOfSale.RT.Models;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
+using Shop.Service.Client;
 using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels
 {
     public class ReceiptViewModel : Screen, IEnabled
     {
-        public ReceiptViewModel(ScreenCoordinator screenCoordinator, ImageService imageService, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService, IDiscountService discountService, IEventAggregator eventAggregator)
+        public ReceiptViewModel(ScreenCoordinator screenCoordinator, ImageService imageService, ICustomerService customerService, IProductService productService, IReceiptService receiptService, IDiscountService discountService, IEventAggregator eventAggregator)
         {
             ScreenCoordinator = screenCoordinator;
             ImageService = imageService;
             CustomerService = customerService;
             ProductService = productService;
-            InvoiceService = invoiceService;
+            ReceiptService = receiptService;
             DiscountService = discountService;
             EventAggregator = eventAggregator;
 
@@ -37,7 +36,7 @@ namespace PointOfSale.RT.ViewModels
 
         private readonly IProductService ProductService;
 
-        private readonly IInvoiceService InvoiceService;
+        private readonly IReceiptService ReceiptService;
 
         private readonly IDiscountService DiscountService;
 
@@ -205,7 +204,7 @@ namespace PointOfSale.RT.ViewModels
                         Price = o.Product.Cost
                     }));
 
-                InvoiceService.AddReceipt(invoice, invoiceItems);
+                ReceiptService.AddReceipt(new InvoiceTransaction { Invoice = invoice, Items = invoiceItems });
 
                 Customer.Balance = CustomerService.GetCustomer(Customer.Id).Balance;
             };

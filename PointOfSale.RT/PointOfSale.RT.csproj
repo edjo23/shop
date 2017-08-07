@@ -105,12 +105,94 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Contracts\Entities\Customer.cs">
+      <Link>Clients\Entities\Customer.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\CustomerTransaction.cs">
+      <Link>Clients\Entities\CustomerTransaction.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\Denomination.cs">
+      <Link>Clients\Entities\Denomination.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\Discount.cs">
+      <Link>Clients\Entities\Discount.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\DiscountCustomer.cs">
+      <Link>Clients\Entities\DiscountCustomer.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\DiscountModel.cs">
+      <Link>Clients\Entities\DiscountModel.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\DiscountProduct.cs">
+      <Link>Clients\Entities\DiscountProduct.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\Invoice.cs">
+      <Link>Clients\Entities\Invoice.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\InvoiceItem.cs">
+      <Link>Clients\Entities\InvoiceItem.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\InvoiceTransaction.cs">
+      <Link>Clients\Entities\InvoiceTransaction.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\Product.cs">
+      <Link>Clients\Entities\Product.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Entities\ProductMovement.cs">
+      <Link>Clients\Entities\ProductMovement.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Messages\CardMessages.cs">
+      <Link>Clients\Messages\CardMessages.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\IApplicationService.cs">
+      <Link>Clients\Services\IApplicationService.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\ICardService.cs">
+      <Link>Clients\Services\ICardService.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\ICustomerService.cs">
+      <Link>Clients\Services\ICustomerService.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\IDiscountService.cs">
+      <Link>Clients\Services\IDiscountService.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\IInvoiceService.cs">
+      <Link>Clients\Services\IInvoiceService.cs</Link>
+    </Compile>
+    <Compile Include="..\Contracts\Services\IProductService.cs">
+      <Link>Clients\Services\IProductService.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\ApplicationClient.cs">
+      <Link>Clients\ApplicationClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\HttpClient.cs">
+      <Link>Clients\HttpClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\CustomerClient.cs">
+      <Link>Clients\CustomerClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\DiscountClient.cs">
+      <Link>Clients\DiscountClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\InvoiceClient.cs">
+      <Link>Clients\InvoiceClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\IUrlProvider.cs">
+      <Link>Clients\IUrlProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\ProductClient.cs">
+      <Link>Clients\ProductClient.cs</Link>
+    </Compile>
+    <Compile Include="..\Service.Client\ReceiptClient.cs">
+      <Link>Clients\ReceiptClient.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\BindingBehaviour.cs" />
     <Compile Include="Behaviors\ElementDeferredVisibilityBehaviour.cs" />
     <Compile Include="Behaviors\IdleTrigger.cs" />
+    <Compile Include="Clients\UrlProvider.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Log4NetFacade.cs" />
@@ -125,7 +207,6 @@
     <Compile Include="Services\CardService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\ScreenCoordinator.cs" />
-    <Compile Include="Services\ServiceClientFactory.cs" />
     <Compile Include="ViewModels\AccountsViewModel.cs" />
     <Compile Include="ViewModels\AccountTransactionListViewModel.cs" />
     <Compile Include="ViewModels\AccountTransactionViewModel.cs" />
@@ -391,21 +472,16 @@
       <HintPath>..\packages\Caliburn.Micro.3.1.0\lib\win81\Microsoft.Xaml.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Windows.UI.Interactivity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=2f4cf195f2e6765d, processorArchitecture=MSIL">
       <HintPath>..\packages\Windows.UI.Interactivity.1.3.0.0\lib\win8\Windows.UI.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj">
-      <Project>{f964b318-7bb8-4efe-8724-a2df741e91b4}</Project>
-      <Name>Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Service.Client\Service.Client.csproj">
-      <Project>{f7543423-e620-46d1-bae4-7c915d1484e8}</Project>
-      <Name>Service.Client</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
 using Dapper;
-using DapperExtensions;
 using Shop.Business.Database;
 using Shop.Contracts.Entities;
 
@@ -13,34 +11,39 @@ namespace Shop.Business.Managers
 {
     public class InvoiceManager
     {
-        public InvoiceManager(ProductManager productManager, CustomerManager customerManager)
+        public InvoiceManager(ProductManager productManager, CustomerManager customerManager, IConnectionProvider connectionProvider)
         {
             ProductManager = productManager;
             CustomerManager = customerManager;
+            ConnectionProvider = connectionProvider;
         }
 
-        private ProductManager ProductManager { get; set; }
+        private readonly IConnectionProvider ConnectionProvider;
 
-        private CustomerManager CustomerManager { get; set; }
+        private readonly ProductManager ProductManager;
+
+        private readonly CustomerManager CustomerManager;
 
         public IEnumerable<Invoice> GetInvoices()
         {
-            return Extensions.SelectAll<Invoice>();
+            using (var connection = ConnectionProvider.CreateConnection())
+            {
+                return connection.DbConnection.GetAll<Invoice>(connection.DbTransaction);
+            }
         }
 
         public void AddInvoice(Invoice invoice, IEnumerable<InvoiceItem> items, decimal payment)
         {
-
-            using (var transaction = new TransactionScope())
-            using (var connection = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection(true))
             {
                 // Insert Invoice.
-                invoice.Insert();
+                connection.DbConnection.Insert(invoice, connection.DbTransaction);
 
                 foreach (var item in items)
+                {
                     item.InvoiceId = invoice.Id;
-
-                items.Insert();
+                    connection.DbConnection.Insert(item, connection.DbTransaction);
+                }
 
                 // Update Inventory.
                 foreach (var item in items)
@@ -102,15 +105,14 @@ namespace Shop.Business.Managers
                     });
                 }
 
-                transaction.Complete();
+                connection.Commit();
             }
 
         }
 
         public void AddReceipt(Invoice invoice, IEnumerable<InvoiceItem> items)
         {
-            using (var transaction = new TransactionScope())
-            using (var connection = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection(true))
             {
                 if (invoice.Id == Guid.Empty)
                     invoice.Id = Guid.NewGuid();                
@@ -149,21 +151,21 @@ namespace Shop.Business.Managers
                     SourceId = invoice.Id
                 });
 
-                transaction.Complete();
+                connection.Commit();
             }
         }
 
         public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
         {
-            using (var connection = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection())
             {
-                return connection.Connection.GetList<InvoiceItem>(new { InvoiceId = invoiceId }).ToList();
+                return connection.DbConnection.Query<InvoiceItem>(@"select * from InvoiceItem where InvoiceId = @InvoiceId", new { InvoiceId = invoiceId }, connection.DbTransaction).ToList();
             }
         }
 
         public IEnumerable<dynamic> GetInvoiceItemHistory(DateTimeOffset startDateTime)
         {
-            using (var connection = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection())
             {
                 var sql = @"
                     select 
@@ -184,7 +186,7 @@ namespace Shop.Business.Managers
                         invoice.DateTime desc,
                         item.ItemNumber";
 
-                return connection.Connection.Query(sql, new { StartDateTime = startDateTime });
+                return connection.DbConnection.Query(sql, new { StartDateTime = startDateTime }, connection.DbTransaction);
             }
         }
     }

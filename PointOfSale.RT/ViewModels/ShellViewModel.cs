@@ -16,10 +16,9 @@ namespace PointOfSale.RT.ViewModels
 {
     public class ShellViewModel : Conductor<Screen>.Collection.OneActive, IHandle<SettingsChanged>, IHandle<Screen>, IHandle<ShowPopup>, IHandle<HidePopup>
     {
-        public ShellViewModel(IEventAggregator eventAggregator, IServiceClientFactory serviceClientFactory, ScreenCoordinator screenCoordinator)
+        public ShellViewModel(IEventAggregator eventAggregator, ScreenCoordinator screenCoordinator)
         {
             EventAggregator = eventAggregator;
-            ServiceClientFactory = serviceClientFactory as WindowsStoreServiceClientFactory;
             ScreenCoordinator = screenCoordinator;
             Logger = log4net.LogManager.GetLogger(GetType());
 
@@ -29,8 +28,6 @@ namespace PointOfSale.RT.ViewModels
         }
 
         private readonly IEventAggregator EventAggregator;
-
-        private readonly WindowsStoreServiceClientFactory ServiceClientFactory;
 
         private readonly ScreenCoordinator ScreenCoordinator;
 
@@ -131,8 +128,6 @@ namespace PointOfSale.RT.ViewModels
 
             Window.Current.SizeChanged += Window_SizeChanged;
 
-            ConfigureServiceClients();
-
             Task.Factory.StartNew(() => Handle(IoC.Get<HomeViewModel>()));
         }
 
@@ -143,21 +138,11 @@ namespace PointOfSale.RT.ViewModels
 
         public void Handle(SettingsChanged message)
         {
-            ConfigureServiceClients();
-
             Task.Factory.StartNew(() => Handle(IoC.Get<HomeViewModel>()));
         }
 
         private void ConfigureServiceClients()
         {
-            ServiceClientFactory.Host = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["HostAddress"];
-            ServiceClientFactory.EndpointAddressFormatString = "http://{0}/Services/{1}.svc";
-
-            var cardReaderHost = (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["CardReaderHostAddress"];
-
-            ServiceClientFactory.EndpointAddressFormatStrings.Clear();
-            ServiceClientFactory.EndpointAddressFormatStrings.Add(typeof(ICardReadService), String.Format("http://{0}/Services/CardReadService.svc", cardReaderHost));
-            ServiceClientFactory.EndpointAddressFormatStrings.Add(typeof(ICardWriteService), String.Format("http://{0}/Services/CardWriteService.svc", cardReaderHost));
         }
 
         public void LogPointerPressed()

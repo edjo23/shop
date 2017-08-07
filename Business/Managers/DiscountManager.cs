@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using DapperExtensions;
 using Shop.Business.Database;
 using Shop.Contracts.Entities;
 
@@ -12,21 +11,31 @@ namespace Shop.Business.Managers
 {
     public class DiscountManager
     {
+        public DiscountManager(IConnectionProvider connectionProvider)
+        {
+            ConnectionProvider = connectionProvider;
+        }
+
+        private readonly IConnectionProvider ConnectionProvider;
+
         public IEnumerable<Discount> GetDiscounts()
         {
-            return Extensions.SelectAll<Discount>();
+            using (var connection = ConnectionProvider.CreateConnection())
+            {
+                return connection.DbConnection.GetAll<Discount>(connection.DbTransaction);
+            }
         }
 
         public DiscountModel GetDiscountModel(Guid id)
         {
-            using (var connectionScope = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection())
             {
-                var result = new DiscountModel();
-
-                result.Discount = connectionScope.Connection.Get<Discount>(id);
-                result.Products = connectionScope.Connection.GetList<DiscountProduct>(Predicates.Field<DiscountProduct>(f => f.DiscountId, Operator.Eq, id)).ToList();
-                result.Customers = connectionScope.Connection.GetList<DiscountCustomer>(Predicates.Field<DiscountCustomer>(f => f.DiscountId, Operator.Eq, id)).ToList();
-
+                var result = new DiscountModel()
+                {
+                    Discount = connection.DbConnection.Get<Discount>(id, connection.DbTransaction),
+                    Products = connection.DbConnection.Query<DiscountProduct>(@"select * from DiscountProduct where DiscountId = @DiscountId", new { DiscountId = id }, connection.DbTransaction),
+                    Customers = connection.DbConnection.Query<DiscountCustomer>(@"select * from DiscountCustomer where DiscountId = @DiscountId", new { DiscountId = id }, connection.DbTransaction)
+                };
                 return result;
             }
         }
@@ -34,17 +43,21 @@ namespace Shop.Business.Managers
         public DiscountModel InsertDiscountModel(DiscountModel entity)
         {
             // TODO - Make this more efficient.
-            using (var connectionScope = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection(true))
             {
-                connectionScope.Connection.Insert<Discount>(entity.Discount);
+                connection.DbConnection.Insert<Discount>(entity.Discount, connection.DbTransaction);
 
                 foreach (var product in entity.Products)
                     product.DiscountId = entity.Discount.Id;
                 foreach (var customer in entity.Customers)
                     customer.DiscountId = entity.Discount.Id;
 
-                connectionScope.Connection.Insert<DiscountProduct>(entity.Products);
-                connectionScope.Connection.Insert<DiscountCustomer>(entity.Customers);
+                foreach (var product in entity.Products)
+                    connection.DbConnection.Insert(product, connection.DbTransaction);
+                foreach (var customer in entity.Customers)
+                    connection.DbConnection.Insert(customer, connection.DbTransaction);
+
+                connection.Commit();
             }
 
             return entity;
@@ -53,20 +66,24 @@ namespace Shop.Business.Managers
         public DiscountModel UpdateDiscountModel(DiscountModel entity)
         {
             // TODO - Make this more efficient.
-            using (var connectionScope = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection(true))
             {
-                connectionScope.Connection.Delete<DiscountProduct>(Predicates.Field<DiscountProduct>(f => f.DiscountId, Operator.Eq, entity.Discount.Id));
-                connectionScope.Connection.Delete<DiscountCustomer>(Predicates.Field<DiscountCustomer>(f => f.DiscountId, Operator.Eq, entity.Discount.Id));
+                connection.DbConnection.Execute(@"delete from DiscountProduct where DiscountId = @DiscountId", new { DiscountId = entity.Discount.Id }, connection.DbTransaction);
+                connection.DbConnection.Execute(@"delete from DiscountCustomer where DiscountId = @DiscountId", new { DiscountId = entity.Discount.Id }, connection.DbTransaction);
 
-                connectionScope.Connection.Update<Discount>(entity.Discount);
+                connection.DbConnection.Update<Discount>(entity.Discount, connection.DbTransaction);
 
                 foreach (var product in entity.Products)
                     product.DiscountId = entity.Discount.Id;
                 foreach (var customer in entity.Customers)
                     customer.DiscountId = entity.Discount.Id;
 
-                connectionScope.Connection.Insert<DiscountProduct>(entity.Products);
-                connectionScope.Connection.Insert<DiscountCustomer>(entity.Customers);
+                foreach (var product in entity.Products)
+                    connection.DbConnection.Insert(product, connection.DbTransaction);
+                foreach (var customer in entity.Customers)
+                    connection.DbConnection.Insert(customer, connection.DbTransaction);
+
+                connection.Commit();
             }
 
             return entity;
@@ -74,7 +91,7 @@ namespace Shop.Business.Managers
 
         public IEnumerable<DiscountProduct> GetDiscountProductsByCustomerId(Guid customerId)
         {
-            using (var connectionScope = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection())
             {
                 var sql = @"
                     select 
@@ -83,7 +100,7 @@ namespace Shop.Business.Managers
                         [DiscountProduct] dp
                         join [DiscountCustomer] dc on dc.DiscountId = dp.DiscountId and dc.CustomerId = @CustomerId";
 
-                return connectionScope.Connection.Query<DiscountProduct>(sql, new { CustomerId = customerId }).ToList();
+                return connection.DbConnection.Query<DiscountProduct>(sql, new { CustomerId = customerId }, connection.DbTransaction).ToList();
             }
         }
     }

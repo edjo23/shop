@@ -60,7 +60,7 @@ namespace Shop.Management.ViewModels
                     Quantity = o.Quantity
                 }));
 
-            InvoiceService.AddInvoice(invoice, invoiceItems, 0);
+            InvoiceService.AddInvoice(new InvoiceTransaction { Invoice = invoice, Items = invoiceItems, Payment = 0 });
 
             Close();
         }

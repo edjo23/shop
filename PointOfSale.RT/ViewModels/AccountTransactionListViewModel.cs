@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
+using Shop.Service.Client;
 using Windows.UI.Xaml;
 
 namespace PointOfSale.RT.ViewModels

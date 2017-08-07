@@ -58,17 +58,17 @@ namespace PointOfSale.RT
             Container.PerRequest<InvoicePopupViewModel>();
             Container.PerRequest<PinPopupViewModel>();
 
-            Container.Singleton<IServiceClientFactory, WindowsStoreServiceClientFactory>();
+            Container.Singleton<IUrlProvider, UrlProvider>();
 
-            Container.PerRequest<IApplicationService, ApplicationServiceProxy>();
-            Container.PerRequest<ICustomerService, CustomerServiceProxy>();
-            Container.PerRequest<IProductService, ProductServiceProxy>();
-            Container.PerRequest<IInvoiceService, InvoiceServiceProxy>();
-            Container.PerRequest<IDiscountService, DiscountServiceProxy>();
+            Container.PerRequest<IApplicationService, ApplicationClient>();
+            Container.PerRequest<ICustomerService, CustomerClient>();
+            Container.PerRequest<IProductService, ProductClient>();
+            Container.PerRequest<IInvoiceService, InvoiceClient>();
+            Container.PerRequest<IDiscountService, DiscountClient>();
 
             Container.PerRequest<ICardHandler, CardReadHandler>();
-            Container.PerRequest<ICardReadService, CardReadServiceProxy>();
-            Container.PerRequest<ICardWriteService, CardWriteServiceProxy>();
+            Container.PerRequest<ICardReadService, CardReadServiceStub>();      // TODO - Replace with Win 8.1 API
+            Container.PerRequest<ICardWriteService, CardWriteServiceStub>();    // TODO - Replace with Win 8.1 API
 
             Container.Singleton<ScreenCoordinator>();
             Container.Singleton<CardService>();

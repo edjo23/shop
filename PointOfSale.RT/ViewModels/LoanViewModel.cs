@@ -9,6 +9,7 @@ using PointOfSale.RT.Models;
 using PointOfSale.RT.Services;
 using Shop.Contracts.Entities;
 using Shop.Contracts.Services;
+using Shop.Service.Client;
 
 namespace PointOfSale.RT.ViewModels
 {

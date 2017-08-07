@@ -1,42 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 using Dapper;
-using DapperExtensions;
 using Shop.Business.Database;
 using Shop.Contracts.Entities;
+using System.Data;
 
 namespace Shop.Business.Managers
 {
     public class ProductManager
     {
+        public ProductManager(IConnectionProvider connectionProvider)
+        {
+            ConnectionProvider = connectionProvider;
+        }
+
+        private readonly IConnectionProvider ConnectionProvider;
+
         public IEnumerable<Product> GetProducts()
         {
-            return Extensions.SelectAll<Product>().OrderBy(o => o.Description);
+            using (var connection = ConnectionProvider.CreateConnection())
+            {
+                return connection.DbConnection.GetAll<Product>(connection.DbTransaction).OrderBy(o => o.Description);
+            }
         }
 
         public Product GetProduct(Guid id)
         {
-            return Extensions.SelectById<Product>(id);
+            using (var connection = ConnectionProvider.CreateConnection())
+            {
+                return connection.DbConnection.Get<Product>(id, connection.DbTransaction);
+            }
         }
 
         public void AddProduct(Product product)
         {
-            product.Insert();
+            using (var connection = ConnectionProvider.CreateConnection(true))
+            {
+                connection.DbConnection.Insert(product, connection.DbTransaction);
+                connection.Commit();
+            }
         }
 
         public void UpdateProduct(Product product)
         {
-            product.Update();
+            using (var connection = ConnectionProvider.CreateConnection(true))
+            {
+                connection.DbConnection.Update(product, connection.DbTransaction);
+                connection.Commit();
+            }
         }
 
         public IEnumerable<ProductMovement> GetProductMovements(Guid productId)
         {
-            using (var connection = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection())
             {
                 var sql = @"
                     select
@@ -55,14 +72,13 @@ namespace Shop.Business.Managers
                         DateTime desc,
                         MovementType";
 
-                return connection.Connection.Query<ProductMovement>(sql, new { ProductId = productId });
+                return connection.DbConnection.Query<ProductMovement>(sql, new { ProductId = productId }, connection.DbTransaction);
             }
         }
 
         public void AddMovement(ProductMovement movement)
         {
-            using (var transaction = new TransactionScope())
-            using (var connection = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection(true))
             {
                 var product = GetProduct(movement.ProductId);
                 if (product == null)
@@ -71,11 +87,11 @@ namespace Shop.Business.Managers
                 if (product.QuantityOnHand + movement.Quantity < 0)
                     throw new Exception("Quantity on hand cannot become negative.");
 
-                movement.Insert();
+                connection.DbConnection.Insert(movement, connection.DbTransaction);
                 product.QuantityOnHand += movement.Quantity;
-                product.Update();
+                connection.DbConnection.Update(product, connection.DbTransaction);
 
-                transaction.Complete();
+                connection.Commit();
             }
         }
     }

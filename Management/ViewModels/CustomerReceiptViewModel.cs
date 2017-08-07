@@ -12,12 +12,12 @@ namespace Shop.Management.ViewModels
 {
     public class CustomerReceiptViewModel : Screen
     {
-        public CustomerReceiptViewModel(IEventAggregator eventAggregator, ICustomerService customerService, IProductService productService, IInvoiceService invoiceService)
+        public CustomerReceiptViewModel(IEventAggregator eventAggregator, ICustomerService customerService, IProductService productService, IReceiptService receiptService)
         {
             EventAggregator = eventAggregator;
             CustomerService = customerService;
             ProductService = productService;
-            InvoiceService = invoiceService;
+            ReceiptService = receiptService;
 
             DisplayName = "New Stock Payment";
             Items = new BindableCollection<CustomerReceiptItemViewModel>();
@@ -29,7 +29,7 @@ namespace Shop.Management.ViewModels
 
         public IProductService ProductService { get; set; }
 
-        public IInvoiceService InvoiceService { get; set; }
+        public IReceiptService ReceiptService { get; set; }
 
         public BindableCollection<CustomerReceiptItemViewModel> Items { get; set; }
 
@@ -60,7 +60,7 @@ namespace Shop.Management.ViewModels
                     Quantity = o.Quantity
                 }));
 
-            InvoiceService.AddReceipt(invoice, invoiceItems);
+            ReceiptService.AddReceipt(new InvoiceTransaction { Invoice = invoice, Items = invoiceItems });
 
             Close();
         }

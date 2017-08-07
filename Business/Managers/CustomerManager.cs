@@ -1,38 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
-using DapperExtensions;
+using Dapper;
 using Shop.Business.Database;
 using Shop.Contracts.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace Shop.Business.Managers
 {
     public class CustomerManager
     {
+        public CustomerManager(IConfiguration configuration, IConnectionProvider connectionProvider)
+        {
+            ConnectionProvider = connectionProvider;
+            PinSalt = configuration.GetSection("PinSalt").Value;
+        }
+
+        private readonly IConnectionProvider ConnectionProvider;
+
+        public string PinSalt { get; set; }
+
         public IEnumerable<Customer> GetCustomers()
         {
-            return Extensions.SelectAll<Customer>().OrderBy(o => o.Name);
+            using (var connection = ConnectionProvider.CreateConnection())
+            {
+                return connection.DbConnection.GetAll<Customer>(connection.DbTransaction).OrderBy(o => o.Name);
+            }
         }
 
         public Customer GetCustomer(Guid id)
         {
-            return Extensions.SelectById<Customer>(id);
+            using (var connection = ConnectionProvider.CreateConnection())
+            {
+                return connection.DbConnection.Get<Customer>(id, connection.DbTransaction);
+            }
         }
 
         public Customer GetCustomerByNumber(string number)
         {
-            using (var connectionScope = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection())
             {
-                var where = new PredicateGroup { Operator = GroupOperator.And, Predicates = new List<IPredicate>() };
-                where.Predicates.Add(Predicates.Field<Customer>(f => f.Number, Operator.Eq, number));
-
-                return connectionScope.Connection.GetList<Customer>(where.Predicates.Any() ? where : null).FirstOrDefault();
+                return connection.DbConnection.QueryFirst<Customer>(@"select * from Customer where Number = @Number", new { Number = number }, connection.DbTransaction);
             }
         }
 
@@ -43,44 +53,54 @@ namespace Shop.Business.Managers
                 customer.Id = Guid.NewGuid();
             }
 
-            customer.Insert();
+            using (var connection = ConnectionProvider.CreateConnection(true))
+            {
+                connection.DbConnection.Insert(customer, connection.DbTransaction);
+                connection.Commit();
+            }
         }
 
         public void UpdateCustomer(Customer customer)
         {
-            customer.Update();
+            using (var connection = ConnectionProvider.CreateConnection(true))
+            {
+                connection.DbConnection.Update(customer, connection.DbTransaction);
+                connection.Commit();
+            }
         }
 
         public void AddTransaction(CustomerTransaction customerTransaction)
         {
-            using (var transaction = new TransactionScope())
-            using (var connection = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection(true))
             {
-                var customer = GetCustomer(customerTransaction.CustomerId);
+                var customer = connection.DbConnection.Get<Customer>(customerTransaction.CustomerId, connection.DbTransaction);
                 if (customer == null)
                     throw new Exception("Customer not found");
 
-                customerTransaction.Insert();
+                connection.DbConnection.Insert(customerTransaction, connection.DbTransaction);
                 customer.Balance += customerTransaction.Amount;
-                customer.Update();
+                connection.DbConnection.Update(customer, connection.DbTransaction);
 
-                transaction.Complete();
+                connection.Commit();
             }
         }
 
         public IEnumerable<CustomerTransaction> GetTransactions(Guid? customerId, DateTimeOffset? fromDate, DateTimeOffset? toDate)
         {
-            using (var connectionScope = new ConnectionScope())
+            using (var connection = ConnectionProvider.CreateConnection())
             {
-                var where = new PredicateGroup { Operator = GroupOperator.And, Predicates = new List<IPredicate>() };
-                if (customerId.HasValue)
-                    where.Predicates.Add(Predicates.Field<CustomerTransaction>(f => f.CustomerId, Operator.Eq, customerId.Value));
-                if (fromDate.HasValue)
-                    where.Predicates.Add(Predicates.Field<CustomerTransaction>(f => f.DateTime, Operator.Ge, fromDate.Value));
-                if (toDate.HasValue)
-                    where.Predicates.Add(Predicates.Field<CustomerTransaction>(f => f.DateTime, Operator.Le, toDate.Value));
+                var where = "where";
 
-                return connectionScope.Connection.GetList<CustomerTransaction>(where.Predicates.Any() ? where : null).ToList();
+                if (customerId.HasValue)
+                    where += " and CustomerId = @CustomerId";
+                if (fromDate.HasValue)
+                    where += " and DateTime >= @FromDate";
+                if (toDate.HasValue)
+                    where += " and DateTime <= @ToDate";
+
+                where = where == "where" ? "" : where.Replace("where and", "where");
+
+                return connection.DbConnection.Query<CustomerTransaction>($"select * from CustomerTransaction {where}", new { CustomerId = customerId.GetValueOrDefault(), FromDate = fromDate.GetValueOrDefault(), ToDate = toDate.GetValueOrDefault() }, connection.DbTransaction).ToList();
             }
         }
 
@@ -106,10 +126,10 @@ namespace Shop.Business.Managers
 
         public string GetPinHash(Guid customerId, string pin)
         {
-            var buffer = ASCIIEncoding.Default.GetBytes(pin + ConfigurationManager.AppSettings["PinSalt"]).Concat(customerId.ToByteArray()).ToArray();
-            var hash = new SHA256Managed().ComputeHash(buffer);           
+            var buffer = Encoding.ASCII.GetBytes(pin + PinSalt).Concat(customerId.ToByteArray()).ToArray();
+            var hash = SHA256.Create().ComputeHash(buffer);           
 
-            return ASCIIEncoding.UTF8.GetString(hash);
+            return Encoding.UTF8.GetString(hash);
         }
     }
 }

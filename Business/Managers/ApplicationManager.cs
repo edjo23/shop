@@ -34,14 +34,14 @@ namespace Shop.Business.Managers
 
         public IEnumerable<string> GetImageList()
         {
-            var directory = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images"));
+            var directory = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "Images"));
 
             return directory.Exists ? directory.GetFiles("*" + ImageFileExtension).Select(o => o.Name.Substring(0, o.Name.Length - ImageFileExtension.Length)).ToList() : new List<string>();
         }
 
         public byte[] GetImage(string code)
         {
-            var folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+            var folder = Path.Combine(Directory.GetCurrentDirectory(), "Images");
             var file = new FileInfo(Path.Combine(folder, code + ".png"));
 
             return file.Exists ? File.ReadAllBytes(file.FullName) : new byte[0];
@@ -49,7 +49,7 @@ namespace Shop.Business.Managers
 
         public string[] GetText(string code)
         {
-            var folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Text");
+            var folder = Path.Combine(Directory.GetCurrentDirectory(), "Text");
             var file = new FileInfo(Path.Combine(folder, code + ".txt"));
 
             return file.Exists ? File.ReadAllLines(file.FullName) : new string[0];
