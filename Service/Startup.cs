@@ -16,7 +16,7 @@ namespace Core.Server
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // services.AddSingleton<IConfigurationRoot>(o => BuildConfiguration());
             services.AddSingleton<IConfiguration>(o => BuildConfiguration());
 
@@ -32,6 +32,7 @@ namespace Core.Server
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IInvoiceService, InvoiceService>();
+            services.AddTransient<IReceiptService, InvoiceService>();
             services.AddTransient<IDiscountService, DiscountService>();
 
             services.AddCors();

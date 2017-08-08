@@ -28,12 +28,14 @@ namespace Shop.Service.Client
             using (var client = new System.Net.Http.HttpClient())
             {
                 var task = call(client);
-
-                task.Wait();
-
-                if (task.Exception != null)
-                    throw task.Exception;
-
+                try
+                {
+                    task.Wait();
+                }
+                catch (AggregateException ex)
+                {
+                    throw ex.InnerException;
+                }
                 return task.Result;
             }
         }
@@ -61,91 +63,161 @@ namespace Shop.Service.Client
         {
             var uri = BuildUri(url, queryParams);
 
-            return Invoke(async client =>
+            var task = Task.Run(() =>
             {
-                using (var response = await client.GetAsync(uri))
-                using (var responseHttpContent = response.Content)
+                return Invoke(async client =>
                 {
-                    var responseContent = await responseHttpContent.ReadAsStringAsync();
+                    using (var response = await client.GetAsync(uri))
+                    using (var responseHttpContent = response.Content)
+                    {
+                        var responseContent = await responseHttpContent.ReadAsStringAsync();
 
-                    if (!response.IsSuccessStatusCode)
-                        throw new HttpRequestException(response.StatusCode, responseContent);
+                        if (!response.IsSuccessStatusCode)
+                            throw new HttpRequestException(response.StatusCode, responseContent);
 
-                    return JsonConvert.DeserializeObject<TResult>(responseContent);
-                }
+                        return JsonConvert.DeserializeObject<TResult>(responseContent);
+                    }
+                });
             });
+
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+
+            return task.Result;
         }
 
         protected HttpStatusCode Post<TBody>(string url, TBody content)
         {
-            return Invoke<HttpStatusCode>(async client =>
+            var task = Task.Run(() =>
             {
-                var requestContent = JsonConvert.SerializeObject(content);
-                using (var response = await client.PostAsync(url, new StringContent(requestContent, Encoding.UTF8, "application/json")))
-                using (var responseHttpContent = response.Content)
+                return Invoke<HttpStatusCode>(async client =>
                 {
-                    var responseContent = await responseHttpContent.ReadAsStringAsync();
+                    var requestContent = JsonConvert.SerializeObject(content);
+                    using (var response = await client.PostAsync(url, new StringContent(requestContent, Encoding.UTF8, "application/json")))
+                    using (var responseHttpContent = response.Content)
+                    {
+                        var responseContent = await responseHttpContent.ReadAsStringAsync();
 
-                    if (!response.IsSuccessStatusCode)
-                        throw new HttpRequestException(response.StatusCode, responseContent);
+                        if (!response.IsSuccessStatusCode)
+                            throw new HttpRequestException(response.StatusCode, responseContent);
 
-                    return response.StatusCode;
-                }
+                        return response.StatusCode;
+                    }
+                });
             });
+
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+
+            return task.Result;
         }
 
         protected TResult Post<TBody, TResult>(string url, TBody content)
         {
-            return Invoke<TResult>(async client =>
+            var task = Task.Run(() =>
             {
-                var requestContent = JsonConvert.SerializeObject(content);
-                using (var response = await client.PostAsync(url, new StringContent(requestContent, Encoding.UTF8, "application/json")))
-                using (var responseHttpContent = response.Content)
+                return Invoke<TResult>(async client =>
                 {
-                    var responseContent = await responseHttpContent.ReadAsStringAsync();
+                    var requestContent = JsonConvert.SerializeObject(content);
+                    using (var response = await client.PostAsync(url, new StringContent(requestContent, Encoding.UTF8, "application/json")))
+                    using (var responseHttpContent = response.Content)
+                    {
+                        var responseContent = await responseHttpContent.ReadAsStringAsync();
 
-                    if (!response.IsSuccessStatusCode)
-                        throw new Exception(response.StatusCode.ToString());
+                        if (!response.IsSuccessStatusCode)
+                            throw new Exception(response.StatusCode.ToString());
 
-                    return JsonConvert.DeserializeObject<TResult>(responseContent);
-                }
+                        return JsonConvert.DeserializeObject<TResult>(responseContent);
+                    }
+                });
             });
+
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+
+            return task.Result;
         }
 
         protected HttpStatusCode Put<TBody>(string url, TBody content)
         {
-            return Invoke<HttpStatusCode>(async client =>
+            var task = Task.Run(() =>
             {
-                var requestContent = JsonConvert.SerializeObject(content);
-                using (var response = await client.PutAsync(url, new StringContent(requestContent, Encoding.UTF8, "application/json")))
-                using (var responseHttpContent = response.Content)
+                return Invoke<HttpStatusCode>(async client =>
                 {
-                    var responseContent = await responseHttpContent.ReadAsStringAsync();
+                    var requestContent = JsonConvert.SerializeObject(content);
+                    using (var response = await client.PutAsync(url, new StringContent(requestContent, Encoding.UTF8, "application/json")))
+                    using (var responseHttpContent = response.Content)
+                    {
+                        var responseContent = await responseHttpContent.ReadAsStringAsync();
 
-                    if (!response.IsSuccessStatusCode)
-                        throw new Exception(response.StatusCode.ToString());
+                        if (!response.IsSuccessStatusCode)
+                            throw new Exception(response.StatusCode.ToString());
 
-                    return response.StatusCode;
-                }
+                        return response.StatusCode;
+                    }
+                });
             });
+
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+
+            return task.Result;
         }
 
         protected TResult Put<TBody, TResult>(string url, TBody content)
         {
-            return Invoke<TResult>(async client =>
+            var task = Task.Run(() =>
             {
-                var requestContent = JsonConvert.SerializeObject(content);
-                using (var response = await client.PutAsync(url, new StringContent(requestContent, Encoding.UTF8, "application/json")))
-                using (var responseHttpContent = response.Content)
+                return Invoke<TResult>(async client =>
                 {
-                    var responseContent = await responseHttpContent.ReadAsStringAsync();
+                    var requestContent = JsonConvert.SerializeObject(content);
+                    using (var response = await client.PutAsync(url, new StringContent(requestContent, Encoding.UTF8, "application/json")))
+                    using (var responseHttpContent = response.Content)
+                    {
+                        var responseContent = await responseHttpContent.ReadAsStringAsync();
 
-                    if (!response.IsSuccessStatusCode)
-                        throw new Exception(response.StatusCode.ToString());
+                        if (!response.IsSuccessStatusCode)
+                            throw new Exception(response.StatusCode.ToString());
 
-                    return JsonConvert.DeserializeObject<TResult>(responseContent);
-                }
+                        return JsonConvert.DeserializeObject<TResult>(responseContent);
+                    }
+                });
             });
+
+            try
+            {
+                task.Wait();
+            }
+            catch (AggregateException ex)
+            {
+                throw ex.InnerException;
+            }
+
+            return task.Result;
         }
     }
 }
